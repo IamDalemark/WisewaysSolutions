@@ -16,5 +16,10 @@ export default function Page() {
     testConnection();
   }, []);
 
-  return <h1>{status}</h1>;
+  return (
+    <div>
+      <h1>{status}</h1>
+      this is the landing page
+    </div>
+  );
 }

@@ -23,6 +23,7 @@ const eslintConfig = [
       "@typescript-eslint/no-explicit-any": "error",
     },
   }),
+  { ignores: ["node_modules", "public"] },
 ];
 
 export default eslintConfig;
