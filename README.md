@@ -2,10 +2,22 @@
 
 ## Getting Started
 
-First, run the development server:
+First, install dependencies
 
 ```bash
 npm i
+```
+
+add .env.local at the root folder
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL="your supabase URL"
+NEXT_PUBLIC_SUPABASE_ANON_KEY="your supabase anon key"
+```
+
+run the development server:
+
+```bash
 npm run dev
 ```
 
