@@ -1,4 +1,4 @@
-import SendTestimonial from "../../components/testimonial/SendTestimonal";
+import SendTestimonial from "../../components/testimonial/SendTestimonial";
 
 const Testimonial = () => {
   return (
