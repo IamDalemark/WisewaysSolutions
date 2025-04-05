@@ -13,7 +13,8 @@ const CustomerSupportPage = () => {
               Customer Support
             </h1>
             <p className="text-lg md:text-xl">
-            Call centers, chat support, and email handling. The frontline of "Let me transfer you to another department.
+            Call centers, chat support, and email handling. The frontline of
+            Let me transfer you to another department.
             </p>
           </div>
 
