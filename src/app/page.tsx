@@ -20,7 +20,6 @@ export default function Page() {
 
   return (
     <div className="scroll-smooth">
-      <LandingPage/>
       <h1>{status}</h1>
       this is the landing page
     </div>
