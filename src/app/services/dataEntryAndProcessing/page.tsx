@@ -1,5 +1,14 @@
+import ServicePage from "@/components/layout/ServicePage";
+
 const DataEntryAndProcessingPage = () => {
-  return <div>this is the content creation page</div>;
+  return (
+    <ServicePage
+      title="Data Entry and Processing"
+      subtitle="Turning messy info into organized spreadsheets — a true unsung hero."
+      imageSrc="/service-dataentry.png"
+      altText="Data entry and processing illustration"
+    />
+  );
 };
 
 export default DataEntryAndProcessingPage;
