@@ -13,9 +13,6 @@ export const NavBar = () => {
         <ul className="flex">
             <li className="list-none">
                 <ServiceDropDownItem label="SERVICES"/>
-                {/* <a href="" className="flex text-[#0D767A] p-2 mx-2 hover:text-[#FD8432] hover:underline">
-                    SERVICES
-                </a> */}
             </li>
             <li className="list-none">
                 <a href="#about" className="flex text-[#0D767A] p-2 mx-2 hover:text-[#FD8432] hover:underline">
