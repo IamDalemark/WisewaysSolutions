@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
-// import Navbar from "../components/layout/NavBar";
-import LandingPage from "@/components/pages/LandingPage";
+import LandingPage from "./pages/LandingPage";
 
 export default function Page() {
   const [status, setStatus] = useState("Checking connection...");
@@ -20,6 +19,7 @@ export default function Page() {
 
   return (
     <div className="scroll-smooth">
+      <LandingPage/>
       <h1>{status}</h1>
       this is the landing page
     </div>
