@@ -21,7 +21,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
   };
 
   return (
-    <div className="bg-white p-4 justify-self-center w-[50vw] mt-5 rounded-2xl shadow-2xl">
+    <div className="bg-white p-4 justify-self-center w-[50vw] mt-12 rounded-2xl shadow-2xl">
       <div className="text-blue-green-dark text-4xl">
         Send us your Testimonial
       </div>

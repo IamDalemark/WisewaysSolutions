@@ -7,7 +7,7 @@ import ProfileDownMenuItem from "./ProfileDropDownItem";
 
 export const NavBar = () => {
   return (
-    <nav className="flex justify-start items-center bg-[#F3F3F3] sticky top-6 ml-[10%] mr-[10%] rounded-3xl h-20 shadow-xl">
+    <nav className="flex justify-start items-center bg-[#F3F3F3] sticky top-6 ml-[10%] mr-[10%] rounded-3xl h-20 shadow-xl z-1">
       <Image
         src={"/wiseways_navbar_logo.png"}
         alt="WiseWays Solution logo"
