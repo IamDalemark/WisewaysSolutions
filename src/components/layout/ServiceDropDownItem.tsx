@@ -27,8 +27,9 @@ const ServiceDropDownItem = ({ label }: Props) => {
     return (
         <div>
             <button className="flex text-[#0D767A] p-2 mx-2 hover:text-[#FD8432]"
-                onClick={() => setIsOpen(!isOpen)}>
-                {label} {isOpen ? <ChevronUp color="#086B70" strokeWidth={3} /> : <ChevronDown color="#086B70" strokeWidth={3} />}
+            onClick={() => setIsOpen(!isOpen)}>
+                {label} {isOpen ? <ChevronUp color="#086B70" strokeWidth={3}/> 
+                                : <ChevronDown color="#086B70" strokeWidth={3}/>}
             </button>
 
             {isOpen && <ServiceDropDown menuItems={menuItems} />}

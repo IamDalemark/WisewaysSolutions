@@ -5,7 +5,8 @@ import Image from "next/image";
 interface LandingPageProps {
     heading?: string | React.ReactNode;
     title?: string | React.ReactNode;
-    subtitle: string | React.ReactNode;
+    titleSize?: string;
+    subtitle?: string | React.ReactNode;
     imageSrc: string;
     altText: string;
     actionButton?: React.ReactNode;
@@ -17,31 +18,31 @@ interface LandingPageProps {
 
 const LandingPageSection = ({ heading, title, subtitle, imageSrc, altText, actionButton }: LandingPageProps) => {
     return (
-        <div id="home" className="flex-col h-screen px-[6%]">
+        <div className="flex-col h-full px-[6%] mb-[20%] lg:mb-[10%]">
 
-            <div className="text-6xl font-bold text-center pt-[4%] mb-[4%]">
+            <div className="flex text-5xl md:text-6xl lg:text-7xl font-bold text-center justify-self-center mb-[3%]">
                 {heading}
             </div>
 
-            <div className="flex">
+            <div className="md:flex pt-4">
 
-                <div className="text-wrap w-[50%] pr-8 content-center">
-                    <div className="text-6xl font-medium leading-[1.1]">
+                <div className="sm:w-[100%] md:w-[50%] text-wrap px-4 content-center">
+                    <div className="text-4xl sm:text-4xl lg:text-6xl text-center font-medium leading-[1.1] pb-4">
                         {title}
                     </div>
-                    <div className="text-xl mt-1.5">
+                    <div className="text-md lg:text-xl mb-[8%]">
                         {subtitle}
                     </div>
 
                     {actionButton &&
-                    <div className="justify-self-center pt-4">
+                    <div className="justify-self-center mb-8">
                             {actionButton}
                     </div>
                     }
 
                 </div>
             
-                <div> {/* 2:3 image ratio */}
+                <div className="justify-self-center self-center md:w-[50%]"> {/* 2:3 image ratio */}
                     <Image src={imageSrc} alt={altText} height={400} width={600}>
                     </Image>
                 </div>
