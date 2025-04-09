@@ -26,12 +26,12 @@ const LandingPageSection = ({ heading, title, subtitle, imageSrc, altText, actio
             <div className="flex">
 
                 <div className="text-wrap w-[50%] pr-8 content-center">
-                    <p className="text-6xl font-medium leading-[1.1]">
+                    <div className="text-6xl font-medium leading-[1.1]">
                         {title}
-                    </p>
-                    <p className="text-xl mt-1.5">
+                    </div>
+                    <div className="text-xl mt-1.5">
                         {subtitle}
-                    </p>
+                    </div>
 
                     {actionButton &&
                     <div className="justify-self-center pt-4">

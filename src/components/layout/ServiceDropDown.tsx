@@ -1,21 +1,25 @@
 import React from "react";
+import Link from "next/link";
 
 type MenuItem = {
-    label: string
+    label: string;
+    href: string;
 };
 
 interface Props {
-    menuItems : MenuItem[]
-};
+    menuItems: MenuItem[];
+}
 
-const ServiceDropDown = ({menuItems}: Props) => {
+const ServiceDropDown = ({ menuItems }: Props) => {
     return (
         <div className="rounded-xl bg-[#f3f3f3] h-40 w-60 mt-10 py-3 px-4 absolute drop-shadow-xl overflow-auto">
             {menuItems.map((item) => {
                 return (
-                    <button key={item.label} className="flex text-[#0D767A] py-2 leading-[1.25] text-left hover:text-[#FD8432]">
-                        {item.label}
-                    </button>
+                    <Link key={item.label} href={item.href}>
+                        <button className="flex text-[#0D767A] py-2 leading-[1.25] text-left hover:text-[#FD8432] w-full">
+                            {item.label}
+                        </button>
+                    </Link>
                 );
             })}
         </div>

@@ -4,15 +4,16 @@ import React from "react";
 import Image from "next/image";
 import ServiceDropDownItem from "./ServiceDropDownItem";
 import ProfileDownMenuItem from "./ProfileDropDownItem";
+import Link from "next/link";
 
 export const NavBar = () => {
     return (
     <nav className="w-[80%] flex items-center bg-[#F3F3F3] fixed top-[4%] mx-[10%] rounded-3xl h-20 shadow-xl px-[2%]">
         
         <div className="flex w-2/3">
-            <a href="#home">
+            <Link href="/"> 
                 <Image src={"/wiseways_navbar_logo.png"} alt="WiseWays Solution logo" width={190} height={51.5} className="mx-5 my-1"></Image>
-            </a>
+            </Link>
 
             <ul className="flex items-center px-5">
                 <li className="list-none">
