@@ -16,7 +16,7 @@ const ServiceDropDown = ({ menuItems }: Props) => {
             {menuItems.map((item) => {
                 return (
                     <Link key={item.label} href={item.href}>
-                        <button className="flex text-[#0D767A] py-2 leading-[1.25] text-left hover:text-[#FD8432] w-full">
+                        <button className="flex text-[#0D767A] py-2 leading-[1.25] text-left hover:text-[#FD8432] w-full hover:scale-103 transition-all">
                             {item.label}
                         </button>
                     </Link>

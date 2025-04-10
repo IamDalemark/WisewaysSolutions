@@ -11,7 +11,7 @@ interface Props {
 
 const ProfileDropDown = ({menuItems}: Props) => {
     return (
-        <div className="rounded-xl bg-[#f3f3f3] min-h-20 w-65 mt-10 py-3 px-4 absolute drop-shadow-xl overflow-auto -right-5">
+        <div className="rounded-xl bg-[#f3f3f3] min-h-20 w-65 mt-10 py-3 px-4 absolute drop-shadow-xl overflow-auto">
             
             <div className="flex">
                 <div className="items-start bg-[#BECECE] h-18 w-18 rounded-full p-2 my-2">
@@ -27,7 +27,7 @@ const ProfileDropDown = ({menuItems}: Props) => {
 
             {menuItems.map((item) => {
                 return (
-                    <button key={item.label} className="flex text-sm text-[#0D767A] py-2 leading-[1] text-left hover:text-[#FD8432]">
+                    <button key={item.label} className="flex text-sm text-[#0D767A] py-2 leading-[1] text-left hover:text-[#FD8432] hover:scale-105 transition-all">
                         {item.label}
                     </button>
                 );

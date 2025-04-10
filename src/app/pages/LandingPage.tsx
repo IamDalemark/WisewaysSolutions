@@ -4,12 +4,12 @@ import ContactDetail from "@/components/layout/ContactDetail";
 
 const LandingPage = () => {
     return (
-        <div className="bg-[#F3F3F3] text-blue-green w-full h-full pt-34 pb-20 static">
+        <div className="bg-[#E1E1E1] sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300 text-blue-green w-full h-full pt-34 pb-20 static">
             <NavBar/>
             
             {/* intro section */}
             <LandingPageSection
-                title={<p className="text-4xl sm:text-5xl lg:text-7xl">Welcome to WiseWays Solutions!</p>}
+                title={<p className="text-4xl sm:text-5xl lg:text-6xl">Welcome to WiseWays Solutions!</p>}
                 subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                           tempor incididunt ut labore et dolore magna aliqua."
                 imageSrc="/landing-page1.png"
@@ -53,7 +53,7 @@ const LandingPage = () => {
             {/* contact details section */}
             <LandingPageSection
                 heading="CONTACT US"
-                title={<p className="text-4xl"> Feel free to contact us if you have any questions or concerns </p>}
+                title={<p className="text-2xl md:text-4xl"> Feel free to connect with us if you have any questions or concerns </p>}
                 subtitle={
                     <div className="justify-self-center text-lg">
                         <ContactDetail iconName="Phone" description="(63) 000-000-0000"/>

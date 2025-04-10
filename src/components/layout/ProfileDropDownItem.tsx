@@ -1,30 +1,46 @@
 "use client";
 
-import { useState } from "react";
-import { ChevronDown, ChevronUp, User } from "lucide-react";
+import { useState, useEffect, useRef } from "react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import ProfileDropDown from "./ProfileDropDown";
 
-const ProfileDownMenuItem = () => {
+interface Props {
+    label: string;
+}
+
+const ProfileDropDownItem = ({ label }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
+    const dropdownRef = useRef<HTMLDivElement>(null);
+
     const menuItems = [{label: "Change Password"}, {label: "Log Out"}];
+    
+    useEffect(() => {
+            const handleClickOutside = (event: MouseEvent) => {
+                if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+                    setIsOpen(false);
+                }
+            };
+    
+            if (isOpen) {
+                document.addEventListener("mousedown", handleClickOutside);
+            }
+    
+            return () => {
+                document.removeEventListener("mousedown", handleClickOutside);
+            };
+        }, [isOpen]);
 
     return (
-        <div>
-            <div className="flex h-11 w-20 ml-2 rounded-[2.5rem] hover:bg-[#D7D8D8]"
+        <div ref={dropdownRef}>
+            <button className="flex text-[#0D767A] p-2 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer"
             onClick={() => setIsOpen(!isOpen)}>
-                <div className="bg-[#BECECE] h-11 w-11 rounded-full p-1.5 ">
-                    <User color="#5D7F81" strokeWidth={2.5} size={30} className="m-auto"/>
-                </div>
-                <div className="pl-0.5 py-2.5">
-                    {isOpen ? <ChevronUp color="#086B70" strokeWidth={3}/> 
-                            : <ChevronDown color="#086B70" strokeWidth={3}/>}
-                </div>
-                
-            </div>
+                {label} {isOpen ? <ChevronUp color="#086B70" strokeWidth={3}/> 
+                                : <ChevronDown color="#086B70" strokeWidth={3}/>}
+            </button>
 
-            {isOpen && <ProfileDropDown menuItems={menuItems}/>}
+            {isOpen && <ProfileDropDown menuItems={menuItems} />}
         </div>
     );
 };
 
-export default ProfileDownMenuItem;
+export default ProfileDropDownItem;

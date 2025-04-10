@@ -20,14 +20,14 @@ const LandingPageSection = ({ heading, title, subtitle, imageSrc, altText, actio
     return (
         <div className="flex-col h-full px-[6%] mb-[20%] lg:mb-[10%]">
 
-            <div className="flex text-5xl md:text-6xl lg:text-7xl font-bold text-center justify-self-center mb-[3%]">
+            <div className="flex text-4xl md:text-5xl lg:text-6xl font-bold text-center justify-self-center mb-[3%]">
                 {heading}
             </div>
 
             <div className="md:flex pt-4">
 
                 <div className="sm:w-[100%] md:w-[50%] text-wrap px-4 content-center">
-                    <div className="text-4xl sm:text-4xl lg:text-6xl text-center font-medium leading-[1.1] pb-4">
+                    <div className="text-3xl sm:text-4xl lg:text-5xl text-center font-medium leading-[1.1] pb-4">
                         {title}
                     </div>
                     <div className="text-md lg:text-xl mb-[8%]">
@@ -42,7 +42,7 @@ const LandingPageSection = ({ heading, title, subtitle, imageSrc, altText, actio
 
                 </div>
             
-                <div className="justify-self-center self-center md:w-[50%]"> {/* 2:3 image ratio */}
+                <div className="justify-self-center self-center w-[90%] md:w-[50%]"> {/* 2:3 image ratio */}
                     <Image src={imageSrc} alt={altText} height={400} width={600}>
                     </Image>
                 </div>
