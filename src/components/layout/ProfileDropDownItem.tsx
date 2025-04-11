@@ -20,11 +20,9 @@ const ProfileDropDownItem = ({ label }: Props) => {
                     setIsOpen(false);
                 }
             };
-    
             if (isOpen) {
                 document.addEventListener("mousedown", handleClickOutside);
             }
-    
             return () => {
                 document.removeEventListener("mousedown", handleClickOutside);
             };

@@ -8,9 +8,15 @@ const getNavButtonFromName = (navButtonName: Button) => {
     case "Services":
         return <ServiceDropDownItem label="SERVICES"/>;
     case "About":
-        return <a href="#about" className="flex text-blue-green p-2 hover:text-[#FD8432] hover:scale-105 transition-all">ABOUT</a>;
+        return <a href="#about" className="flex text-blue-green p-2 
+            hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer">
+                ABOUT
+            </a>;
     case "Contact":
-        return <a href="#contact" className="flex text-blue-green p-2 hover:text-[#FD8432] hover:scale-105 transition-all">CONTACT</a>;
+        return <a href="#contact" className="flex text-blue-green p-2 
+            hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer">
+                CONTACT
+            </a>;
     case "User":
         return <ProfileDropDownItem label="USER"/>;
   };

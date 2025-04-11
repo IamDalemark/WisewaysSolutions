@@ -20,7 +20,7 @@ const LandingPageSection = ({ heading, title, subtitle, imageSrc, altText, actio
     return (
         <div className="flex-col h-full px-[6%] mb-[20%] lg:mb-[10%]">
 
-            <div className="flex text-4xl md:text-5xl lg:text-6xl font-bold text-center justify-self-center mb-[3%]">
+            <div className="flex text-4xl sm:text-5xl lg:text-6xl font-bold text-center justify-self-center mb-[3%]">
                 {heading}
             </div>
 

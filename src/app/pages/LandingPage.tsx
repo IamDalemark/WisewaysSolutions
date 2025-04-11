@@ -4,7 +4,7 @@ import ContactDetail from "@/components/layout/ContactDetail";
 
 const LandingPage = () => {
     return (
-        <div className="bg-[#E1E1E1] sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300 text-blue-green w-full h-full pt-34 pb-20 static">
+        <div className="bg-[#E1E1E1] sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300 text-blue-green w-full h-full pt-30 lg:pt-48 xl:pt-30 pb-20 static">
             <NavBar/>
             
             {/* intro section */}
@@ -27,7 +27,7 @@ const LandingPage = () => {
                 altText="Services"
                 actionButton={
                     <button className="bg-blue-green text-[#F3F3F3] rounded-lg px-8 py-2
-                    hover:bg-blue-green-dark hover:text-[#BECECE]">
+                    hover:bg-blue-green-dark hover:text-[#BECECE] cursor-pointer">
                         VIEW SERVICES
                     </button>}
             />
@@ -53,7 +53,7 @@ const LandingPage = () => {
             {/* contact details section */}
             <LandingPageSection
                 heading="CONTACT US"
-                title={<p className="text-2xl md:text-4xl"> Feel free to connect with us if you have any questions or concerns </p>}
+                title={<p className="text-2xl md:text-3xl lg:text-4xl"> Feel free to connect with us if you have any questions or concerns </p>}
                 subtitle={
                     <div className="justify-self-center text-lg">
                         <ContactDetail iconName="Phone" description="(63) 000-000-0000"/>
@@ -65,7 +65,7 @@ const LandingPage = () => {
                 altText="Contact Us"
                 actionButton={
                     <button className="inline-block h-5/8 w-48 py-1 mx-[2%] bg-blue-green text-[#F3F3F3] rounded-2xl leading-[1.25] 
-                    hover:bg-blue-green-dark hover:text-[#BECECE]">
+                    hover:bg-blue-green-dark hover:text-[#BECECE] cursor-pointer">
                         <p>SCHEDULE <br /> APPOINTMENT</p>
                     </button>
                 }

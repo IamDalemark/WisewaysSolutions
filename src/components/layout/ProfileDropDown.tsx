@@ -27,7 +27,8 @@ const ProfileDropDown = ({menuItems}: Props) => {
 
             {menuItems.map((item) => {
                 return (
-                    <button key={item.label} className="flex text-sm text-[#0D767A] py-2 leading-[1] text-left hover:text-[#FD8432] hover:scale-105 transition-all">
+                    <button key={item.label} className="flex text-sm text-[#0D767A] py-2 leading-[1] text-left 
+                    hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer">
                         {item.label}
                     </button>
                 );

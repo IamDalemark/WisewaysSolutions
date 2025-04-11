@@ -27,7 +27,7 @@ const NavBar = () => {
 
         <div className="flex w-[30%] md:w-[50%] lg:w-[25%] justify-end">
             <button className="hidden md:inline-block h-5/8 w-[50%] lg:w-[80%] xl:[60%] py-1 mx-2 bg-blue-green text-[#F3F3F3] rounded-2xl leading-[1.25] 
-            hover:bg-blue-green-dark hover:text-[#BECECE] hover:scale-103 transition-all">
+            hover:bg-blue-green-dark hover:text-[#BECECE] hover:scale-103 transition-all cursor-pointer">
             <p>SCHEDULE <br /> APPOINTMENT</p>
             </button>
 
