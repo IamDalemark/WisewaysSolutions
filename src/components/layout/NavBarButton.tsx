@@ -1,5 +1,7 @@
+// the buttons you see to the right of the logo in the navbar
+
 import ServiceDropDownItem from "./ServiceDropDownItem";
-import ProfileDropDownItem from "./ProfileDropDownItem";
+import UserDropDownItem from "./UserDropDownItem";
 
 type Button = "Services" | "About" | "Contact" | "User"
 
@@ -18,7 +20,7 @@ const getNavButtonFromName = (navButtonName: Button) => {
                 CONTACT
             </a>;
     case "User":
-        return <ProfileDropDownItem label="USER"/>;
+        return <UserDropDownItem label="USER"/>;
   };
 };
 

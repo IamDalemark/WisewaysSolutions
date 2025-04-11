@@ -1,3 +1,5 @@
+// component for the details in the contact us section of the landing page
+
 import { Phone, Mail, MapPin } from "lucide-react";
 
 type Icons = "Phone" | "Mail" | "MapPin"

@@ -1,14 +1,15 @@
 "use client";
 
+// the profile button in the navbar
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import ProfileDropDown from "./ProfileDropDown";
+import UserDropDown from "./UserDropDown";
 
 interface Props {
     label: string;
 }
 
-const ProfileDropDownItem = ({ label }: Props) => {
+const UserDropDownItem = ({ label }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -36,9 +37,9 @@ const ProfileDropDownItem = ({ label }: Props) => {
                                 : <ChevronDown color="#086B70" strokeWidth={3}/>}
             </button>
 
-            {isOpen && <ProfileDropDown menuItems={menuItems} />}
+            {isOpen && <UserDropDown menuItems={menuItems} />}
         </div>
     );
 };
 
-export default ProfileDropDownItem;
+export default UserDropDownItem;

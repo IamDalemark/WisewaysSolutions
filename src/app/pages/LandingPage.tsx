@@ -2,9 +2,11 @@ import NavBar from "@/components/layout/NavBar";
 import LandingPageSection from "@/components/page_sections/LandingPageSection";
 import ContactDetail from "@/components/layout/ContactDetail";
 
+//        sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300 
 const LandingPage = () => {
     return (
-        <div className="bg-[#E1E1E1] sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300 text-blue-green w-full h-full pt-30 lg:pt-48 xl:pt-30 pb-20 static">
+        <div className="bg-[#E1E1E1] 
+        text-blue-green w-full h-full pt-32 xl:pt-[8%] pb-20 static">
             <NavBar/>
             
             {/* intro section */}

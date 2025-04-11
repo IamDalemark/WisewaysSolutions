@@ -1,5 +1,7 @@
 "use client";
 
+// the hamburger menu at the right side of the navbar
+
 import { useState, useRef, useEffect } from "react";
 import { Menu } from "lucide-react";
 import NavMenuDropDown from "./NavMenuDropDown";
