@@ -15,7 +15,7 @@ const Testimonial = () => {
     router.push("/");
   };
   return (
-    <div className="bg-gray-white h-[100vh] w-full ">
+    <div className="bg-gray-white min-h-screen w-full ">
       <NavBar />
       {isSubmitted ? (
         <SentTestimonial onSubmit={handleBackToHome} />

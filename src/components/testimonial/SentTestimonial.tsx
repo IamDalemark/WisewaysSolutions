@@ -1,9 +1,6 @@
 "use client";
 import { Button } from "../ui/button";
-
-type SentTestimonialProps = {
-  onSubmit: () => void;
-};
+import { SentTestimonialProps } from "@/types/testimonials.type";
 
 const SentTestimonial = ({ onSubmit }: SentTestimonialProps) => {
   const handleSubmit = () => {
@@ -13,7 +10,7 @@ const SentTestimonial = ({ onSubmit }: SentTestimonialProps) => {
     <div className="justify-self-center w-[50vw] mt-12 rounded-2xl shadow-2xl p-4 bg-white ">
       <div className="grid grid-cols-1 md:grid-cols-3">
         <div className="md:col-span-2">
-          <div className="text-blue-green-dark text-4xl">
+          <div className="text-blue-green-dark text-4xl font-medium">
             Testimonial submitted!
           </div>
           <div className="text-blue-green">
@@ -21,7 +18,7 @@ const SentTestimonial = ({ onSubmit }: SentTestimonialProps) => {
             tenetur voluptates itaque temporibus quasi
           </div>
           <Button
-            className="mt-4 bg-blue-green hover:bg-blue-green-dark mb-3"
+            className="mt-10 bg-blue-green hover:bg-blue-green-dark sm:mb-3"
             onClick={handleSubmit}
           >
             Back to Homepage

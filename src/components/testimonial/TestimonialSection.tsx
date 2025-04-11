@@ -47,7 +47,7 @@ const TestimonialSection = () => {
           <CarouselNext />
         </Carousel>
       </div>
-      <div className=" justify-self-center  self-center">
+      <div className=" justify-self-center self-center">
         <Button
           className="bg-blue-green hover:bg-blue-green-dark"
           onClick={onSubmit}
