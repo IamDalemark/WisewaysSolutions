@@ -53,20 +53,18 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
 
   const handleSubmit = async () => {
     const errors = validate();
-
-    if (Object.keys(errors).length === 0) {
-      const result = await submitTestimonial(formData);
-
-      if (result.success) {
-        onSubmit();
-      } else {
-        setFormErrors({
-          ...formErrors,
-          testimonial: result.error || "Failed to submit. Please try again.",
-        });
-      }
-    } else {
+    if (Object.keys(errors).length > 0) {
       setFormErrors(errors);
+      return;
+    }
+    const result = await submitTestimonial(formData);
+    if (result.success) {
+      onSubmit();
+    } else {
+      setFormErrors({
+        ...formErrors,
+        testimonial: result.error || "Failed to submit. Please try again.",
+      });
     }
   };
 
