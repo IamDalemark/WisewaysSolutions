@@ -5,21 +5,9 @@ import { supabase } from "@/lib/supabaseClient";
 import LandingPage from "./pages/LandingPage";
 
 export default function Page() {
-  const [status, setStatus] = useState("Checking connection...");
-
-  useEffect(() => {
-    const testConnection = async () => {
-      const { error } = await supabase.from("admin").select("*").limit(1);
-      if (error) setStatus("Error connecting to Supabase");
-      else setStatus("Connected to Supabase!");
-    };
-
-    testConnection();
-  }, []);
-
   return (
     <div className="scroll-smooth">
-      <LandingPage/>
+      <LandingPage />
       <h1>{status}</h1>
       this is the landing page
     </div>
