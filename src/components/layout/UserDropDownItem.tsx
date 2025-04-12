@@ -1,29 +1,19 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+// the profile button in the navbar
+import { useState, useEffect, useRef } from "react";
 import { ChevronDown, ChevronUp } from "lucide-react";
-import ServiceDropDown from "./ServiceDropDown";
+import UserDropDown from "./UserDropDown";
 
 interface Props {
     label: string;
 }
 
-const ServiceDropDownItem = ({ label }: Props) => {
+const UserDropDownItem = ({ label }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
-    const menuItems = [
-        { label: "Accounting & Bookkeeping", href: "/services/accountingAndBookkeeping" },
-        { label: "Content Creation", href: "/services/contentCreation" },
-        { label: "Customer Support", href: "/services/customerSupport" },
-        { label: "Data Entry & Processing", href: "/services/dataEntryAndProcessing" },
-        { label: "Digital Marketing", href: "/services/digitalMarketing" },
-        { label: "Graphic & Web Design", href: "/services/graphicAndWebDesign" },
-        { label: "IT Support & Help Desk", href: "/services/itSupportAndHelpDesk" },
-        { label: "Recruitment & HR", href: "/services/recruitmentAndHr" },
-        { label: "Software Development", href: "/services/softwareDevelopment" },
-        { label: "Virtual Assistance", href: "/services/virtualAssistance" }
-    ];
+    const menuItems = [{label: "Change Password"}, {label: "Log Out"}];
     
     useEffect(() => {
             const handleClickOutside = (event: MouseEvent) => {
@@ -31,11 +21,9 @@ const ServiceDropDownItem = ({ label }: Props) => {
                     setIsOpen(false);
                 }
             };
-    
             if (isOpen) {
                 document.addEventListener("mousedown", handleClickOutside);
             }
-    
             return () => {
                 document.removeEventListener("mousedown", handleClickOutside);
             };
@@ -49,9 +37,9 @@ const ServiceDropDownItem = ({ label }: Props) => {
                                 : <ChevronDown color="#086B70" strokeWidth={3}/>}
             </button>
 
-            {isOpen && <ServiceDropDown menuItems={menuItems} />}
+            {isOpen && <UserDropDown menuItems={menuItems} />}
         </div>
     );
 };
 
-export default ServiceDropDownItem;
+export default UserDropDownItem;
