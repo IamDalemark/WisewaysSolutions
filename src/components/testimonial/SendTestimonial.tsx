@@ -43,6 +43,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
   const validate = (): FormErrors => {
     const errors: FormErrors = {};
     if (!formData.name.trim()) errors.name = "Name is required";
+    if (!formData.rating) errors.rating = "Rating is required";
     if (!formData.email.trim()) errors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(formData.email))
       errors.email = "Email is invalid";
@@ -69,7 +70,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
   };
 
   return (
-    <div className="bg-white p-4 md:p-6 w-full md:w-3/4 lg:w-1/2 mx-auto mt-12 rounded-2xl shadow-2xl ">
+    <div className="bg-white p-4 md:p-6 w-full md:w-3/4 lg:w-1/2 mx-auto mt-32 rounded-2xl shadow-2xl ">
       <div className="text-blue-green-dark text-4xl font-medium">
         Send us your Testimonial
       </div>

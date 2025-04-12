@@ -7,7 +7,7 @@ const SentTestimonial = ({ onSubmit }: SentTestimonialProps) => {
     onSubmit();
   };
   return (
-    <div className="justify-self-center w-[50vw] mt-12 rounded-2xl shadow-2xl p-4 bg-white ">
+    <div className="bg-white p-4 md:p-6 w-full md:w-3/4 lg:w-1/2 mx-auto mt-32 rounded-2xl shadow-2xl  ">
       <div className="grid grid-cols-1 md:grid-cols-3">
         <div className="md:col-span-2">
           <div className="text-blue-green-dark text-4xl font-medium">
