@@ -1,71 +1,192 @@
 "use client";
 import { useState } from "react";
+import { useCreateTestimonial } from "@/app/hooks/testimonials/useSubmitTestimonial";
 import { Input } from "@/components/ui/input";
-import { Button } from "../ui/button";
-import { Textarea } from "../ui/textarea";
-import { Star } from "lucide-react";
-
-type SendTestimonialProps = {
-  onSubmit: () => void;
-};
+import { Button } from "@/components/ui/button";
+import { Textarea } from "@/components/ui/textarea";
+import { Star, Loader2 } from "lucide-react";
+import {
+  SendTestimonialProps,
+  TestimonialFormData,
+  FormErrors,
+} from "@/types/testimonials.type";
 
 const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
-  const [rating, setRating] = useState(0);
+  const [formData, setFormData] = useState<TestimonialFormData>({
+    name: "",
+    email: "",
+    rating: 0,
+    testimonial: "",
+  });
 
-  const handleRating = (index: number) => {
-    setRating(index);
+  const [formErrors, setFormErrors] = useState<FormErrors>({});
+  const { submitTestimonial, isSubmitting } = useCreateTestimonial();
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Clear error for the field when user starts typi  ng
+    if (name in formErrors) {
+      setFormErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
-  const handleSubmit = () => {
-    onSubmit();
+  const handleRating = (index: number) => {
+    setFormData((prev) => ({ ...prev, rating: index }));
+    if (formErrors.rating) {
+      setFormErrors((prev) => ({ ...prev, rating: undefined }));
+    }
+  };
+
+  const validate = (): FormErrors => {
+    const errors: FormErrors = {};
+    if (!formData.name.trim()) errors.name = "Name is required";
+    if (!formData.rating) errors.rating = "Rating is required";
+    if (!formData.email.trim()) errors.email = "Email is required";
+    else if (!/\S+@\S+\.\S+/.test(formData.email))
+      errors.email = "Email is invalid";
+    if (!formData.testimonial.trim())
+      errors.testimonial = "Testimonial is required";
+    return errors;
+  };
+
+  const handleSubmit = async () => {
+    const errors = validate();
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      return;
+    }
+    const result = await submitTestimonial(formData);
+    if (result.success) {
+      onSubmit();
+    } else {
+      setFormErrors({
+        ...formErrors,
+        testimonial: result.error || "Failed to submit. Please try again.",
+      });
+    }
   };
 
   return (
-    <div className="bg-white p-4 justify-self-center w-[50vw] mt-5 rounded-2xl shadow-2xl">
-      <div className="text-blue-green-dark text-4xl">
+    <div className="bg-white p-4 md:p-6 w-full md:w-3/4 lg:w-1/2 mx-auto mt-32 rounded-2xl shadow-2xl ">
+      <div className="text-blue-green-dark text-4xl font-medium">
         Send us your Testimonial
       </div>
-      <div className="text-blue-green">
+      <div className="text-blue-green mb-4">
         Share with us your feedback and experience
       </div>
-      <div className="grid md:grid-cols-2 grid-cols-1 gap-x-6 mt-2">
+
+      <div className="grid md:grid-cols-2 grid-cols-1 gap-x-6 gap-y-4">
         <div>
-          <div>
-            <div className="text-blue-green-dark">Name</div>
-            <Input placeholder="Name" />
+          <div className="mb-4">
+            <label htmlFor="name" className="text-blue-green-dark block mb-1">
+              Name
+            </label>
+            <Input
+              id="name"
+              name="name"
+              placeholder="Your name"
+              value={formData.name}
+              onChange={handleChange}
+              aria-required="true"
+              aria-invalid={!!formErrors.name}
+              className={formErrors.name ? "border-red-500" : ""}
+            />
+            {formErrors.name && (
+              <p className="text-red-500 text-sm mt-1">{formErrors.name}</p>
+            )}
           </div>
-          <div className="mt-2">
-            <div className="text-blue-green-dark">Email</div>
-            <Input type="email" placeholder="Email" />
+
+          <div>
+            <label htmlFor="email" className="text-blue-green-dark block mb-1">
+              Email
+            </label>
+            <Input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Your email"
+              value={formData.email}
+              onChange={handleChange}
+              aria-required="true"
+              aria-invalid={!!formErrors.email}
+              className={formErrors.email ? "border-red-500" : ""}
+            />
+            {formErrors.email && (
+              <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>
+            )}
           </div>
         </div>
+
         <div>
-          <div className="text-blue-green-dark">Rate our Services</div>
-          <div className="flex gap-1">
-            {[1, 2, 3, 4, 5].map((index) => (
-              <Star
-                key={index}
-                className={`w-6 h-6 cursor-pointer transition-colors ${
-                  index <= rating
-                    ? "fill-blue-green stroke-blue-green"
-                    : "stroke-gray-400"
-                }`}
-                onClick={() => handleRating(index)}
-              />
-            ))}
+          <div className="mb-4">
+            <div className="text-blue-green-dark mb-1">
+              Rate our Services <span className="text-red-500">*</span>
+            </div>
+            <div className="flex gap-1">
+              {[1, 2, 3, 4, 5].map((index) => (
+                <Star
+                  key={index}
+                  className={`w-6 h-6 cursor-pointer transition-colors ${
+                    index <= formData.rating
+                      ? "fill-blue-green stroke-blue-green"
+                      : "stroke-gray-400"
+                  }`}
+                  onClick={() => handleRating(index)}
+                  role="button"
+                  aria-label={`Rate ${index} star${index > 1 ? "s" : ""}`}
+                />
+              ))}
+            </div>
+            {formErrors.rating && (
+              <p className="text-red-500 text-sm mt-1">{formErrors.rating}</p>
+            )}
           </div>
-          <div className="mt-2">
-            <div className="text-blue-green-dark">Your Testimonial</div>
-            <Textarea className="h-32" />
+
+          <div>
+            <label
+              htmlFor="testimonial"
+              className="text-blue-green-dark block mb-1"
+            >
+              Your Testimonial <span className="text-red-500">*</span>
+            </label>
+            <Textarea
+              id="testimonial"
+              name="testimonial"
+              className={`h-32 ${
+                formErrors.testimonial ? "border-red-500" : ""
+              }`}
+              placeholder="Tell us about your experience..."
+              value={formData.testimonial}
+              onChange={handleChange}
+              aria-required="true"
+              aria-invalid={!!formErrors.testimonial}
+            />
+            {formErrors.testimonial && (
+              <p className="text-red-500 text-sm mt-1">
+                {formErrors.testimonial}
+              </p>
+            )}
           </div>
         </div>
       </div>
-      <div className="justify-self-center mt-2">
+
+      <div className="flex justify-center mt-6">
         <Button
-          className="bg-blue-green hover:bg-blue-green-dark"
+          className="bg-blue-green hover:bg-blue-green-dark px-6"
           onClick={handleSubmit}
+          disabled={isSubmitting}
         >
-          Submit
+          {isSubmitting ? (
+            <>
+              <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              Submitting...
+            </>
+          ) : (
+            "Submit Testimonial"
+          )}
         </Button>
       </div>
     </div>
