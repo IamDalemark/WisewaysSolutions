@@ -17,15 +17,15 @@ const TestimonialSection = () => {
   return (
     <div className="grid grid-rows-6  w-[90vw] justify-self-center p-4 z-0">
       <div className="row-span-2 place-content-center">
-        <div className="justify-self-center text-6xl mt-5 font-medium  leading-[1.1]">
+        <div className="justify-self-center text-4xl sm:text-5xl lg:text-6xl font-bold mt-5 leading-[1.1]">
           What Our Customers Say
         </div>
-        <div className="justify-self-center p-4 ">
+        <div className="justify-self-center p-4 text-md lg:text-xl">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
           eos optio voluptates saepe veritatis vero rerum
         </div>
       </div>
-      <div className="row-span-4 grid mt-4  ">
+      <div className="row-span-4 grid">
         <Carousel
           opts={{
             align: "center",

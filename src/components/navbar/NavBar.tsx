@@ -4,10 +4,10 @@
 
 import React from "react";
 import Image from "next/image";
-import NavMenuDropDownItem from "./NavMenuDropDownItem";
+import NavMenuDropDownItem from "./dropdown/NavMenuDropDownItem";
 import Link from "next/link";
 import NavBarButton from "./NavBarButton";
-import UserDropDownItem from "./UserDropDownItem";
+import UserDropDownItem from "./dropdown/UserDropDownItem";
 
 const NavBar = () => {
     return (

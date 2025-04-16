@@ -1,6 +1,6 @@
 // the buttons you see to the right of the logo in the navbar
 
-import ServiceDropDownItem from "./ServiceDropDownItem";
+import ServiceDropDownItem from "./dropdown/ServiceDropDownItem";
 // import Link from "next/link";
 
 type Button = "Services" | "About" | "Contact"

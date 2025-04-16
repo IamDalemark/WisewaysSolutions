@@ -1,6 +1,6 @@
-import NavBar from "@/components/layout/navbar/NavBar";
-import LandingPageSection from "@/components/page_sections/LandingPageSection";
-import ContactDetail from "@/components/layout/ContactDetail";
+import NavBar from "@/components/navbar/NavBar";
+import LandingPageSection from "@/components/landing/LandingPageSection";
+import ContactDetail from "@/components/landing/ContactDetail";
 import TestimonialSection from "@/components/testimonial/TestimonialSection";
 
 //        sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300

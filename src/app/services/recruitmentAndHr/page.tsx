@@ -1,4 +1,4 @@
-import ServicePage from "@/components/layout/ServicePage";
+import ServicePage from "@/components/services/ServicePage";
 
 const RecruitmentAndHRPage = () => {
   return (
