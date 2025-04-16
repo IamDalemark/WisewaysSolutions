@@ -3,6 +3,7 @@
 import Image from "next/image";
 
 interface LandingPageProps {
+    id: string;
     heading?: string | React.ReactNode;
     title?: string | React.ReactNode;
     titleSize?: string;
@@ -16,9 +17,9 @@ interface LandingPageProps {
 // if you want to pass a class style as a prop make sure to use the quotation format:
 // className={`style1 style2 style3 ${styleprop}`}
 
-const LandingPageSection = ({ heading, title, subtitle, imageSrc, altText, actionButton }: LandingPageProps) => {
+const LandingPageSection = ({ id, heading, title, subtitle, imageSrc, altText, actionButton }: LandingPageProps) => {
     return (
-        <div className="flex-col h-full lg:min-h-screen px-[6%] pb-[15%] lg:pb-[5%]">
+        <div className="flex-col h-full sm:content-center lg:min-h-screen px-[6%] pb-[20%]" id={id}>
 
             <div className="flex text-4xl sm:text-5xl lg:text-6xl font-bold text-center justify-self-center mb-[3%]">
                 {heading}

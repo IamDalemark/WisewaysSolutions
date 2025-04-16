@@ -29,14 +29,10 @@
  
      return (
          <div ref={dropdownRef} className="flex justify-items-end">
-            <div className="flex group h-11 w-20 ml-2 rounded-[2.5rem] hover:scale-105 transition-all"
+            <div className="flex group h-11 w-11 ml-2 rounded-[2.5rem] hover:scale-105 transition-all"
              onClick={() => setIsOpen(!isOpen)}>
                 <div className="h-11 w-11 rounded-full ">
                      <CircleUserRound color="#096c71" strokeWidth={2} size={44} className="m-auto group-hover:stroke-[#FD8432]"/>
-                 </div>
-                 <div className="pl-0.5 py-2.5">
-                     {isOpen ? <ChevronUp color="#086B70" strokeWidth={3} className="group-hover:stroke-[#FD8432]"/> 
-                             : <ChevronDown color="#086B70" strokeWidth={3} className="group-hover:stroke-[#FD8432]"/>}
                  </div>
             </div>
             

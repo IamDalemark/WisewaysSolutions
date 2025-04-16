@@ -15,7 +15,7 @@ const TestimonialSection = () => {
     router.push("/testimonial");
   };
   return (
-    <div className="grid grid-rows-6  w-[90vw] justify-self-center p-4 z-0">
+    <div id="testimonial" className="grid grid-rows-6  w-[90vw] justify-self-center p-4 z-0">
       <div className="row-span-2 place-content-center">
         <div className="justify-self-center text-4xl sm:text-5xl lg:text-6xl font-bold mt-5 leading-[1.1]">
           What Our Customers Say

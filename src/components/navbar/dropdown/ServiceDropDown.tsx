@@ -13,7 +13,7 @@ interface Props {
 
 const ServiceDropDown = ({ menuItems }: Props) => {
     return (
-        <div className="rounded-xl bg-[#f3f3f3] h-38 lg:h-42 w-[80%] sm:w-[75%] lg:w-[30%] py-3 px-4 absolute drop-shadow-xl/30 overflow-auto
+        <div className="rounded-xl bg-[#f3f3f3] h-38 lg:h-42 w-[80%] sm:w-[75%] lg:w-[30%] py-3 px-4 absolute drop-shadow-xl overflow-auto
         left-[10%] sm:left-[14%] lg:left-[30%] top-[20%] lg:top-[120%] justify-self-center">
             {menuItems.map((item) => {
                 return (

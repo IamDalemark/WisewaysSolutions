@@ -43,7 +43,7 @@ const ServiceDropDownItem = ({ label }: Props) => {
 
     return (
         <div ref={dropdownRef}>
-            <button className="flex group text-[#0D767A] p-2 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer"
+            <button className="flex group text-base text-[#0D767A] p-2 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer"
             onClick={() => setIsOpen(!isOpen)}>
                 {label} {isOpen ? <ChevronUp color="#086B70" strokeWidth={3} className="group-hover:stroke-[#FD8432]"/> 
                                 : <ChevronDown color="#086B70" strokeWidth={3} className="group-hover:stroke-[#FD8432]"/>}

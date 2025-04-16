@@ -12,7 +12,7 @@ interface Props {
 
 const UserDropDown = ({menuItems}: Props) => {
     return (
-        <div className="rounded-xl bg-[#f3f3f3] min-h-20 w-50 sm:w-60 mt-10 py-3 px-4 absolute drop-shadow-xl/30 
+        <div className="rounded-xl bg-[#f3f3f3] min-h-20 w-50 sm:w-60 mt-10 py-3 px-4 absolute drop-shadow-xl
         overflow-auto -right-[0%] top-[60%] lg:top-[70%]">
             
             <div className="flex">
