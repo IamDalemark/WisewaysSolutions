@@ -5,15 +5,21 @@ import TestimonialSection from "@/components/testimonial/TestimonialSection";
 
 //        sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
 const LandingPage = () => {
-    return (
-        <div className="bg-[#E1E1E1]
-        text-blue-green w-full h-full pt-32 xl:pt-[8%] pb-20 static">
-            <NavBar/>
-            
-            {/* intro section */}
-            <LandingPageSection
-                title={<p className="text-4xl sm:text-5xl lg:text-6xl">Welcome to WiseWays Solutions!</p>}
-                subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
+  return (
+    <div
+      className="bg-[#E1E1E1] 
+        text-blue-green w-full h-full pt-32 xl:pt-[8%] pb-20 static"
+    >
+      <NavBar />
+
+      {/* intro section */}
+      <LandingPageSection
+        title={
+          <p className="text-4xl sm:text-5xl lg:text-6xl">
+            Welcome to WiseWays Solutions!
+          </p>
+        }
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                           tempor incididunt ut labore et dolore magna aliqua."
         imageSrc="/landing-page1.png"
         altText="Website Landing page"

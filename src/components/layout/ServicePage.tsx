@@ -1,5 +1,5 @@
 import Image from "next/image";
-import NavBar from "@/components/layout/NavBar";
+import NavBar from "@/components/layout/navbar/NavBar";
 
 interface ServicePageProps {
   title: string;

@@ -2,7 +2,6 @@
 
 // the dropdown menu that will popup when you select hamburger menu in the navbar
 import ServiceDropDownItem from "./ServiceDropDownItem";
-import ProfileDropDownItem from "./UserDropDownItem";
 
 type NavMenuItem = {
     label: string;
@@ -20,7 +19,6 @@ const NavMenuDropDown = ({ isOpen }: Props) => {
             ${isOpen ? "opacity-100" : "opacity-0"}`} style={{transition: "transform 0.3s ease, opacity 0.3s ease"}}>
 
                 <ServiceDropDownItem label="SERVICES"/>
-                <ProfileDropDownItem label="USER"/>
                 <a href="#about" className="flex text-blue-green p-2 
                 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer">
                     ABOUT
@@ -29,15 +27,6 @@ const NavMenuDropDown = ({ isOpen }: Props) => {
                 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer">
                     CONTACT
                 </a>
-
-            {/* {navMenuItems.map((item) => {
-                return (
-                    <li key={item.label} className="list-none w-[60%] md:w-[50%] text-center p-3 rounded-2xl
-                    hover:text-[#fd8432] hover:scale-105 transition-all cursor-pointer">
-                        {item.label}
-                    </li>
-                );
-            })} */}
 
             <button className="inline-block md:hidden h-5/8 w-[75%] sm:w-[70%] py-1 bg-blue-green text-[#F3F3F3] rounded-2xl leading-[1.25] 
             hover:bg-blue-green-dark hover:scale-103 transition-all cursor-pointer">
