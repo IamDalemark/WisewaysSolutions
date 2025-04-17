@@ -21,7 +21,7 @@ const LandingPageSection = ({ id, heading, title, subtitle, imageSrc, altText, a
     return (
         <div className="flex-col h-full sm:content-center lg:min-h-screen px-[6%] pb-[20%]" id={id}>
 
-            <div className="flex text-4xl sm:text-5xl lg:text-6xl font-bold text-center justify-self-center mb-[3%]">
+            <div className="flex text-5xl lg:text-6xl font-bold text-center justify-self-center mb-[3%]">
                 {heading}
             </div>
 
@@ -31,7 +31,7 @@ const LandingPageSection = ({ id, heading, title, subtitle, imageSrc, altText, a
                     <div className="text-3xl sm:text-4xl lg:text-5xl text-center font-medium leading-[1.1] pb-4">
                         {title}
                     </div>
-                    <div className="text-md lg:text-xl mb-[8%]">
+                    <div className="text-md text-left lg:text-xl mb-[8%]">
                         {subtitle}
                     </div>
 

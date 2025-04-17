@@ -1,7 +1,7 @@
 "use client";
  
  import { useState, useEffect, useRef } from "react";
- import { ChevronDown, ChevronUp, CircleUserRound } from "lucide-react";
+ import { CircleUserRound } from "lucide-react";
  import UserDropDown from "./UserDropDown";
  
  

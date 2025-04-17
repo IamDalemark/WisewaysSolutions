@@ -1,14 +1,14 @@
 // the buttons you see to the right of the logo in the navbar
 
 import ServiceDropDownItem from "./dropdown/ServiceDropDownItem";
-import React from 'react';
-import {Link} from 'react-scroll';
+import React from "react";
+import {Link} from "react-scroll";
 
 
 type Button = "Services" | "About" | "Contact" | "Testimonial"
 
 const getNavButtonFromName = (navButtonName: Button) => {
-    const baseClass = "flex text-base text-blue-green p-2 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer";
+    const baseClass = "flex text-xl lg:text-base text-blue-green p-2 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer";
     
     switch (navButtonName) {
         case "Services":
