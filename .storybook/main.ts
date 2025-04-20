@@ -1,24 +1,18 @@
 import type { StorybookConfig } from "@storybook/nextjs";
 
 const config: StorybookConfig = {
-  stories: [
-    "../app/**/*.stories.@(js|jsx|ts|tsx)",
-    "../components/**/*.stories.@(js|jsx|ts|tsx)",
-  ],
+  stories: ["../src/**/*.mdx", "../src/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
-    "@storybook/addon-links",
     "@storybook/addon-essentials",
-    "@storybook/addon-interactions",
-    "@storybook/addon-a11y",
+    "@storybook/addon-onboarding",
+    "@chromatic-com/storybook",
+    "@storybook/experimental-addon-test",
   ],
   framework: {
     name: "@storybook/nextjs",
     options: {},
   },
-  docs: {
-    autodocs: "tag",
-  },
-  // This ensures paths with @ alias work correctly
+  staticDirs: ["..\\public"],
   webpackFinal: async (config) => {
     if (config.resolve) {
       config.resolve.alias = {
@@ -29,5 +23,4 @@ const config: StorybookConfig = {
     return config;
   },
 };
-
 export default config;
