@@ -1,48 +1,22 @@
 // the buttons you see to the right of the logo in the navbar
 
 import ServiceDropDownItem from "./dropdown/ServiceDropDownItem";
+import NonDropDownButton from "./NonDropDownButton";
 import React from "react";
-import {Link} from "react-scroll";
 
 
 type Button = "Services" | "About" | "Contact" | "Testimonial"
 
 const getNavButtonFromName = (navButtonName: Button) => {
-    const baseClass = "flex text-xl lg:text-base text-blue-green p-2 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer";
-    
     switch (navButtonName) {
         case "Services":
             return <ServiceDropDownItem label="SERVICES"/>;
         case "About":
-            return <Link 
-                to="about"
-                spy={true}
-                smooth={true} 
-                offset={-120} 
-                duration={600}
-                className={baseClass}>
-                    ABOUT
-                </Link>;
+            return <NonDropDownButton section="about" offset={-120} label="ABOUT"/>;
         case "Contact":
-            return <Link 
-            to="contact" 
-            spy={true} 
-            smooth={true} 
-            offset={-120} 
-            duration={600}
-            className={baseClass}>
-                CONTACT
-            </Link>;
+            return <NonDropDownButton section="contact" offset={-120} label="CONTACT"/>;
         case "Testimonial":
-            return <Link 
-            to="testimonial" 
-            spy={true} 
-            smooth={true} 
-            offset={-75} 
-            duration={600}
-            className={baseClass}>
-                TESTIMONIAL
-            </Link>;
+            return <NonDropDownButton section="testimonial" offset={-75} label="TESTIMONIAL"/>;
   };
 };
 
