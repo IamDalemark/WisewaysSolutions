@@ -1,7 +1,7 @@
 import NavBar from "@/components/layout/NavBar";
 import LandingPageSection from "@/components/page_sections/LandingPageSection";
 import ContactDetail from "@/components/layout/ContactDetail";
-import TestimonialSection from "@/components/testimonial/TestimonialSection";
+import TestimonialSection from "@/components/page_sections/TestimonialSection";
 
 //        sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
 const LandingPage = () => {
