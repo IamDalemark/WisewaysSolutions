@@ -19,13 +19,13 @@ interface LandingPageProps {
 
 const LandingPageSection = ({ id, heading, title, subtitle, imageSrc, altText, actionButton }: LandingPageProps) => {
     return (
-        <div className="flex-col h-full sm:content-center lg:min-h-screen px-[6%] pb-[20%]" id={id}>
+        <div className="flex-col h-full sm:content-center lg:max-h-screen mx-[6%] pb-[20%]" id={id}>
 
             <div className="flex text-5xl lg:text-6xl font-bold text-center justify-self-center mb-[3%]">
                 {heading}
             </div>
 
-            <div className="md:flex pt-4">
+            <div className="md:flex pt-4 items-center">
 
                 <div className="sm:w-[100%] md:w-[50%] text-wrap px-4 content-center">
                     <div className="text-3xl sm:text-4xl lg:text-5xl text-center font-medium leading-[1.1] pb-4">

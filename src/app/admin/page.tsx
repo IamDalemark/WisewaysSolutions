@@ -1,4 +1,4 @@
-import AdminLogin from "@/components/layout/AdminLogin";
+import AdminLogin from "@/components/auth/admin/AdminLogin";
 
 const admin = () => {
   return (
