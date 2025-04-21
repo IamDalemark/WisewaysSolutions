@@ -7,7 +7,11 @@ interface UserSignupModalProps {
   onOpenLogIn: () => void;
 }
 
-function UserSignUpModal({ show, onClose, onOpenLogIn }: UserSignupModalProps) {
+const UserSignUpModal = ({
+  show,
+  onClose,
+  onOpenLogIn,
+}: UserSignupModalProps) => {
   const [showPassword, setShowPassword] = useState(false);
 
   if (!show) return null;
@@ -112,6 +116,6 @@ function UserSignUpModal({ show, onClose, onOpenLogIn }: UserSignupModalProps) {
       </div>
     </div>
   );
-}
+};
 
 export default UserSignUpModal;

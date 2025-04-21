@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import NavBar from "@/components/layout/NavBar";
 import DateAndTimeSelection from "@/components/booking/BookingDateAndTimeSelection";
 import EnterDetails from "@/components/booking/BookingEnterDetails";
@@ -11,6 +11,24 @@ const BookingPage = () => {
   const [isSchedulingBooking, setIsSchedulingBooking] = useState(false);
   const [currentStep, setCurrentStep] = useState(1);
   const [bookingData, setBookingData] = useState({});
+  const [userCountry, setUserCountry] = useState("");
+
+  const getUserCountryFromLocale = (): string => {
+    try {
+      const locale = Intl.DateTimeFormat().resolvedOptions().locale;
+      const region = locale.split("-")[1];
+      if (!region) return "";
+      const regionName = new Intl.DisplayNames([locale], { type: "region" });
+      return regionName.of(region) || "";
+    } catch {
+      return "";
+    }
+  };
+
+  useEffect(() => {
+    const country = getUserCountryFromLocale();
+    setUserCountry(country);
+  }, []);
 
   const nextStep = (data: BookingDateTime) => {
     setBookingData({ ...bookingData, ...data });
@@ -25,17 +43,23 @@ const BookingPage = () => {
     setBookingData({ ...bookingData, ...finalData });
     console.log("Booking confirmed with data:", bookingData);
     setHasBooking(true);
+    setIsSchedulingBooking(false);
   };
 
   const renderBookingProcess = () => {
     switch (currentStep) {
       case 1:
         return (
-          <DateAndTimeSelection onNext={nextStep} initialData={bookingData} />
+          <DateAndTimeSelection
+            userCountry={userCountry}
+            onNext={nextStep}
+            initialData={bookingData}
+          />
         );
       case 2:
         return (
           <EnterDetails
+            userCountry={userCountry}
             onSubmit={handleBookingConfirmation}
             onPrevious={previousStep}
             initialData={bookingData}
