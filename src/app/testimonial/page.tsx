@@ -12,10 +12,10 @@ const Testimonial = () => {
   };
 
   const handleBackToHome = () => {
-    router.push("/");
+    router.back();
   };
   return (
-    <div className="bg-gray-white h-screen w-full   ">
+    <div className="bg-gray-white h-screen w-full overflow-auto  ">
       <NavBar />
       {isSubmitted ? (
         <SentTestimonial onSubmit={handleBackToHome} />

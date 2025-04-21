@@ -1,7 +1,7 @@
-import NavBar from "@/components/navbar/NavBar";
-import LandingPageSection from "@/components/landing/LandingPageSection";
-import ContactDetail from "@/components/landing/ContactDetail";
-import TestimonialSection from "@/components/testimonial/TestimonialSection";
+import NavBar from "@/components/layout/NavBar";
+import LandingPageSection from "@/components/page_sections/LandingPageSection";
+import ContactDetail from "@/components/layout/ContactDetail";
+import TestimonialSection from "@/components/page_sections/TestimonialSection";
 
 const LandingPage = () => {
   return (

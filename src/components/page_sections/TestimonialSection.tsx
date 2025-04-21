@@ -1,5 +1,5 @@
 import { Button } from "../ui/button";
-import Testimonial from "./Testimonial";
+import Testimonial from "../testimonial/Testimonial";
 import { testimonialSample } from "@/mockData/testimonial.sample";
 import {
   Carousel,
@@ -17,10 +17,10 @@ const TestimonialSection = () => {
   return (
     <div id="testimonial" className="grid grid-rows-6  w-[90vw] justify-self-center p-4 z-0">
       <div className="row-span-2 place-content-center">
-        <div className="justify-self-center text-4xl sm:text-5xl lg:text-6xl font-bold mt-5 leading-[1.1]">
+        <div className="justify-self-center text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
           What Our Customers Say
         </div>
-        <div className="justify-self-center p-4 text-md lg:text-xl">
+        <div className="justify-self-center text-md lg:text-xl  p-4 ">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus
           eos optio voluptates saepe veritatis vero rerum
         </div>
