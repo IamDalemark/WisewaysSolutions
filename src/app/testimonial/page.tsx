@@ -3,7 +3,7 @@ import { useState } from "react";
 import SendTestimonial from "../../components/testimonial/SendTestimonial";
 import SentTestimonial from "@/components/testimonial/SentTestimonial";
 import { useRouter } from "next/navigation";
-import NavBar from "@/components/layout/NavBar";
+import NavBar from "@/components/navbar/NavBar";
 const Testimonial = () => {
   const router = useRouter();
   const [isSubmitted, setIsSubmitted] = useState(false);
@@ -12,10 +12,10 @@ const Testimonial = () => {
   };
 
   const handleBackToHome = () => {
-    router.push("/");
+    router.back();
   };
   return (
-    <div className="bg-gray-white h-screen w-full   ">
+    <div className="bg-gray-white h-screen w-full overflow-auto  ">
       <NavBar />
       {isSubmitted ? (
         <SentTestimonial onSubmit={handleBackToHome} />

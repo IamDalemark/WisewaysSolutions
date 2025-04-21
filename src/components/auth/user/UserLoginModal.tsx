@@ -5,10 +5,20 @@ interface UserLoginModalProps {
   show: boolean;
   onClose: () => void;
   onOpenSignUp: () => void;
+  onLogin: () => void;
 }
 
-function UserLoginModal({ show, onClose, onOpenSignUp }: UserLoginModalProps) {
+function UserLoginModal({
+  show,
+  onClose,
+  onOpenSignUp,
+  onLogin,
+}: UserLoginModalProps) {
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleOnLogin = () => {
+    onLogin();
+  };
 
   if (!show) return null;
 
@@ -63,6 +73,7 @@ function UserLoginModal({ show, onClose, onOpenSignUp }: UserLoginModalProps) {
           <button
             type="submit"
             className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition"
+            onClick={() => handleOnLogin()}
           >
             Log in
           </button>

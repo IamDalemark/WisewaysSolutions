@@ -20,12 +20,10 @@ export default function AdminLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${inter.className} ${interTight.className} antialiased`}
-      >
-        {children}
-      </body>
-    </html>
+    <section
+      className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}
+    >
+      {children}
+    </section>
   );
 }
