@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
-import AdminSidebar from "@/components/layout/AdminSidebar";
+import AdminSidebar from "@/components/admin/AdminSidebar";
 import "@/app/globals.css";
 import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 

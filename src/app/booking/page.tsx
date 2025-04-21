@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import NavBar from "@/components/layout/NavBar";
+import NavBar from "@/components/navbar/NavBar";
 import DateAndTimeSelection from "@/components/booking/BookingDateAndTimeSelection";
 import EnterDetails from "@/components/booking/BookingEnterDetails";
 import BookingLandingContent from "@/components/booking/BookingLandingContent";
