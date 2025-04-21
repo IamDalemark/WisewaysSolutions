@@ -8,20 +8,21 @@ interface ServicePageProps {
   altText: string;
 }
 
-const ServicePage = ({ title, subtitle, imageSrc, altText }: ServicePageProps) => {
+const ServicePage = ({
+  title,
+  subtitle,
+  imageSrc,
+  altText,
+}: ServicePageProps) => {
   return (
     <div className="bg-[#E1E1E1]">
       <NavBar />
 
-      <main className="text-blue-green min-h-screen pt-24 px-6 md:px-16">
-        <section className="flex flex-col md:flex-row items-center justify-between gap-8 max-w-7xl mx-auto">
+      <main className="text-blue-green min-h-screen pt-24 px-6 md:px-16 ">
+        <section className="flex flex-col md:flex-row items-center justify-between gap-8 max-w-7xl mx-auto mt-10">
           <div className="flex-1 text-center md:text-left">
-            <h1 className="text-4xl md:text-5xl font-bold mb-4">
-              {title}
-            </h1>
-            <p className="text-lg md:text-xl">
-              {subtitle}
-            </p>
+            <h1 className="text-4xl md:text-5xl font-bold mb-4">{title}</h1>
+            <p className="text-lg md:text-xl">{subtitle}</p>
           </div>
 
           <div className="flex-1">
