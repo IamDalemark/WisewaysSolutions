@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import SendTestimonial from "../../components/testimonial/SendTestimonial";
+import SendTestimonial from "../../components/testimonial/TestimonialForm";
 import SentTestimonial from "@/components/testimonial/SentTestimonial";
 import { useRouter } from "next/navigation";
 import NavBar from "@/components/navbar/NavBar";

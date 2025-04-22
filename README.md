@@ -38,3 +38,7 @@ npm run storybook
 ```
 
 ### jest
+
+```bash
+npm run test
+```
