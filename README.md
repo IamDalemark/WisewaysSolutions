@@ -39,6 +39,8 @@ npm run storybook
 
 ### jest
 
+run development server on Port: 3000
+
 ```bash
 npm run test
 ```

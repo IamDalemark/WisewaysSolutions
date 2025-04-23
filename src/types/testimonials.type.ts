@@ -3,6 +3,7 @@ export type TestimonialFormProps = {
 };
 export type SentTestimonialProps = {
   onSubmit: () => void;
+  description: string;
 };
 export type TestimonialProps = {
   testimonial: string;
