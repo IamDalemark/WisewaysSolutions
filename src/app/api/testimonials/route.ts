@@ -3,6 +3,7 @@ import { supabase } from "@/lib/supabaseClient";
 
 export const POST = async (request: Request) => {
   try {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     const { name, email, rating, testimonial } = await request.json();
 
     if (!name || !email || !rating || !testimonial) {
@@ -12,19 +13,21 @@ export const POST = async (request: Request) => {
       );
     }
 
+    if (!emailRegex.test(email)) {
+      return NextResponse.json(
+        { error: "Invalid email format" },
+        { status: 400 }
+      );
+    }
+
     const { data, error } = await supabase
       .from("testimonial")
-      .insert([
-        { name, email, rating, testimonial }
-      ])
+      .insert([{ name, email, rating, testimonial }])
       .select();
 
     if (error) {
       console.error("Supabase error:", error);
-      return NextResponse.json(
-        { error: error },
-        { status: 500 }
-      );
+      return NextResponse.json({ error: error }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, data }, { status: 201 });
