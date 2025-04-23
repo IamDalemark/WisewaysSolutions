@@ -115,19 +115,6 @@ export const ValidationError: Story = {
       delay: 100,
     });
   },
-  parameters: {
-    msw: {
-      handlers: [
-        http.post("/api/testimonials", () => {
-          // Simulate a validation error
-          return HttpResponse.json(
-            { error: "Missing required fields" },
-            { status: 400 }
-          );
-        }),
-      ],
-    },
-  },
 };
 
 export const LongInputValues: Story = {
