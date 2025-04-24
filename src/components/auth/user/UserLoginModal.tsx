@@ -1,21 +1,22 @@
-import { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
-
 interface UserLoginModalProps {
   show: boolean;
   onClose: () => void;
   onOpenSignUp: () => void;
   onLogin: () => void;
+  username?: string;
+  password?: string;
+  showPassword?: boolean;
 }
 
-function UserLoginModal({
+const UserLoginModal = ({
   show,
   onClose,
   onOpenSignUp,
   onLogin,
-}: UserLoginModalProps) {
-  const [showPassword, setShowPassword] = useState(false);
-
+  username,
+  password,
+  showPassword,
+}: UserLoginModalProps) => {
   const handleOnLogin = () => {
     onLogin();
   };
@@ -43,6 +44,7 @@ function UserLoginModal({
               type="text"
               className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
               placeholder="Enter username"
+              value={username}
             />
           </div>
           <div>
@@ -52,16 +54,18 @@ function UserLoginModal({
             <div className="relative">
               <input
                 type={showPassword ? "text" : "password"}
-                className="w-full border border-gray-400 rounded-md px-4 py-2 pr-10 outline-none focus:ring-2 focus:ring-teal-300"
+                className="w-full border border-gray-400 rounded-md px-4 py-2 pr-2 outline-none focus:ring-2 focus:ring-teal-300"
                 placeholder="Enter password"
+                value={password}
               />
-              <button
+              {/* <button
                 type="button"
                 className="absolute top-1/2 right-3 -translate-y-1/2 text-gray-500"
                 onClick={() => setShowPassword(!showPassword)}
-              >
-                {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
-              </button>
+              > */}
+              {/* Custom Eye */}
+              {/* {showPassword ? <EyeOff size={20} /> : <Eye size={20} />} */}
+              {/* </button> */}
             </div>
           </div>
           <div className="flex items-center space-x-2">
@@ -96,6 +100,6 @@ function UserLoginModal({
       </div>
     </div>
   );
-}
+};
 
 export default UserLoginModal;

@@ -1,6 +1,9 @@
+import { Globe } from "lucide-react";
 import React from "react";
 
 interface TimePickerProps {
+  userCountry: string;
+  selectedDate: Date;
   selectedTime: string;
   onTimeSelect: (time: string) => void;
   onNext: () => void;
@@ -16,6 +19,8 @@ const timeSlots = [
 ];
 
 const TimePicker = ({
+  userCountry,
+  selectedDate,
   selectedTime,
   onTimeSelect,
   onNext,
@@ -32,18 +37,26 @@ const TimePicker = ({
       </div>
 
       {/* Date and Time Info */}
-      <div className="mb-4 text-sm text-gray-600">
+      <div className="mb-4 text-sm text-gray-600 w-full">
         <div>
-          <span className="font-semibold text-teal-700">Thursday</span>: March
-          13, 2025
+          <span className="font-semibold text-teal-700">Selected Date</span>:{" "}
+          {selectedDate.toDateString()}
         </div>
         <div>
-          <span className="font-semibold text-teal-700">Time</span>: 9:37 am{" "}
-          <span className="underline text-teal-500">Philippine Time</span> ▼
+          <span className="font-semibold text-teal-700">Time</span>:{" "}
+          {selectedTime || "No Time Selected"}
+          {"   "}
         </div>
-        <div>
-          <span className="font-semibold text-teal-700">Duration</span>: 30
-          mins.
+        <div className="flex items-center gap-2 text-teal-500">
+          <Globe size={18} />
+          <span className="underline">
+            {userCountry || "Local Time"} Local Time
+          </span>{" "}
+        </div>
+        <div className="pt-3 pb-1 flex items-center justify-center w-full">
+          <span className="font-semibold text-teal-700 text-center">
+            Duration: 30 mins.
+          </span>
         </div>
       </div>
 

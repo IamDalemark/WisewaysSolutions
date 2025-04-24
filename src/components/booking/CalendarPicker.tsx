@@ -8,6 +8,7 @@ import {
   addMonths,
   isSameDay,
   isToday,
+  isBefore,
   getDay,
 } from "date-fns";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/outline";
@@ -43,6 +44,7 @@ const CalendarPicker = ({
   const daysOfWeek = ["SUN", "MON", "TUE", "WED", "THU", "FRI", "SAT"];
   const startDayOffset = getDay(startDate);
   const daysInMonth = [];
+  const today = new Date();
 
   for (let i = 0; i < startDayOffset; i++) {
     daysInMonth.push(null);
@@ -88,19 +90,28 @@ const CalendarPicker = ({
       <div className="grid grid-cols-7 gap-2 flex-grow">
         {daysInMonth.map((day, index) =>
           day ? (
-            <button
-              key={index}
-              onClick={() => handleDateClick(day)}
-              className={`w-10 h-10 rounded-full text-sm flex items-center justify-center transition ${
-                isSameDay(day, selectedDate || new Date())
-                  ? "bg-teal-500 text-white font-semibold"
-                  : isToday(day)
-                  ? "text-teal-500"
-                  : "text-gray-700"
-              } hover:bg-teal-100`}
-            >
-              {format(day, "d")}
-            </button>
+            isBefore(day, today) && !isToday(day) ? (
+              <div
+                key={`previous-${index}`}
+                className="w-10 h-10 rounded-full text-sm flex items-center justify-center transition bg-gray-100 text-black"
+              >
+                {format(day, "d")}
+              </div>
+            ) : (
+              <button
+                key={index}
+                onClick={() => handleDateClick(day)}
+                className={`w-10 h-10 rounded-full text-sm flex items-center justify-center transition ${
+                  isSameDay(day, selectedDate || new Date())
+                    ? "bg-teal-600 text-white font-semibold"
+                    : isToday(day)
+                    ? "text-teal-500"
+                    : "text-gray-700"
+                } hover:bg-teal-100`}
+              >
+                {format(day, "d")}
+              </button>
+            )
           ) : (
             <div key={`empty-${index}`} />
           )

@@ -3,31 +3,34 @@ import { supabase } from "@/lib/supabaseClient";
 
 export const POST = async (request: Request) => {
   try {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const { name, email, rating, testimonial } = await request.json();
+    const { name, email, service, date, time } = await request.json();
 
-    if (!name || !email || !rating || !testimonial) {
+    if (!name || !email || !service || !date || !time) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    if (!emailRegex.test(email)) {
-      return NextResponse.json(
-        { error: "Invalid email format" },
-        { status: 400 }
-      );
-    }
+    // Ensure the date is stored as an ISO string (for compatibility)
+    const isoDate = new Date(date).toISOString();
 
     const { data, error } = await supabase
-      .from("testimonial")
-      .insert([{ name, email, rating, testimonial }])
+      .from("booking")
+      .insert([
+        {
+          name,
+          email,
+          service,
+          date: isoDate,
+          time,
+        },
+      ])
       .select();
 
     if (error) {
       console.error("Supabase error:", error);
-      return NextResponse.json({ error: error }, { status: 500 });
+      return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
     return NextResponse.json({ success: true, data }, { status: 201 });
