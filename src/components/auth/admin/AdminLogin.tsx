@@ -4,10 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 
 const AdminLogin = () => {
-  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -19,9 +17,6 @@ const AdminLogin = () => {
     if (email === "admin@example.com" && password === "correctpassword") {
       setIsSuccess(true);
       setLoginMessage("Login successful");
-      setTimeout(() => {
-        router.push("/admin/appointments");
-      }, 1000);
     } else {
       setIsSuccess(false);
       setLoginMessage("Invalid credentials. Please try again.");
