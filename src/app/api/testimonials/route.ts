@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
-
+// import sendEmailToAdmin from "@/emails/sendEmailToAdmin";
 export const POST = async (request: Request) => {
   try {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -29,6 +29,8 @@ export const POST = async (request: Request) => {
       console.error("Supabase error:", error);
       return NextResponse.json({ error: error }, { status: 500 });
     }
+
+    // sendEmailToAdmin({ name, testimonial, rating, email });
 
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {
