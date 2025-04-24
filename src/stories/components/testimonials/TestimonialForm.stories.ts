@@ -96,7 +96,7 @@ export const SubmissionError: Story = {
         http.post("/api/testimonials", () => {
           // Simulate a server error
           return HttpResponse.json(
-            { error: "Database connection error" },
+            { error: "Something went wrong" },
             { status: 500 }
           );
         }),
