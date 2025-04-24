@@ -1,8 +1,9 @@
-export type SendTestimonialProps = {
+export type TestimonialFormProps = {
   onSubmit: () => void;
 };
 export type SentTestimonialProps = {
   onSubmit: () => void;
+  description: string;
 };
 export type TestimonialProps = {
   testimonial: string;
@@ -27,4 +28,4 @@ export type FormErrors = {
 export type SubmitTestimonialResult = {
   success: boolean;
   error?: string;
-}
+};
