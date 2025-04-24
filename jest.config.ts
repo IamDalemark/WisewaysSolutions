@@ -2,11 +2,17 @@
  * For a detailed explanation regarding each configuration property, visit:
  * https://jestjs.io/docs/configuration
  */
-
+import nextJest from "next/jest.js";
 import type { Config } from "jest";
+
+const createJestConfig = nextJest({
+  // Provide the path to your Next.js app to load next.config.js and .env files in your test environment
+  dir: "./",
+});
 
 const config: Config = {
   testTimeout: 30000,
+
   // All imported modules in your tests should be mocked automatically
   // automock: false,
 
@@ -87,7 +93,7 @@ const config: Config = {
     "ts",
     "tsx",
     "json",
-    "node"
+    "node",
   ],
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
@@ -162,9 +168,7 @@ const config: Config = {
   // ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
-  testPathIgnorePatterns: [
-    "\\\\node_modules\\\\"
-  ],
+  testPathIgnorePatterns: ["\\\\node_modules\\\\"],
 
   // The regexp pattern or array of patterns that Jest uses to detect test files
   // testRegex: [],
@@ -197,4 +201,4 @@ const config: Config = {
   // watchman: true,
 };
 
-export default config;
+export default createJestConfig(config);
