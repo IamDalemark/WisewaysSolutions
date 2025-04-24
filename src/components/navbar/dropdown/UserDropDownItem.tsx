@@ -2,14 +2,17 @@
  
  import { useState, useEffect, useRef } from "react";
  import { CircleUserRound } from "lucide-react";
- import UserDropDown from "./UserDropDown";
+//  import UserDropDown from "./UserDropDown";
+ import NonLogUserDropDown from "./UserDropDown";
  
  
  const UserDropDownItem = () => {
      const [isOpen, setIsOpen] = useState(false);
      const dropdownRef = useRef<HTMLDivElement>(null);
  
-     const menuItems = [{label: "Change Password"}, {label: "Log Out"}];
+    //  const menuItems = [{label: "Change Password"}, {label: "Log Out"}];
+     const nonLoggedItems = [{label: "Log In", href: "/auth/user/UserLoginModal"}, 
+        {label: "Sign Up", href: "/auth/user/UserSignUpModal"}];
  
      useEffect(() => {
              const handleClickOutside = (event: MouseEvent) => {
@@ -36,14 +39,8 @@
                  </div>
             </div>
             
-            {isOpen && <UserDropDown menuItems={menuItems}/>}
-             {/* <button className="flex text-[#0D767A] p-2 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer"
-             onClick={() => setIsOpen(!isOpen)}>
-                 {label} {isOpen ? <ChevronUp color="#086B70" strokeWidth={3}/> 
-                                 : <ChevronDown color="#086B70" strokeWidth={3}/>}
-             </button>
- 
-             {isOpen && <UserDropDown menuItems={menuItems} />} */}
+            {isOpen && <NonLogUserDropDown menuItems={nonLoggedItems}/>}
+            {/* {isOpen && <UserDropDown menuItems={menuItems}/>} */}
          </div>
      );
  };
