@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import NavBar from "@/components/navbar/NavBar";
 import DateAndTimeSelection from "@/components/booking/BookingDateAndTimeSelection";
 import EnterDetails from "@/components/booking/BookingEnterDetails";
 import BookingLandingContent from "@/components/booking/BookingLandingContent";
@@ -48,7 +47,6 @@ const BookingPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#E1E1E1]">
-      <NavBar />
       <div className="mt-20 w-full max-w-6xl">
         {isSchedulingBooking ? (
           renderBookingProcess()
