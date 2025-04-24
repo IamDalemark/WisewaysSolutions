@@ -6,12 +6,12 @@ import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Star, Loader2 } from "lucide-react";
 import {
-  SendTestimonialProps,
+  TestimonialFormProps,
   TestimonialFormData,
   FormErrors,
 } from "@/types/testimonials.type";
 
-const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
+const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
   const [formData, setFormData] = useState<TestimonialFormData>({
     name: "",
     email: "",
@@ -72,7 +72,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
   return (
     <div className="bg-white p-4 md:p-6 w-full md:w-3/4 lg:w-1/2 mx-auto mt-32 rounded-2xl shadow-2xl ">
       <div className="text-blue-green-dark text-4xl font-medium">
-        Send us your Testimonial
+        Form us your Testimonial
       </div>
       <div className="text-blue-green mb-4">
         Share with us your feedback and experience
@@ -87,6 +87,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
             <Input
               id="name"
               name="name"
+              data-testid="form-name"
               placeholder="Your name"
               value={formData.name}
               onChange={handleChange}
@@ -107,6 +108,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
               id="email"
               name="email"
               type="email"
+              data-testid="form-email"
               placeholder="Your email"
               value={formData.email}
               onChange={handleChange}
@@ -135,6 +137,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
                       : "stroke-gray-400"
                   }`}
                   onClick={() => handleRating(index)}
+                  data-testid={"form-rating-" + index.toString()}
                   role="button"
                   aria-label={`Rate ${index} star${index > 1 ? "s" : ""}`}
                 />
@@ -155,6 +158,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
             <Textarea
               id="testimonial"
               name="testimonial"
+              data-testid="form-testimonial"
               className={`h-32 ${
                 formErrors.testimonial ? "border-red-500" : ""
               }`}
@@ -178,6 +182,7 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
           className="bg-blue-green hover:bg-blue-green-dark px-6"
           onClick={handleSubmit}
           disabled={isSubmitting}
+          data-testid="form-button"
         >
           {isSubmitting ? (
             <>
@@ -193,4 +198,4 @@ const SendTestimonial = ({ onSubmit }: SendTestimonialProps) => {
   );
 };
 
-export default SendTestimonial;
+export default TestimonialForm;
