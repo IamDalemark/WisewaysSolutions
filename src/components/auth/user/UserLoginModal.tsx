@@ -3,6 +3,9 @@ interface UserLoginModalProps {
   onClose: () => void;
   onOpenSignUp: () => void;
   onLogin: () => void;
+  username?: string;
+  password?: string;
+  showPassword?: boolean;
 }
 
 const UserLoginModal = ({
@@ -10,6 +13,9 @@ const UserLoginModal = ({
   onClose,
   onOpenSignUp,
   onLogin,
+  username,
+  password,
+  showPassword,
 }: UserLoginModalProps) => {
   const handleOnLogin = () => {
     onLogin();
@@ -38,6 +44,7 @@ const UserLoginModal = ({
               type="text"
               className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
               placeholder="Enter username"
+              value={username}
             />
           </div>
           <div>
@@ -46,9 +53,10 @@ const UserLoginModal = ({
             </label>
             <div className="relative">
               <input
-                type={"password"}
+                type={showPassword ? "text" : "password"}
                 className="w-full border border-gray-400 rounded-md px-4 py-2 pr-2 outline-none focus:ring-2 focus:ring-teal-300"
                 placeholder="Enter password"
+                value={password}
               />
               {/* <button
                 type="button"
