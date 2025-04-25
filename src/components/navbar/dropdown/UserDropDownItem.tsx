@@ -5,9 +5,12 @@
 //  import UserDropDown from "./UserDropDown";
  import NonLogUserDropDown from "./UserDropDown";
  
+ interface Props {
+    initialOpen: boolean;
+}
  
- const UserDropDownItem = () => {
-     const [isOpen, setIsOpen] = useState(false);
+ const UserDropDownItem = ({initialOpen = false }: Props) => {
+     const [isOpen, setIsOpen] = useState(initialOpen);
      const dropdownRef = useRef<HTMLDivElement>(null);
  
     //  const menuItems = [{label: "Change Password"}, {label: "Log Out"}];

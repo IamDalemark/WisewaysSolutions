@@ -6,7 +6,7 @@ import LandingPageSection from "@/components/landing/LandingPageSection";
 
 
 const meta: Meta<typeof LandingPageSection> = {
-  title: "Components/LandingPageSection",
+  title: "Components/LandingPage/LandingPageSection",
   component: LandingPageSection,
   tags: ["autodocs"],
   args: {
