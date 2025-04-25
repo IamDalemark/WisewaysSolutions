@@ -1,4 +1,4 @@
-import NavBar from "@/components/navbar/NavBar";
+
 import LandingPageSection from "@/components/landing/LandingPageSection";
 import ContactDetail from "@/components/landing/ContactDetail";
 import TestimonialSection from "@/components/page_sections/TestimonialSection";
@@ -6,10 +6,9 @@ import TestimonialSection from "@/components/page_sections/TestimonialSection";
 const LandingPage = () => {
   return (
     //    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
-    <div className="bg-[#E1E1E1]
+    <div className="bg-[#ca6e6e]
     text-blue-green w-full h-full pt-32 lg:pt-24 static">
-      <NavBar/>
-            
+  
       {/* intro section */}
       <LandingPageSection
         id="intro"
