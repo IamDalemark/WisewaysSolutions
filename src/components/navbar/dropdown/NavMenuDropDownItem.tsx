@@ -6,11 +6,13 @@ import { useState, useRef, useEffect } from "react";
 import { Menu } from "lucide-react";
 import NavMenuDropDown from "./NavMenuDropDown";
 
-const NavMenuDropDownItem = () => {
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const dropdownRef = useRef<HTMLDivElement>(null);
+interface Props {
+    initialOpen: boolean;
+}
 
-    const navMenuItems = [{ label: "SERVICES" }, { label: "ABOUT" }, { label: "CONTACT" }, { label: "USER" }];
+const NavMenuDropDownItem = ({initialOpen = false }: Props) => {
+    const [isMenuOpen, setIsMenuOpen] = useState(initialOpen);
+    const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -32,7 +34,7 @@ const NavMenuDropDownItem = () => {
             className="justify-self-center hover:stroke-[#FD8432] hover:scale-110 transition-all"
             onClick={() => setIsMenuOpen(prev => !prev)}/>
 
-            <NavMenuDropDown navMenuItems={navMenuItems} isOpen={isMenuOpen}/>
+            <NavMenuDropDown isOpen={isMenuOpen}/>
         </div>
     );
 };

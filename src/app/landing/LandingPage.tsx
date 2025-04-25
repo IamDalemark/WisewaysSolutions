@@ -6,7 +6,7 @@ import TestimonialSection from "@/components/page_sections/TestimonialSection";
 const LandingPage = () => {
   return (
     //    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
-    <div className="bg-[#ca6e6e]
+    <div className="bg-[#E3E3E3]
     text-blue-green w-full h-full pt-32 lg:pt-24 static">
   
       {/* intro section */}

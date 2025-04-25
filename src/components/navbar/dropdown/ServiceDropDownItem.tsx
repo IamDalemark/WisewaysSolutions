@@ -6,10 +6,11 @@ import ServiceDropDown from "./ServiceDropDown";
 
 interface Props {
     label: string;
+    initialOpen: boolean;
 }
 
-const ServiceDropDownItem = ({ label }: Props) => {
-    const [isOpen, setIsOpen] = useState(false);
+const ServiceDropDownItem = ({ label, initialOpen = false }: Props) => {
+    const [isOpen, setIsOpen] = useState(initialOpen);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     const menuItems = [
