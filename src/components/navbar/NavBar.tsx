@@ -37,8 +37,8 @@
                     </button>
                 </Link>
 
-                <UserDropDownItem/>
-                <NavMenuDropDownItem/>            
+                <UserDropDownItem initialOpen={false}/>
+                <NavMenuDropDownItem initialOpen={false}/>            
             </div>
         </nav>
     );
