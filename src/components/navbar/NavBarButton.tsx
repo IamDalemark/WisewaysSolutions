@@ -12,11 +12,11 @@ const getNavButtonFromName = (navButtonName: Button) => {
         case "Services":
             return <ServiceDropDownItem label="SERVICES" initialOpen={false}/>;
         case "About":
-            return <NonDropDownButton section="/#about" label="ABOUT"/>;
+            return <NonDropDownButton section="about" label="ABOUT"/>;
         case "Contact":
-            return <NonDropDownButton section="/#contact" label="CONTACT"/>;
+            return <NonDropDownButton section="contact" label="CONTACT"/>;
         case "Testimonial":
-            return <NonDropDownButton section="/#testimonial" label="TESTIMONIAL"/>;
+            return <NonDropDownButton section="testimonial" label="TESTIMONIAL"/>;
   };
 };
 

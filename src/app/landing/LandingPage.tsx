@@ -1,10 +1,29 @@
+"use client";
 
+import { useEffect } from "react";
 import LandingPageSection from "@/components/landing/LandingPageSection";
 import TestimonialSection from "@/components/page_sections/TestimonialSection";
 import ContactDetail from "@/components/landing/ContactDetail";
 import AppointmentButton from "@/components/navbar/AppointmentButton";
 
 const LandingPage = () => {
+  useEffect(() => {
+    const scrollTarget = sessionStorage.getItem("scrollTarget");
+
+    if (scrollTarget) {
+      const target = document.getElementById(scrollTarget);
+
+      if (target) {
+        setTimeout(() => {
+          const yOffset = -120;
+          const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth"});
+          sessionStorage.removeItem("scrollTarget");
+        }, 300);
+      }
+    }
+  }, []);
+
   return (
     //    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
     <div className="bg-[#E3E3E3]
