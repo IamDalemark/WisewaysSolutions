@@ -18,25 +18,27 @@ const LandingPage = () => {
           const yOffset = -120;
           const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
           window.scrollTo({ top: y, behavior: "smooth"});
-          sessionStorage.removeItem("scrollTarget");
         }, 300);
       }
     }
+    sessionStorage.removeItem("scrollTarget");
   }, []);
 
   return (
     //    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
-    <div className="bg-[#E3E3E3]
-    text-blue-green w-full h-full pt-32 lg:pt-24 static">
+    <main className="bg-[#E3E3E3]
+    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
+    text-blue-green w-full h-full pt-36 lg:pt-32 static">
 
       {/* intro section */}
       <LandingPageSection
         id="intro"
-        title={<p className="text-5xl lg:text-6xl font-bold">Welcome to WiseWays Solutions!</p>}
+        title="Welcome to WiseWays Solutions!"
         subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua."
         imageSrc="/landing-page1.png"
         altText="Website Landing page"
+        titleClassName="text-5xl lg:text-6xl font-bold"
       />
 
       {/* services section */}
@@ -62,24 +64,21 @@ const LandingPage = () => {
       <LandingPageSection
         id="about"
         heading={
-          <p>
+          <p className="flex flex-wrap justify-center">
             {" "}
-            Learn More About&nbsp;
-            <span className="text-[#FD8432] font-extrabold">Wiseways</span>{" "}
+            Learn More About
+            <span className="text-[#FD8432] font-extrabold ml-3">Wiseways</span>{" "}
           </p>
         }
-        subtitle={
-          <div className="lg:px-[5%] leading-7 lg:leading-9">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
             eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
             ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
             aliquip ex ea commodo consequat. Duis aute irure dolor in
             reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident.
-          </div>
-        }
+            pariatur. Excepteur sint occaecat cupidatat non proident."
         imageSrc="/landing-about.png"
         altText="About Us"
+        subTitleClassName="lg:px-[5%] leading-7 lg:leading-9"
       />
       
       {/* testimonial section */}
@@ -89,26 +88,23 @@ const LandingPage = () => {
       <LandingPageSection
         id="contact"
         heading="CONTACT US"
-        title={
-          <p className="text-2xl md:text-3xl lg:text-4xl">
-            {" "}Feel free to connect with us if you have any questions or concerns{" "}
-          </p>
-        }
+        title="Feel free to connect with us if you have any questions or concerns"
         subtitle={
-          <div className="justify-self-center text-lg">
+          <ul className="justify-self-center text-lg">
             <ContactDetail iconName="Phone" description="(63) 000-000-0000" />
             <ContactDetail iconName="Mail" description="loremisum@gmail.com" />
             <ContactDetail iconName="MapPin" description="999 Lorem Ipsum road, Dolor sit Amet City"/>
-          </div>
+          </ul>
         }
         imageSrc="/landing-contact.png"
         altText="Contact Us"
         actionButton={
           <AppointmentButton/>
         }
+        titleClassName="text-2xl md:text-3xl lg:text-4xl font-medium"
       />
 
-    </div>
+    </main>
   );
 };
 
