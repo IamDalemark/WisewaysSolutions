@@ -1,14 +1,15 @@
 
 import LandingPageSection from "@/components/landing/LandingPageSection";
-import ContactDetail from "@/components/landing/ContactDetail";
 import TestimonialSection from "@/components/page_sections/TestimonialSection";
+import ContactDetail from "@/components/landing/ContactDetail";
+import AppointmentButton from "@/components/navbar/AppointmentButton";
 
 const LandingPage = () => {
   return (
     //    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
     <div className="bg-[#E3E3E3]
     text-blue-green w-full h-full pt-32 lg:pt-24 static">
-  
+
       {/* intro section */}
       <LandingPageSection
         id="intro"
@@ -84,10 +85,7 @@ const LandingPage = () => {
         imageSrc="/landing-contact.png"
         altText="Contact Us"
         actionButton={
-          <button className="inline-block h-5/8 w-48 py-1 mx-[2%] bg-blue-green text-[#F3F3F3] rounded-2xl leading-[1.25] 
-                    hover:bg-blue-green-dark hover:text-[#BECECE] cursor-pointer">
-            <p> SCHEDULE <br /> APPOINTMENT </p>
-          </button>
+          <AppointmentButton/>
         }
       />
 
