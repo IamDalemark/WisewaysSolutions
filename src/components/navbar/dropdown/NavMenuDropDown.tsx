@@ -2,26 +2,25 @@
 
 // the dropdown menu that will popup when you select hamburger menu in the navbar
 import NavBarButton from "../NavBarButton";
+import AppointmentButton from "../AppointmentButton";
 
 interface Props {
-    isOpen: boolean;
+    isMenuOpen: boolean;
 }
 
-const NavMenuDropDown = ({ isOpen }: Props) => {
+const NavMenuDropDown = ({ isMenuOpen }: Props) => {
     return (
-        <div className={`absolute lg:hidden top-24 left-0 h-95 md:h-75 w-[90%] sm:w-[60%] md:w-[50%] pt-6 md:pt-6 pb-6 mx-[5%] sm:ml-[40%] md:ml-[50%] 
+        <div className={`absolute lg:hidden top-24 left-0 sm:left-10 md:left-25 h-95 md:h-80 w-[90%] sm:w-[50%] md:w-[35%] pt-6 md:pt-6 pb-6 mx-[5%] sm:ml-[40%] md:ml-[50%] 
             bg-[#F3F3F3] flex flex-col items-center gap-6 md:gap-6 font-medium transform transition-transform rounded-2xl shadow-2xl 
-            ${isOpen ? "opacity-100" : "opacity-0"}`} style={{transition: "transform 0.3s ease, opacity 0.3s ease"}}>
+            ${isMenuOpen ? "opacity-100" : "opacity-0"}`} style={{transition: "transform 0.3s ease, opacity 0.3s ease"}}>
 
-                <NavBarButton navButtonName="Services"/>
-                <NavBarButton navButtonName="About"/>
-                <NavBarButton navButtonName="Contact"/>
-                <NavBarButton navButtonName="Testimonial"/>
-
-            <button className="inline-block md:hidden h-15 w-50 sm:w-60 md:w-[70%] py-1 bg-blue-green text-[#F3F3F3] rounded-2xl leading-[1.25] 
-            text-xl hover:bg-blue-green-dark hover:scale-103 transition-all cursor-pointer">
-            <p>SCHEDULE <br /> APPOINTMENT</p>
-            </button>
+            <NavBarButton navButtonName="Services"/>
+            <NavBarButton navButtonName="About"/>
+            <NavBarButton navButtonName="Contact"/>
+            <NavBarButton navButtonName="Testimonial"/>
+            <div className="flex md:hidden">
+                <AppointmentButton/>
+            </div>
 
         </div>
     );

@@ -9,7 +9,7 @@ interface Props {
     initialOpen: boolean;
 }
 
-const ServiceDropDownItem = ({ label, initialOpen = false }: Props) => {
+const ServiceDropDownItem = ({ label, initialOpen }: Props) => {
     const [isOpen, setIsOpen] = useState(initialOpen);
     const dropdownRef = useRef<HTMLDivElement>(null);
 

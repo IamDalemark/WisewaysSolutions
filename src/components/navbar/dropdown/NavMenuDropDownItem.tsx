@@ -10,7 +10,7 @@ interface Props {
     initialOpen: boolean;
 }
 
-const NavMenuDropDownItem = ({initialOpen = false }: Props) => {
+const NavMenuDropDownItem = ({ initialOpen }: Props) => {
     const [isMenuOpen, setIsMenuOpen] = useState(initialOpen);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -34,7 +34,7 @@ const NavMenuDropDownItem = ({initialOpen = false }: Props) => {
             className="justify-self-center hover:stroke-[#FD8432] hover:scale-110 transition-all"
             onClick={() => setIsMenuOpen(prev => !prev)}/>
 
-            <NavMenuDropDown isOpen={isMenuOpen}/>
+            <NavMenuDropDown isMenuOpen={isMenuOpen}/>
         </div>
     );
 };
