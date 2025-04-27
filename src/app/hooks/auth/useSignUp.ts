@@ -1,6 +1,6 @@
 import { useState } from "react";
-import UserData from "@/types/users.type";
-import SignUpResult from "@/types/auth.type";
+import { UserData } from "@/types/users.type";
+import { SignUpResult } from "@/types/auth.type";
 import { supabase } from "@/lib/supabaseClient";
 
 export const useSignUp = () => {
