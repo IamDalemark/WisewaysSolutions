@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useModal } from "@/components/contexts/ModalContext";
+import { Loader2 } from "lucide-react";
 
 interface UserSignUpModalProps {
   show: boolean;
@@ -44,7 +45,6 @@ const UserSignUpModal = ({
 
   const [errors, setErrors] = useState<SignUpErrors>({});
 
-  // Sync props to local state when component mounts (for Storybook pre-filling)
   useEffect(() => {
     setSignUpForm({
       username,
@@ -55,6 +55,19 @@ const UserSignUpModal = ({
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (
+      signUpForm.username === "" &&
+      signUpForm.email === "" &&
+      signUpForm.password === "" &&
+      signUpForm.confirmPassword === "" &&
+      signUpForm.showPassword === false &&
+      !show
+    ) {
+      setErrors({});
+    }
+  }, [signUpForm, show]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -96,7 +109,7 @@ const UserSignUpModal = ({
     }
   };
 
-  if (!showSignUpModal && !show) return null; // Handle Storybook show prop
+  if (!showSignUpModal && !show) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -188,9 +201,16 @@ const UserSignUpModal = ({
           <button
             type="submit"
             disabled={isLoading || signUpLoading}
-            className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition disabled:opacity-50"
+            className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
           >
-            {isLoading || signUpLoading ? "Signing Up..." : "Create Account"}
+            {isLoading || signUpLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Creating Account...
+              </>
+            ) : (
+              "Sign Up"
+            )}
           </button>
         </form>
 

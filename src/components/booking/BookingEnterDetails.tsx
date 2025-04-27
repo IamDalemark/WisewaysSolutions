@@ -1,5 +1,5 @@
 import { BookingDetails } from "@/types/bookings.type";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useSubmitBooking } from "@/app/hooks/bookings/useSubmitBooking";
 import { Loader2 } from "lucide-react";
 import {
@@ -9,6 +9,7 @@ import {
   ChevronLeft,
   ChevronDown,
 } from "lucide-react";
+import { useUser } from "../contexts/UserContext";
 
 interface EnterDetailsProps {
   userCountry: string;
@@ -29,6 +30,8 @@ const EnterDetails = ({
   onPrevious,
   initialData,
 }: EnterDetailsProps) => {
+  const { user } = useUser();
+
   const time = initialData.time!;
   const date = initialData.date!.toISOString();
   const [name, setName] = useState(initialData.name || "");
@@ -40,6 +43,13 @@ const EnterDetails = ({
   const serviceOptions = ["Service A", "Service B", "Service C"];
   const formattedDate = initialData.date!.toDateString() || "";
   const formattedTime = initialData.time || "";
+
+  useEffect(() => {
+    if (user) {
+      setEmail(user!.user_metadata.email);
+      setName(user!.user_metadata.username);
+    }
+  }, [user]);
 
   const validate = () => {
     const newErrors: typeof errors = {};

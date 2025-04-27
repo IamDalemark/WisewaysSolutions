@@ -4,6 +4,7 @@ import "./globals.css";
 import NavBar from "@/components/navbar/NavBar";
 import { ModalProvider } from "@/components/contexts/ModalContext";
 import Modals from "@/components/modals/modals";
+import { UserProvider } from "@/components/contexts/UserContext";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -27,11 +28,13 @@ export default function RootLayout({
       <body
         className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}
       >
-        <ModalProvider>
-          <NavBar />
-          <Modals />
-          {children}
-        </ModalProvider>
+        <UserProvider>
+          <ModalProvider>
+            <NavBar />
+            <Modals />
+            {children}
+          </ModalProvider>
+        </UserProvider>
       </body>
     </html>
   );

@@ -1,6 +1,7 @@
 "use client";
 
 import { useModal } from "@/components/contexts/ModalContext";
+import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
 interface UserLoginModalProps {
@@ -47,6 +48,17 @@ const UserLoginModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (
+      loginForm.email === "" &&
+      loginForm.password === "" &&
+      loginForm.showPassword === false &&
+      !show
+    ) {
+      setErrors({});
+    }
+  }, [loginForm, show]);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginForm((prev) => ({ ...prev, [name]: value }));
@@ -91,6 +103,11 @@ const UserLoginModal = ({
           Log In
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
+          {errors.general && (
+            <div className="text-red-500 text-center mb-2">
+              {errors.general}
+            </div>
+          )}
           <div>
             <label className="block text-teal-700 font-medium mb-1">
               Email
@@ -129,9 +146,16 @@ const UserLoginModal = ({
           <button
             type="submit"
             disabled={isLoading || logInLoading}
-            className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition"
+            className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
           >
-            {isLoading || logInLoading ? "Logging In..." : "Log In"}
+            {isLoading || logInLoading ? (
+              <>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                Logging In...
+              </>
+            ) : (
+              "Log In"
+            )}
           </button>
         </form>
 

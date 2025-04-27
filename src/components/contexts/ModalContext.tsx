@@ -1,11 +1,18 @@
 "use client";
 
-import { createContext, useContext, useState, ReactNode } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+} from "react";
 import { useRouter } from "next/navigation";
 import { useSignUp } from "@/app/hooks/auth/useSignUp";
 import { UserData } from "@/types/users.type";
 import { LogInResult, SignUpResult } from "@/types/auth.type";
 import { useLogin } from "@/app/hooks/auth/useLogin";
+import { useUser } from "./UserContext";
 
 interface ModalContextType {
   showSignUpModal: boolean;
@@ -48,7 +55,19 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
   const { signUp, signUpLoading } = useSignUp();
   const { logIn, logInLoading } = useLogin();
-  const isLoggedIn = false; // Placeholder: Implement proper login state tracking
+  const [isBooking, setIsBooking] = useState(false);
+
+  const { user, loading: userLoading } = useUser();
+  const [isLoggedIn, setIsLoggedIn] = useState(user != null);
+
+  useEffect(() => {
+    // console.log('User Auth Data:', user);
+    if (!userLoading && user) {
+      setIsLoggedIn(true);
+    } else {
+      setIsLoggedIn(false);
+    }
+  }, [user, userLoading]);
 
   const [signUpForm, setSignUpForm] = useState({
     username: "",
@@ -71,6 +90,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
   const closeSignUpModal = () => {
     setShowSignUpModal(false);
+    resetFields();
   };
 
   const openLogInModal = () => {
@@ -78,12 +98,33 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setShowSignUpModal(false);
   };
 
-  const closeLogInModal = () => setShowLogInModal(false);
+  const closeLogInModal = () => {
+    setShowLogInModal(false);
+    resetFields();
+  };
+
+  const resetFields = () => {
+    setSignUpForm({
+      username: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+      showPassword: false,
+    });
+    setLoginForm({
+      email: "",
+      password: "",
+      showPassword: false,
+    });
+  };
 
   const handleScheduleAppointment = () => {
+    if (userLoading) return;
+    setIsBooking(false);
     if (isLoggedIn) {
       router.push("/booking");
     } else {
+      setIsBooking(true);
       openLogInModal();
     }
   };
@@ -93,7 +134,6 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const user: UserData = { username, email, password };
 
     try {
-      // Set the loading state to true while the sign-up is in progress
       const result = await signUp(user);
       if (result.success) {
         openLogInModal();
@@ -116,10 +156,12 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     const user = { email, password };
 
     try {
-      // Set the loading state to true while the login is in progress
       const result = await logIn(user);
       if (result.success) {
         closeLogInModal();
+        if (isBooking) {
+          router.push("/booking");
+        }
         return result;
       } else {
         // console.error("Log In failed:", result.error);
