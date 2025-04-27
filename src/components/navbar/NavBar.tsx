@@ -2,42 +2,95 @@
 
 // the main component for the actual navbar you see at the top of the website
 
-import React from "react";
+import React, { useState } from "react";
 import Image from "next/image";
 import NavMenuDropDownItem from "./dropdown/NavMenuDropDownItem";
 import Link from "next/link";
 import NavBarButton from "./NavBarButton";
 import UserDropDownItem from "./dropdown/UserDropDownItem";
 import AppointmentButton from "./AppointmentButton";
+import UserSignUpModal from "../auth/user/UserSignUpModal";
+import UserLoginModal from "../auth/user/UserLoginModal";
+import { UserData } from "@/types/users.type";
+import { useRouter } from "next/navigation";
+import { useSignUp } from "@/app/hooks/auth/useSignUp";
 
 const NavBar = () => {
-    return (
+  const isLoggedIn = false;
+  const router = useRouter();
+  const [showSignUpModal, setShowSignUpModal] = useState(false);
+  const [showLogInModal, setShowLogInModal] = useState(false);
+  const { signUp, signUpLoading } = useSignUp();
+
+  const handleChangeModal = () => {
+    setShowLogInModal(!showLogInModal);
+    setShowSignUpModal(!showSignUpModal);
+  };
+
+  const handleSignUp = async (user: UserData) => {
+    // console.log(user);
+    const result = await signUp(user);
+    console.log(result);
+    return result;
+  };
+
+  const handleLogIn = () => {};
+
+  const handleScheduleAppointment = () => {
+    if (isLoggedIn) {
+      router.push("/booking");
+    } else {
+      setShowLogInModal(true);
+    }
+  };
+
+  return (
     <nav className="w-[90%] flex items-center bg-[#F3F3F3] fixed top-6 mx-[5%] rounded-3xl h-20 shadow-lg px-[2%] justify-between">
-        
-        <div className="flex w-[60%] md:w-[40%] lg:w-[65%] xl:w-[70%]">
-            <Link href="/" className="w-[80%] lg:w-[35%] xl:w-[30%] h-full mx-[2%]"> 
-                <Image src={"/wiseways_navbar_logo.png"} alt="WiseWays Solution logo" 
-                        width={190} height={51.5} className="hover:scale-103 transition-all"></Image>
-            </Link>
+      <div className="flex w-[60%] md:w-[40%] lg:w-[65%] xl:w-[70%]">
+        <Link href="/" className="w-[80%] lg:w-[35%] xl:w-[30%] h-full mx-[2%]">
+          <Image
+            src={"/wiseways_navbar_logo.png"}
+            alt="WiseWays Solution logo"
+            width={190}
+            height={51.5}
+            className="hover:scale-103 transition-all"
+          ></Image>
+        </Link>
 
-            <ul className="hidden lg:flex items-center lg:w-[55%] xl:w-[60%] justify-left">
-                <NavBarButton navButtonName="Services"/>
-                <NavBarButton navButtonName="About"/>
-                <NavBarButton navButtonName="Contact"/>
-                <NavBarButton navButtonName="Testimonial"/>
-            </ul>
+        <ul className="hidden lg:flex items-center lg:w-[55%] xl:w-[60%] justify-left">
+          <NavBarButton navButtonName="Services" />
+          <NavBarButton navButtonName="About" />
+          <NavBarButton navButtonName="Contact" />
+          <NavBarButton navButtonName="Testimonial" />
+        </ul>
+      </div>
+
+      <div className="flex w-[30%] md:w-[55%] lg:w-[30%] xl:w-[30%] mr-[2%] justify-end">
+        <div className="hidden md:flex md:w-[60%] lg:w-[75%] items-center justify-end max-w-70">
+          <AppointmentButton
+            onHandleScheduleAppointment={handleScheduleAppointment}
+          />
         </div>
 
-        <div className="flex w-[30%] md:w-[55%] lg:w-[30%] xl:w-[30%] mr-[2%] justify-end">
-            <div className="hidden md:flex md:w-[60%] lg:w-[75%] items-center justify-end max-w-70">
-                <AppointmentButton/>
-            </div>
+        <UserDropDownItem initialOpen={false} />
+        <NavMenuDropDownItem initialOpen={false} />
+      </div>
 
-            <UserDropDownItem initialOpen={false}/>
-            <NavMenuDropDownItem initialOpen={false}/>            
-        </div>
+      <UserSignUpModal
+        show={showSignUpModal}
+        onClose={() => setShowSignUpModal(false)}
+        onOpenLogIn={handleChangeModal}
+        onSignUp={handleSignUp}
+        isLoading={signUpLoading}
+      />
+      <UserLoginModal
+        show={showLogInModal}
+        onClose={() => setShowLogInModal(false)}
+        onOpenSignUp={handleChangeModal}
+        onLogin={handleLogIn}
+      />
     </nav>
-);
+  );
 };
 
 export default NavBar;
