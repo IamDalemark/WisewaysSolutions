@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { useModal } from "@/components/contexts/ModalContext";
 import { Loader2 } from "lucide-react";
 
-interface UserSignUpModalProps {
+export interface UserSignUpModalProps {
   show: boolean;
   isLoading: boolean;
 
@@ -14,6 +14,13 @@ interface UserSignUpModalProps {
   password?: string;
   confirmPassword?: string;
   showPassword?: boolean;
+  validationErrors?: {
+    username?: string;
+    email?: string;
+    password?: string;
+    confirmPassword?: string;
+    general?: string;
+  };
 }
 
 interface SignUpErrors {
@@ -32,6 +39,7 @@ const UserSignUpModal = ({
   password = "",
   confirmPassword = "",
   showPassword = false,
+  validationErrors = {},
 }: UserSignUpModalProps) => {
   const {
     showSignUpModal,
@@ -43,18 +51,27 @@ const UserSignUpModal = ({
     openLogInModal: contextOpenLogInModal,
   } = useModal(); // Use ModalContext
 
-  const [errors, setErrors] = useState<SignUpErrors>({});
+  // Initialize with any validation errors passed as props
+  const [errors, setErrors] = useState<SignUpErrors>({
+    ...validationErrors,
+  });
 
   useEffect(() => {
     setSignUpForm({
-      username,
-      email,
-      password,
-      confirmPassword,
-      showPassword,
+      username: username || "",
+      email: email || "",
+      password: password || "",
+      confirmPassword: confirmPassword || "",
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [username, email, password, confirmPassword]);
+
+  // Update errors when validationErrors prop changes
+  useEffect(() => {
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    }
+  }, [validationErrors]);
 
   useEffect(() => {
     if (
@@ -62,7 +79,6 @@ const UserSignUpModal = ({
       signUpForm.email === "" &&
       signUpForm.password === "" &&
       signUpForm.confirmPassword === "" &&
-      signUpForm.showPassword === false &&
       !show
     ) {
       setErrors({});
@@ -72,6 +88,11 @@ const UserSignUpModal = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setSignUpForm((prev) => ({ ...prev, [name]: value }));
+
+    // Clear specific error when user starts typing in a field
+    if (errors[name as keyof SignUpErrors]) {
+      setErrors((prev) => ({ ...prev, [name]: undefined }));
+    }
   };
 
   const validate = (): SignUpErrors => {
@@ -80,7 +101,7 @@ const UserSignUpModal = ({
       newErrors.username = "Username is required.";
     if (!signUpForm.email.trim()) newErrors.email = "Email is required.";
     else if (!/\S+@\S+\.\S+/.test(signUpForm.email))
-      newErrors.email = "Email is invalid.";
+      newErrors.email = "Please enter a valid email address.";
     if (!signUpForm.password) newErrors.password = "Password is required.";
     if (!signUpForm.confirmPassword)
       newErrors.confirmPassword = "Please confirm your password.";
@@ -169,7 +190,7 @@ const UserSignUpModal = ({
               Password
             </label>
             <input
-              type={signUpForm.showPassword ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               name="password"
               value={signUpForm.password}
               onChange={handleChange}
@@ -186,7 +207,7 @@ const UserSignUpModal = ({
               Confirm Password
             </label>
             <input
-              type={signUpForm.showPassword ? "text" : "password"}
+              type={showPassword ? "text" : "password"}
               name="confirmPassword"
               value={signUpForm.confirmPassword}
               onChange={handleChange}

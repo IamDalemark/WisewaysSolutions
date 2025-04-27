@@ -4,7 +4,7 @@ import { useModal } from "@/components/contexts/ModalContext";
 import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 
-interface UserLoginModalProps {
+export interface UserLoginModalProps {
   isLoading: boolean;
   show: boolean;
 
@@ -12,6 +12,11 @@ interface UserLoginModalProps {
   email?: string;
   password?: string;
   showPassword?: boolean;
+  validationErrors?: {
+    email?: string;
+    password?: string;
+    general?: string;
+  };
 }
 
 interface LogInErrors {
@@ -26,6 +31,7 @@ const UserLoginModal = ({
   email = "",
   password = "",
   showPassword = false,
+  validationErrors = {},
 }: UserLoginModalProps) => {
   const {
     logInLoading,
@@ -37,16 +43,23 @@ const UserLoginModal = ({
     setLoginForm,
   } = useModal();
 
-  const [errors, setErrors] = useState<LogInErrors>({});
+  const [errors, setErrors] = useState<LogInErrors>(validationErrors);
 
   useEffect(() => {
     setLoginForm({
-      email,
-      password,
-      showPassword,
+      email: email || "",
+      password: password || "",
+      showPassword: showPassword || false,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [email, password, showPassword]);
+
+  useEffect(() => {
+    // If storybook sends validation errors, use them
+    if (Object.keys(validationErrors).length > 0) {
+      setErrors(validationErrors);
+    }
+  }, [validationErrors]);
 
   useEffect(() => {
     if (
@@ -62,6 +75,15 @@ const UserLoginModal = ({
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setLoginForm((prev) => ({ ...prev, [name]: value }));
+
+    // Clear errors when user types
+    if (errors[name as keyof LogInErrors]) {
+      setErrors((prev) => {
+        const newErrors = { ...prev };
+        delete newErrors[name as keyof LogInErrors];
+        return newErrors;
+      });
+    }
   };
 
   const validate = (): LogInErrors => {
@@ -168,7 +190,7 @@ const UserLoginModal = ({
         <hr className="my-4" />
 
         <div className="text-center text-sm text-teal-700">
-          Don’t have an account?{" "}
+          {"Don't have an account? "}
           <button
             onClick={openSignUpModal}
             className="font-semibold hover:underline"

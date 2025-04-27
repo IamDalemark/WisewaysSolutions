@@ -31,7 +31,6 @@ interface ModalContextType {
     email: string;
     password: string;
     confirmPassword: string;
-    showPassword: boolean;
   };
   loginForm: {
     email: string;
@@ -46,7 +45,9 @@ interface ModalContextType {
   >;
 }
 
-const ModalContext = createContext<ModalContextType | undefined>(undefined);
+export const ModalContext = createContext<ModalContextType | undefined>(
+  undefined
+);
 
 export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const router = useRouter();
@@ -74,7 +75,6 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     email: "",
     password: "",
     confirmPassword: "",
-    showPassword: false,
   });
 
   const [loginForm, setLoginForm] = useState({
@@ -109,7 +109,6 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       email: "",
       password: "",
       confirmPassword: "",
-      showPassword: false,
     });
     setLoginForm({
       email: "",
