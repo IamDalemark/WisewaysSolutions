@@ -34,7 +34,7 @@ const UserSignUpModal = ({
 }: UserSignUpModalProps) => {
   const {
     showSignUpModal,
-    isLoading: contextLoading,
+    signUpLoading,
     signUpForm,
     setSignUpForm,
     handleSignUp: contextSignUp,
@@ -187,10 +187,10 @@ const UserSignUpModal = ({
 
           <button
             type="submit"
-            disabled={isLoading || contextLoading}
+            disabled={isLoading || signUpLoading}
             className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition disabled:opacity-50"
           >
-            {isLoading || contextLoading ? "Signing Up..." : "Create Account"}
+            {isLoading || signUpLoading ? "Signing Up..." : "Create Account"}
           </button>
         </form>
 

@@ -4,7 +4,8 @@ import { createContext, useContext, useState, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useSignUp } from "@/app/hooks/auth/useSignUp";
 import { UserData } from "@/types/users.type";
-import { SignUpResult } from "@/types/auth.type";
+import { LogInResult, SignUpResult } from "@/types/auth.type";
+import { useLogin } from "@/app/hooks/auth/useLogin";
 
 interface ModalContextType {
   showSignUpModal: boolean;
@@ -15,8 +16,9 @@ interface ModalContextType {
   closeLogInModal: () => void;
   handleScheduleAppointment: () => void;
   handleSignUp: () => Promise<SignUpResult>;
-  handleLogIn: () => void;
-  isLoading: boolean;
+  handleLogIn: () => Promise<LogInResult>;
+  signUpLoading: boolean;
+  logInLoading: boolean;
   signUpForm: {
     username: string;
     email: string;
@@ -44,10 +46,10 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const [showLogInModal, setShowLogInModal] = useState(false);
 
-  const { signUp, signUpLoading } = useSignUp(); // Get signUp function and loading state from the custom hook
+  const { signUp, signUpLoading } = useSignUp();
+  const { logIn, logInLoading } = useLogin();
   const isLoggedIn = false; // Placeholder: Implement proper login state tracking
 
-  // 🛠️ Form states
   const [signUpForm, setSignUpForm] = useState({
     username: "",
     email: "",
@@ -94,20 +96,42 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       // Set the loading state to true while the sign-up is in progress
       const result = await signUp(user);
       if (result.success) {
-        closeSignUpModal();
+        openLogInModal();
         return result;
       } else {
         // console.error("Signup failed:", result.error);
         return result;
       }
     } catch (error) {
-      console.error("Error during signup:", error);
-      return { success: false, error: "Error during Sign Up." };
+      //   console.error("Error during signup:", error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Error during Sign Up.",
+      };
     }
   };
 
   const handleLogIn = async () => {
-    // const { email, password } = loginForm;
+    const { email, password } = loginForm;
+    const user = { email, password };
+
+    try {
+      // Set the loading state to true while the login is in progress
+      const result = await logIn(user);
+      if (result.success) {
+        closeLogInModal();
+        return result;
+      } else {
+        // console.error("Log In failed:", result.error);
+        return result;
+      }
+    } catch (error) {
+      //   console.error("Error during log in:", error);
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Error during Log In.",
+      };
+    }
   };
 
   return (
@@ -122,7 +146,8 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         handleScheduleAppointment,
         handleSignUp,
         handleLogIn,
-        isLoading: signUpLoading, // Track loading state for signup
+        signUpLoading,
+        logInLoading,
         signUpForm,
         loginForm,
         setSignUpForm,

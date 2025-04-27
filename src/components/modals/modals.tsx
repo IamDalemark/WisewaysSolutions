@@ -5,12 +5,13 @@ import UserSignUpModal from "@/components/auth/user/UserSignUpModal";
 import UserLoginModal from "@/components/auth/user/UserLoginModal";
 
 const Modals = () => {
-  const { showSignUpModal, showLogInModal, isLoading } = useModal();
+  const { showSignUpModal, showLogInModal, signUpLoading, logInLoading } =
+    useModal();
 
   return (
     <>
-      <UserSignUpModal show={showSignUpModal} isLoading={isLoading} />
-      <UserLoginModal show={showLogInModal} />
+      <UserSignUpModal show={showSignUpModal} isLoading={signUpLoading} />
+      <UserLoginModal show={showLogInModal} isLoading={logInLoading} />
     </>
   );
 };

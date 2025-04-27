@@ -5,3 +5,9 @@ export type SignUpResult = {
   error?: string;
   user?: User | null;
 };
+
+export type LogInResult = {
+  success: boolean;
+  error?: string;
+  user?: User | null;
+};

@@ -1,28 +1,42 @@
 "use client";
 
 import { useModal } from "@/components/contexts/ModalContext";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface UserLoginModalProps {
+  isLoading: boolean;
   show: boolean;
+
+  // Props for Storybook/testing
   email?: string;
   password?: string;
   showPassword?: boolean;
 }
 
+interface LogInErrors {
+  email?: string;
+  password?: string;
+  general?: string;
+}
+
 const UserLoginModal = ({
+  isLoading,
+  show,
   email = "",
   password = "",
   showPassword = false,
 }: UserLoginModalProps) => {
   const {
+    logInLoading,
     showLogInModal,
     closeLogInModal,
     openSignUpModal,
-    handleLogIn,
+    handleLogIn: contextLogIn,
     loginForm,
     setLoginForm,
   } = useModal();
+
+  const [errors, setErrors] = useState<LogInErrors>({});
 
   useEffect(() => {
     setLoginForm({
@@ -35,13 +49,34 @@ const UserLoginModal = ({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setLoginForm((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setLoginForm((prev) => ({ ...prev, [name]: value }));
   };
 
-  if (!showLogInModal && !showPassword) return null;
+  const validate = (): LogInErrors => {
+    const newErrors: LogInErrors = {};
+    if (!loginForm.email.trim()) newErrors.email = "Email is required.";
+    else if (!/\S+@\S+\.\S+/.test(loginForm.email))
+      newErrors.email = "Email is invalid.";
+    if (!loginForm.password) newErrors.password = "Password is required.";
+    if (loginForm.password && loginForm.password.length < 6) {
+      newErrors.password = "Password must be at least 6 characters.";
+    }
+    return newErrors;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
+
+    const result = await contextLogIn();
+    if (!result.success) {
+      setErrors({ general: result.error });
+    }
+  };
+
+  if (!showLogInModal && !show) return null;
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -55,25 +90,22 @@ const UserLoginModal = ({
         <h2 className="text-2xl font-semibold text-center text-teal-700 mb-6">
           Log In
         </h2>
-        <form
-          className="space-y-4"
-          onSubmit={(e) => {
-            e.preventDefault();
-            handleLogIn();
-          }}
-        >
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label className="block text-teal-700 font-medium mb-1">
               Email
             </label>
             <input
               type="text"
-              name="username"
+              name="email"
               value={loginForm.email}
               onChange={handleChange}
               className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
               placeholder="Enter Email"
             />
+            {errors.email && (
+              <p className="text-red-500 text-sm">{errors.email}</p>
+            )}
           </div>
 
           <div>
@@ -89,13 +121,17 @@ const UserLoginModal = ({
                 className="w-full border border-gray-400 rounded-md px-4 py-2 pr-2 outline-none focus:ring-2 focus:ring-teal-300"
                 placeholder="Enter Password"
               />
+              {errors.password && (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              )}
             </div>
           </div>
           <button
             type="submit"
+            disabled={isLoading || logInLoading}
             className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition"
           >
-            Log in
+            {isLoading || logInLoading ? "Logging In..." : "Log In"}
           </button>
         </form>
 
