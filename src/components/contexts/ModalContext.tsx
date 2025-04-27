@@ -4,6 +4,7 @@ import { createContext, useContext, useState, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 import { useSignUp } from "@/app/hooks/auth/useSignUp";
 import { UserData } from "@/types/users.type";
+import { SignUpResult } from "@/types/auth.type";
 
 interface ModalContextType {
   showSignUpModal: boolean;
@@ -13,7 +14,7 @@ interface ModalContextType {
   openLogInModal: () => void;
   closeLogInModal: () => void;
   handleScheduleAppointment: () => void;
-  handleSignUp: () => void;
+  handleSignUp: () => Promise<SignUpResult>;
   handleLogIn: () => void;
   isLoading: boolean;
   signUpForm: {
@@ -66,11 +67,15 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     setShowLogInModal(false);
   };
 
-  const closeSignUpModal = () => setShowSignUpModal(false);
+  const closeSignUpModal = () => {
+    setShowSignUpModal(false);
+  };
+
   const openLogInModal = () => {
     setShowLogInModal(true);
     setShowSignUpModal(false);
   };
+
   const closeLogInModal = () => setShowLogInModal(false);
 
   const handleScheduleAppointment = () => {
@@ -90,18 +95,19 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       const result = await signUp(user);
       if (result.success) {
         closeSignUpModal();
+        return result;
       } else {
-        // Show error if signup fails
-        console.error("Signup failed:", result.error);
+        // console.error("Signup failed:", result.error);
+        return result;
       }
     } catch (error) {
       console.error("Error during signup:", error);
+      return { success: false, error: "Error during Sign Up." };
     }
   };
 
   const handleLogIn = async () => {
     // const { email, password } = loginForm;
-    // Implement your login logic here (you can use your existing login function)
   };
 
   return (

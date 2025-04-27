@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useModal } from "@/components/contexts/ModalContext"; // Import the ModalContext
+import { useModal } from "@/components/contexts/ModalContext";
 
 interface UserSignUpModalProps {
   show: boolean;
@@ -90,9 +90,10 @@ const UserSignUpModal = ({
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    await contextSignUp();
-    // This will close the modal after successful signup
-    closeSignUpModal();
+    const result = await contextSignUp();
+    if (!result.success) {
+      setErrors({ general: result.error });
+    }
   };
 
   if (!showSignUpModal && !show) return null; // Handle Storybook show prop
