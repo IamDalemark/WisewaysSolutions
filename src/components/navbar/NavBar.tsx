@@ -2,47 +2,17 @@
 
 // the main component for the actual navbar you see at the top of the website
 
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import NavMenuDropDownItem from "./dropdown/NavMenuDropDownItem";
 import Link from "next/link";
 import NavBarButton from "./NavBarButton";
 import UserDropDownItem from "./dropdown/UserDropDownItem";
+import { useModal } from "../contexts/ModalContext";
 import AppointmentButton from "./AppointmentButton";
-import UserSignUpModal from "../auth/user/UserSignUpModal";
-import UserLoginModal from "../auth/user/UserLoginModal";
-import { UserData } from "@/types/users.type";
-import { useRouter } from "next/navigation";
-import { useSignUp } from "@/app/hooks/auth/useSignUp";
 
 const NavBar = () => {
-  const isLoggedIn = false;
-  const router = useRouter();
-  const [showSignUpModal, setShowSignUpModal] = useState(false);
-  const [showLogInModal, setShowLogInModal] = useState(false);
-  const { signUp, signUpLoading } = useSignUp();
-
-  const handleChangeModal = () => {
-    setShowLogInModal(!showLogInModal);
-    setShowSignUpModal(!showSignUpModal);
-  };
-
-  const handleSignUp = async (user: UserData) => {
-    // console.log(user);
-    const result = await signUp(user);
-    console.log(result);
-    return result;
-  };
-
-  const handleLogIn = () => {};
-
-  const handleScheduleAppointment = () => {
-    if (isLoggedIn) {
-      router.push("/booking");
-    } else {
-      setShowLogInModal(true);
-    }
-  };
+  const { handleScheduleAppointment } = useModal();
 
   return (
     <nav className="w-[90%] flex items-center bg-[#F3F3F3] fixed top-6 mx-[5%] rounded-3xl h-20 shadow-lg px-[2%] justify-between">
@@ -75,20 +45,6 @@ const NavBar = () => {
         <UserDropDownItem initialOpen={false} />
         <NavMenuDropDownItem initialOpen={false} />
       </div>
-
-      <UserSignUpModal
-        show={showSignUpModal}
-        onClose={() => setShowSignUpModal(false)}
-        onOpenLogIn={handleChangeModal}
-        onSignUp={handleSignUp}
-        isLoading={signUpLoading}
-      />
-      <UserLoginModal
-        show={showLogInModal}
-        onClose={() => setShowLogInModal(false)}
-        onOpenSignUp={handleChangeModal}
-        onLogin={handleLogIn}
-      />
     </nav>
   );
 };

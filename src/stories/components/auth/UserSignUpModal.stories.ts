@@ -31,9 +31,6 @@ export const Default: Story = {
     password: "testPassword",
     confirmPassword: "testPassword",
     showPassword: false,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };
 
@@ -46,9 +43,6 @@ export const NoUsername: Story = {
     password: "testPassword",
     confirmPassword: "testPassword",
     showPassword: false,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };
 
@@ -61,9 +55,6 @@ export const NoPassword: Story = {
     password: "",
     confirmPassword: "testPassword",
     showPassword: false,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };
 
@@ -76,9 +67,6 @@ export const NoConfirmPassword: Story = {
     password: "testPassword",
     confirmPassword: "",
     showPassword: false,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };
 
@@ -91,9 +79,6 @@ export const ShowPasswords: Story = {
     password: "testPassword",
     confirmPassword: "testPassword",
     showPassword: true,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };
 
@@ -107,9 +92,6 @@ export const LongUsername: Story = {
     password: "testPassword",
     confirmPassword: "testPassword",
     showPassword: false,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };
 
@@ -123,9 +105,6 @@ export const LongPassword: Story = {
       "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra inceptos himenaeos orci varius natoque penatibus et magnis dis parturient montes nascetur ridiculus mus donec rhoncus eros lobortis nulla molestie mattis scelerisque maximus eget fermentum odio phasellus non purus est efficitur laoreet mauris pharetra vestibulum fusce dictum risus.",
     confirmPassword: "testPassword",
     showPassword: false,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };
 
@@ -139,9 +118,6 @@ export const LongConfirmPassword: Story = {
     confirmPassword:
       "Lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit semper vel class aptent taciti sociosqu ad litora torquent per conubia nostra inceptos himenaeos orci varius natoque penatibus et magnis dis parturient montes nascetur ridiculus mus donec rhoncus eros lobortis nulla molestie mattis scelerisque maximus eget fermentum odio phasellus non purus est efficitur laoreet mauris pharetra vestibulum fusce dictum risus.",
     showPassword: false,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };
 
@@ -155,8 +131,5 @@ export const LongEmail: Story = {
     password: "testPassword",
     confirmPassword: "testPassword",
     showPassword: false,
-    onClose: () => {},
-    onOpenLogIn: () => {},
-    onSignUp: () => {},
   },
 };

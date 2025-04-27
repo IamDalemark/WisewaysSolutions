@@ -5,8 +5,11 @@ import LandingPageSection from "@/components/landing/LandingPageSection";
 import TestimonialSection from "@/components/page_sections/TestimonialSection";
 import ContactDetail from "@/components/landing/ContactDetail";
 import AppointmentButton from "@/components/navbar/AppointmentButton";
+import { useModal } from "@/components/contexts/ModalContext";
 
 const LandingPage = () => {
+  const { handleScheduleAppointment } = useModal();
+
   useEffect(() => {
     const scrollTarget = sessionStorage.getItem("scrollTarget");
 
@@ -16,8 +19,9 @@ const LandingPage = () => {
       if (target) {
         setTimeout(() => {
           const yOffset = -120;
-          const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: "smooth"});
+          const y =
+            target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
           sessionStorage.removeItem("scrollTarget");
         }, 300);
       }
@@ -26,13 +30,18 @@ const LandingPage = () => {
 
   return (
     //    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
-    <div className="bg-[#E3E3E3]
-    text-blue-green w-full h-full pt-32 lg:pt-24 static">
-
+    <div
+      className="bg-[#E3E3E3]
+    text-blue-green w-full h-full pt-32 lg:pt-24 static"
+    >
       {/* intro section */}
       <LandingPageSection
         id="intro"
-        title={<p className="text-5xl lg:text-6xl font-bold">Welcome to WiseWays Solutions!</p>}
+        title={
+          <p className="text-5xl lg:text-6xl font-bold">
+            Welcome to WiseWays Solutions!
+          </p>
+        }
         subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                   tempor incididunt ut labore et dolore magna aliqua."
         imageSrc="/landing-page1.png"
@@ -81,7 +90,7 @@ const LandingPage = () => {
         imageSrc="/landing-about.png"
         altText="About Us"
       />
-      
+
       {/* testimonial section */}
       <TestimonialSection />
 
@@ -91,23 +100,28 @@ const LandingPage = () => {
         heading="CONTACT US"
         title={
           <p className="text-2xl md:text-3xl lg:text-4xl">
-            {" "}Feel free to connect with us if you have any questions or concerns{" "}
+            {" "}
+            Feel free to connect with us if you have any questions or concerns{" "}
           </p>
         }
         subtitle={
           <div className="justify-self-center text-lg">
             <ContactDetail iconName="Phone" description="(63) 000-000-0000" />
             <ContactDetail iconName="Mail" description="loremisum@gmail.com" />
-            <ContactDetail iconName="MapPin" description="999 Lorem Ipsum road, Dolor sit Amet City"/>
+            <ContactDetail
+              iconName="MapPin"
+              description="999 Lorem Ipsum road, Dolor sit Amet City"
+            />
           </div>
         }
         imageSrc="/landing-contact.png"
         altText="Contact Us"
         actionButton={
-          <AppointmentButton/>
+          <AppointmentButton
+            onHandleScheduleAppointment={handleScheduleAppointment}
+          />
         }
       />
-
     </div>
   );
 };
