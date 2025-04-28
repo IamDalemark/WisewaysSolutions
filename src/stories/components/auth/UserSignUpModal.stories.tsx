@@ -249,3 +249,21 @@ WithGeneralError.args = {
     general: "Account creation failed. Please try again later.",
   },
 };
+
+export const WithMultipleError = ValidationErrorTemplate.bind({});
+WithMultipleError.args = {
+  show: true,
+  isLoading: false,
+  email: "invalid-email",
+  username: "",
+  password: "test",
+  confirmPassword: "tested",
+  showPassword: false,
+  validationErrors: {
+    username: "Username is required.",
+    email: "Please enter a valid email address.",
+    password: "Password must be at least 6 characters.",
+    confirmPassword: "Passwords do not match.",
+    general: "Account creation failed. Please try again later.",
+  },
+};
