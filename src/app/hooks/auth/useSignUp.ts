@@ -23,10 +23,6 @@ export const useSignUp = () => {
         throw new Error(error.message || "Failed to Sign Up.");
       }
 
-      if (data.user?.aud === "authenticated") {
-        throw new Error("Email already in use!");
-      }
-
       return { success: true, user: data.user };
     } catch (error) {
       //   console.error("Error Signing Up:", error);
