@@ -22,13 +22,15 @@ export default function AdminDashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}>
+    <div
+      className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}
+    >
       <SidebarProvider>
         <div className="flex w-screen">
           <AdminSidebar />
-          <div className="flex-1"> 
+          <div className="flex-1">
             <AdminNavbar />
-            <main className="mt-36 px-10 w-full">{children}</main> 
+            <main className="mt-36 px-10 w-full">{children}</main>
           </div>
         </div>
       </SidebarProvider>
