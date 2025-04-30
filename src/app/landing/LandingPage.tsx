@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import LandingPageSection from "@/components/landing/LandingPageSection";
-import TestimonialSection from "@/components/page_sections/TestimonialSection";
+import TestimonialSection from "@/components/landing/TestimonialSection";
 import ContactDetail from "@/components/landing/ContactDetail";
 import AppointmentButton from "@/components/navbar/AppointmentButton";
 
@@ -50,14 +50,6 @@ const LandingPage = () => {
                           tempor incididunt ut labore et dolore magna aliqua."
         imageSrc="/landing-services.png"
         altText="Services"
-        actionButton={
-          <button
-            className="bg-blue-green text-[#F3F3F3] rounded-lg px-8 py-2
-                    hover:bg-blue-green-dark hover:text-[#BECECE] cursor-pointer"
-          >
-            VIEW SERVICES
-          </button>
-        }
       />
 
       {/* about section */}

@@ -40,14 +40,14 @@ interface Props {
 
 const NonLogUserDropDown = ({menuItems}: Props) => {
     return (
-        <div className="rounded-xl bg-[#f3f3f3] min-h-20 w-30 sm:w-40 mt-10 py-3 pl-6 absolute drop-shadow-xl
-        overflow-auto -right-[0%] top-[70%]">
+        <div className="rounded-xl bg-[#f3f3f3] min-h-20 w-30 sm:w-40 mt-10 py-3 pl-4 absolute drop-shadow-xl
+        justify-items-center overflow-auto -right-[0%] top-[70%]">
 
             {menuItems.map((item) => {
                 return (
-                    <Link key={item.label} href={item.href}>
-                        <button className="flex text-lg text-[#0D767A] py-2 leading-[1] text-left 
-                    hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer">
+                    <Link key={item.label} href={item.href} className="w-[50%] leading-[1] text-center">
+                        <button className="flex text-lg text-[#0D767A] my-2 hover:text-[#FD8432] 
+                        hover:scale-105 transition-all cursor-pointer">
                         {item.label}
                     </button>
                     </Link>
