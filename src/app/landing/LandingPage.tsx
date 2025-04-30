@@ -2,11 +2,14 @@
 
 import { useEffect } from "react";
 import LandingPageSection from "@/components/landing/LandingPageSection";
-import TestimonialSection from "@/components/landing/TestimonialSection";
+import TestimonialSection from "@/components/page_sections/TestimonialSection";
 import ContactDetail from "@/components/landing/ContactDetail";
 import AppointmentButton from "@/components/navbar/AppointmentButton";
+import { useModal } from "@/components/contexts/ModalContext";
 
 const LandingPage = () => {
+  const { handleScheduleAppointment } = useModal();
+
   useEffect(() => {
     const scrollTarget = sessionStorage.getItem("scrollTarget");
 
@@ -72,7 +75,7 @@ const LandingPage = () => {
         altText="About Us"
         subTitleClassName="lg:px-[5%] leading-7 lg:leading-9"
       />
-      
+
       {/* testimonial section */}
       <TestimonialSection />
 
@@ -91,7 +94,9 @@ const LandingPage = () => {
         imageSrc="/landing-contact.png"
         altText="Contact Us"
         actionButton={
-          <AppointmentButton/>
+          <AppointmentButton
+            onHandleScheduleAppointment={handleScheduleAppointment}
+          />
         }
         titleClassName="text-2xl md:text-3xl lg:text-4xl font-medium"
       />
