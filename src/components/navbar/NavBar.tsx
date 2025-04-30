@@ -8,10 +8,14 @@ import NavMenuDropDownItem from "./dropdown/NavMenuDropDownItem";
 import Link from "next/link";
 import NavBarButton from "./NavBarButton";
 import UserDropDownItem from "./dropdown/UserDropDownItem";
+import { useModal } from "../contexts/ModalContext";
+import AppointmentButton from "./AppointmentButton";
 
 const NavBar = () => {
+  const { handleScheduleAppointment } = useModal();
+
   return (
-    <nav className="w-[90%] sm:w-[86%] flex items-center bg-[#F3F3F3] fixed top-6 mx-[5%] sm:mx-[7%] rounded-3xl h-20 shadow-lg px-[2%] justify-between z-1">
+    <nav className="w-[90%] flex items-center bg-[#F3F3F3] fixed top-6 mx-[5%] rounded-3xl h-20 shadow-lg px-[2%] justify-between">
       <div className="flex w-[60%] md:w-[40%] lg:w-[65%] xl:w-[70%]">
         <Link href="/" className="w-[80%] lg:w-[35%] xl:w-[30%] h-full mx-[2%]">
           <Image
@@ -32,17 +36,14 @@ const NavBar = () => {
       </div>
 
       <div className="flex w-[30%] md:w-[55%] lg:w-[30%] xl:w-[30%] mr-[2%] justify-end">
-        <button
-          className="hidden md:inline-block h-5/8 w-[50%] lg:w-[60%] xl:[50%] py-1 mx-2 bg-blue-green text-[#F3F3F3] rounded-2xl leading-[1.25] 
-            hover:bg-blue-green-dark hover:scale-103 transition-all cursor-pointer"
-        >
-          <p>
-            SCHEDULE <br /> APPOINTMENT
-          </p>
-        </button>
+        <div className="hidden md:flex md:w-[60%] lg:w-[75%] items-center justify-end max-w-70">
+          <AppointmentButton
+            onHandleScheduleAppointment={handleScheduleAppointment}
+          />
+        </div>
 
-        <UserDropDownItem />
-        <NavMenuDropDownItem />
+        <UserDropDownItem initialOpen={false} />
+        <NavMenuDropDownItem initialOpen={false} />
       </div>
     </nav>
   );

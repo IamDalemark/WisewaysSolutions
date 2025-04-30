@@ -2,14 +2,20 @@
  
  import { useState, useEffect, useRef } from "react";
  import { CircleUserRound } from "lucide-react";
- import UserDropDown from "./UserDropDown";
+//  import UserDropDown from "./UserDropDown";
+ import NonLogUserDropDown from "./UserDropDown";
  
+ interface Props {
+    initialOpen: boolean;
+}
  
- const UserDropDownItem = () => {
-     const [isOpen, setIsOpen] = useState(false);
+ const UserDropDownItem = ({initialOpen}: Props) => {
+     const [isOpen, setIsOpen] = useState(initialOpen);
      const dropdownRef = useRef<HTMLDivElement>(null);
  
-     const menuItems = [{label: "Change Password"}, {label: "Log Out"}];
+    //  const menuItems = [{label: "Change Password"}, {label: "Log Out"}];
+     const nonLoggedItems = [{label: "Log In", href: "/auth/user/UserLoginModal"}, 
+        {label: "Sign Up", href: "/auth/user/UserSignUpModal"}];
  
      useEffect(() => {
              const handleClickOutside = (event: MouseEvent) => {
@@ -28,7 +34,7 @@
          }, [isOpen]);
  
      return (
-         <div ref={dropdownRef} className="flex justify-items-end">
+         <div ref={dropdownRef} className="flex justify-items-end items-center">
             <div className="flex group h-11 w-11 ml-2 rounded-[2.5rem] hover:scale-105 transition-all"
              onClick={() => setIsOpen(!isOpen)}>
                 <div className="h-11 w-11 rounded-full ">
@@ -36,14 +42,8 @@
                  </div>
             </div>
             
-            {isOpen && <UserDropDown menuItems={menuItems}/>}
-             {/* <button className="flex text-[#0D767A] p-2 hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer"
-             onClick={() => setIsOpen(!isOpen)}>
-                 {label} {isOpen ? <ChevronUp color="#086B70" strokeWidth={3}/> 
-                                 : <ChevronDown color="#086B70" strokeWidth={3}/>}
-             </button>
- 
-             {isOpen && <UserDropDown menuItems={menuItems} />} */}
+            {isOpen && <NonLogUserDropDown menuItems={nonLoggedItems}/>}
+            {/* {isOpen && <UserDropDown menuItems={menuItems}/>} */}
          </div>
      );
  };

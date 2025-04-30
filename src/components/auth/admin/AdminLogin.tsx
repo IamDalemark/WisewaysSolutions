@@ -4,16 +4,23 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [keepSignedIn, setKeepSignedIn] = useState(false);
-  const router = useRouter();
+  const [loginMessage, setLoginMessage] = useState<string | null>(null); 
+  const [isSuccess, setIsSuccess] = useState<boolean | null>(null); 
+  
   const handleLogin = () => {
-    console.log("Logging in with", { email, password, keepSignedIn });
-    router.push("/admin/appointments");
+    if (email === "admin@example.com" && password === "correctpassword") {
+      setIsSuccess(true);
+      setLoginMessage("Login successful");
+    } else {
+      setIsSuccess(false);
+      setLoginMessage("Invalid credentials. Please try again.");
+    }
   };
 
   return (
@@ -35,6 +42,7 @@ const AdminLogin = () => {
         <Input
           type="email"
           placeholder="Enter your email"
+          data-testid="email-input"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
         />
@@ -70,6 +78,17 @@ const AdminLogin = () => {
           Keep Me Signed In
         </label>
       </div>
+
+      {loginMessage && (
+        <div
+          className={`text-center text-lg mt-3 ${
+            isSuccess ? "text-green-500" : "text-red-500"
+          }`}
+        >
+          {loginMessage}
+        </div>
+      )}
+
       <Button
         className="w-full bg-blue-green hover:bg-blue-green-dark"
         onClick={handleLogin}

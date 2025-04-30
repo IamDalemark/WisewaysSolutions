@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
+import AdminNavbar from "@/components/admin/AdminNavbar";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import "@/app/globals.css";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -21,15 +22,15 @@ export default function AdminDashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div
-      className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}
-    >
+    <div className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}>
       <SidebarProvider>
-        <AdminSidebar />
-        <main>
-          <SidebarTrigger />
-          {children}
-        </main>
+        <div className="flex">
+          <AdminSidebar />
+          <div className="flex-1 ml-[250px]"> 
+            <AdminNavbar />
+            <main className="mt-16 px-6">{children}</main> 
+          </div>
+        </div>
       </SidebarProvider>
     </div>
   );

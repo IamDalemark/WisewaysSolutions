@@ -10,13 +10,13 @@ type Button = "Services" | "About" | "Contact" | "Testimonial"
 const getNavButtonFromName = (navButtonName: Button) => {
     switch (navButtonName) {
         case "Services":
-            return <ServiceDropDownItem label="SERVICES"/>;
+            return <ServiceDropDownItem label="SERVICES" initialOpen={false}/>;
         case "About":
-            return <NonDropDownButton section="about" offset={-120} label="ABOUT"/>;
+            return <NonDropDownButton section="about" label="ABOUT"/>;
         case "Contact":
-            return <NonDropDownButton section="contact" offset={-120} label="CONTACT"/>;
+            return <NonDropDownButton section="contact" label="CONTACT"/>;
         case "Testimonial":
-            return <NonDropDownButton section="testimonial" offset={-75} label="TESTIMONIAL"/>;
+            return <NonDropDownButton section="testimonial" label="TESTIMONIAL"/>;
   };
 };
 
