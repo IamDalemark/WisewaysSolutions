@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 import "./globals.css";
-import NavBar from "@/components/navbar/NavBar";
+import NavBarWrapper from "@/components/navbar/NavBarWrapper";
 import { ModalProvider } from "@/components/contexts/ModalContext";
 import Modals from "@/components/modals/modals";
 import { UserProvider } from "@/components/contexts/UserContext";
@@ -30,7 +30,7 @@ export default function RootLayout({
       >
         <UserProvider>
           <ModalProvider>
-            <NavBar />
+            <NavBarWrapper />
             <Modals />
             {children}
           </ModalProvider>
