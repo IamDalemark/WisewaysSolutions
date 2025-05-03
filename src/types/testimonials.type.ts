@@ -29,3 +29,13 @@ export type SubmitTestimonialResult = {
   success: boolean;
   error?: string;
 };
+
+export interface TestimonialAdminData {
+  clientName: string;
+  email: string;
+  review: string;
+  rating: number;
+  status: string;
+
+  [key: string]: string | number;
+}

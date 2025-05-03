@@ -24,11 +24,11 @@ export default function AdminDashboardLayout({
   return (
     <div className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}>
       <SidebarProvider>
-        <div className="flex">
+        <div className="flex w-screen">
           <AdminSidebar />
-          <div className="flex-1 ml-[250px]"> 
+          <div className="flex-1"> 
             <AdminNavbar />
-            <main className="mt-16 px-6">{children}</main> 
+            <main className="mt-24 px-10 pt-6 w-full">{children}</main> 
           </div>
         </div>
       </SidebarProvider>
