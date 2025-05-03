@@ -26,8 +26,7 @@ const sendEmailToAdmin = async ({
       `<p>From ${name}, ${email}</p>
          <p>Please review! Here's what has been sent:</p>
          <blockquote>${testimonial}</blockquote>
-         <p>Rating: ${rating}/5</p>
-         <button>Accept</button>
+         <p>Rating: ${rating}/5</p
          <a href="http://localhost:3000/api/testimonials?testimonial_id=${testimonial_id}&is_approved=approved" ...>Accept</a>
          <a href="http://localhost:3000/api/testimonials?testimonial_id=${testimonial_id}&is_approved=rejected" ...>Reject</a>
          <p>— Wiseways Solutions</p>`
