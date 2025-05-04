@@ -1,10 +1,11 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { fetchTestimonials } from "@/hooks/fetchTestimonials";
+import { fetchTestimonials } from "@/app/hooks/admin/fetchTestimonials";
 import { TestimonialAdminData } from "@/types/testimonials.type";
 import StatusColumnButtons from "./StatusColumnButtons";
 import TableCellDropDown from "./TableCellDropDown";
+import { supabase } from "@/lib/supabaseClient";
 
 const columns = [
   { header: "Name", accessor: "name" },
@@ -17,17 +18,17 @@ const columns = [
 const maxLengths: Record<string, number> = {
   testimonial: 35,
   name: 20,
-  email: 25,
+  email: 30,
 };
 
 const AdminTableBody: React.FC = () => {
   const [error, setError] = useState("");
   const [testimonials, setTestimonials] = useState<TestimonialAdminData[]>([]);
-  const [statuses, setStatuses] = useState<Record<number, string>>({});
+  // const [statuses, setStatuses] = useState<Record<number, string>>({});
 
-  const handleStatusChange = (rowIdx: number, status: string) => {
-      setStatuses((prev) => ({ ...prev, [rowIdx]: status }));
-  };
+  // const handleStatusChange = (rowIdx: number, status: string) => {
+  //     setStatuses((prev) => ({ ...prev, [rowIdx]: status }));
+  // };
 
   useEffect(() => {
     const loadData = async () => {
@@ -42,6 +43,33 @@ const AdminTableBody: React.FC = () => {
     loadData();
   }, []);
 
+  useEffect(() => {
+    const channel = supabase
+      .channel("testimonials-updates")
+      .on(
+        "postgres_changes",
+        {
+          event: "UPDATE",
+          schema: "public",
+          table: "testimonial",
+        },
+        (payload) => {
+          const updated = payload.new as TestimonialAdminData;
+          setTestimonials((prev) =>
+            prev.map((t) =>
+              t.testimonial_id === updated.testimonial_id ? updated : t
+            )
+          );
+        }
+      )
+      .subscribe();
+  
+    return () => {
+      supabase.removeChannel(channel);
+    };
+  }, []);
+  
+
   if (error) {
     return (
       <tbody>
@@ -53,7 +81,7 @@ const AdminTableBody: React.FC = () => {
   }
 
   return (
-    <tbody className="text-center text-base w-full">
+    <tbody className="text-center text-sm w-full">
       {testimonials.map((row, rowIdx) => (
         <tr
         key={rowIdx}
@@ -70,27 +98,22 @@ const AdminTableBody: React.FC = () => {
               ? `${cellValue.slice(0, maxLength)}...`
               : cellValue;
 
-            return (
-              <td key={colIdx} className="px-4 py-2 text-center h-14">
-                { col.accessor === "is_approved" ? (
-                  statuses[rowIdx] ? (
-                    <span>{statuses[rowIdx]}</span>
+              return (
+                <td key={colIdx} className="px-4 py-2 text-center h-14">
+                  { col.accessor === "is_approved" ? (
+                    row.is_approved === "Accepted" || row.is_approved === "Declined" ? (
+                      <span>{row.is_approved}</span>
+                    ) : (
+                      <StatusColumnButtons rowId={row.testimonial_id} />
+                    )
+                  ) : shouldTruncate ? (
+                    <TableCellDropDown shortText={String(shortText)} fullText={cellValue} isReview={col.accessor === "testimonial"}/>
                   ) : (
-                    <StatusColumnButtons onChange={(status) => handleStatusChange(rowIdx, status)}/>
-                  )
-                ) : shouldTruncate ? (
-                  <TableCellDropDown shortText={shortText} fullText={cellValue} isReview={col.accessor === "testimonial"}/>
-                ) : (
-                  cellValue
-                )}
-              </td>
-            );
+                    cellValue
+                  )}
+                </td>
+              );
           })}
-          {/* <td className="px-4 py-2 text-center h-13">{testimonial.name}</td>
-          <td className="px-4 py-2 text-center h-13">{testimonial.email}</td>
-          <td className="px-4 py-2 text-center h-13">{testimonial.testimonial}</td>
-          <td className="px-4 py-2 text-center h-13">{testimonial.rating}</td>
-          <td className="px-4 py-2 text-center h-13">{testimonial.is_approved}</td> */}
         </tr>
       ))
       }

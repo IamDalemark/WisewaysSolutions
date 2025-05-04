@@ -30,7 +30,6 @@ const LandingPage = () => {
   return (
     //    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
     <main className="bg-[#E3E3E3]
-    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
     text-blue-green w-full h-full pt-36 lg:pt-32 static">
 
       {/* intro section */}

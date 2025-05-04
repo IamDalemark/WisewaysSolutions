@@ -28,7 +28,7 @@ export default function AdminDashboardLayout({
           <AdminSidebar />
           <div className="flex-1"> 
             <AdminNavbar />
-            <main className="mt-24 px-10 pt-6 w-full">{children}</main> 
+            <main className="mt-36 px-10 w-full">{children}</main> 
           </div>
         </div>
       </SidebarProvider>

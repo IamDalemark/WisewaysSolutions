@@ -41,7 +41,7 @@ const TableCellDropDown = ({ shortText, fullText, isReview }: Props) => {
       {isOpen && (
         <div 
           className={`absolute left-[50%] -translate-x-[50%] z-10 mt-1 bg-white text-[#0D767A] border 
-          rounded-md shadow-md px-5 py-3 text-sm ${isReview ? "w-80 text-left" : "w-64 text center break-all"}`}>
+          rounded-md shadow-md px-5 text-sm ${isReview ? "w-80 py-4 text-left" : "w-64 py-3 text-center text-wrap"}`}>
           {fullText}
         </div>
       )}

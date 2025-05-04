@@ -31,7 +31,7 @@ export type SubmitTestimonialResult = {
 };
 
 export interface TestimonialAdminData {
-  // id: number;
+  testimonial_id: string;
   name: string;
   email: string;
   testimonial: string;
