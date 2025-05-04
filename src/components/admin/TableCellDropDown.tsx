@@ -9,7 +9,7 @@ interface Props {
   isReview?: boolean;
 }
 
-const TableCellDropdown = ({ shortText, fullText, isReview }: Props) => {
+const TableCellDropDown = ({ shortText, fullText, isReview }: Props) => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -35,7 +35,7 @@ const TableCellDropdown = ({ shortText, fullText, isReview }: Props) => {
         className="text-[#0D767A] hover:text-[#FD8432] hover: flex justify-self-center items-center gap-1"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {shortText} {isOpen ? <ChevronUp size={16} /> : <ChevronDown size={16} />}
+        {shortText} {isOpen ? <ChevronUp size={16} strokeWidth={3} /> : <ChevronDown size={16} strokeWidth={3} />}
       </button>
 
       {isOpen && (
@@ -49,4 +49,4 @@ const TableCellDropdown = ({ shortText, fullText, isReview }: Props) => {
   );
 };
 
-export default TableCellDropdown;
+export default TableCellDropDown;

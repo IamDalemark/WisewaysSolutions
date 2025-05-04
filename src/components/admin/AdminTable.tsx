@@ -1,18 +1,18 @@
 import React from "react";
 import AdminTableBody from "./AdminTableBody";
-import { TestimonialAdminData } from "@/types/testimonials.type";
+// import { TestimonialAdminData } from "@/types/testimonials.type";
 
 export interface AdminTableColumn {
   header: string;
   accessor: string;
-}
+};
 
 export interface AdminTableProps {
   columns: AdminTableColumn[];
-  data: TestimonialAdminData[];
-}
+  // data: TestimonialAdminData[];
+};
 
-const AdminTable = ({ columns, data }: AdminTableProps) => {
+const AdminTable = ({ columns }: AdminTableProps) => {
   return (
     <div className="flex w-full h-full justify-center items-center mt-1">
       <table className="bg-[#f3f3f3] w-full rounded-xl">
@@ -31,7 +31,8 @@ const AdminTable = ({ columns, data }: AdminTableProps) => {
           </tr>
         </thead>
         
-        <AdminTableBody columns={columns} data={data} />
+        <AdminTableBody />
+        {/* <AdminTableBody columns={columns} data={data} /> */}
       </table>
     </div>
   );

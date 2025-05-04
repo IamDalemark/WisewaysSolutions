@@ -31,11 +31,10 @@ export type SubmitTestimonialResult = {
 };
 
 export interface TestimonialAdminData {
-  clientName: string;
+  // id: number;
+  name: string;
   email: string;
-  review: string;
-  rating: number;
-  status: string;
-
-  [key: string]: string | number;
+  testimonial: string;
+  rating: string;
+  is_approved: string;
 }
