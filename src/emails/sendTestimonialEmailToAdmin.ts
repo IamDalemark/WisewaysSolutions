@@ -1,7 +1,7 @@
 import { mailerSend, domain } from "@/lib/mailerSend";
 import { EmailParams, Recipient } from "mailersend";
 
-interface sendEmailToAdminProps {
+interface sendTestimonialEmailToAdminProps {
   testimonial_id: string;
   name: string;
   testimonial: string;
@@ -9,19 +9,19 @@ interface sendEmailToAdminProps {
   email?: string;
 }
 
-const sendEmailToAdmin = async ({
+const sendTestimonialEmailToAdmin = async ({
   testimonial_id,
   name,
   testimonial,
   rating,
   email,
-}: sendEmailToAdminProps) => {
+}: sendTestimonialEmailToAdminProps) => {
   const admin = [new Recipient("danielweg123@gmail.com", "wiegand")];
 
   const emailParams = new EmailParams()
     .setFrom(domain)
     .setTo(admin)
-    .setSubject("New testimonial!")
+    .setSubject(`New testimonial from ${name}`)
     .setHtml(
       `<p>From ${name}, ${email}</p>
          <p>Please review! Here's what has been sent:</p>
@@ -36,4 +36,4 @@ const sendEmailToAdmin = async ({
   await mailerSend.email.send(emailParams);
 };
 
-export default sendEmailToAdmin;
+export default sendTestimonialEmailToAdmin;

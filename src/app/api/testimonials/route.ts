@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
-import sendEmailToAdmin from "@/emails/sendEmailToAdmin";
+// import sendTestimonialEmailToAdmin from "@/emails/sendTestimonialEmailToAdmin";
 export const POST = async (request: Request) => {
   try {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,8 +30,13 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ error: error }, { status: 500 });
     }
 
-    const testimonial_id = data?.[0]?.testimonial_id;
-    sendEmailToAdmin({ name, testimonial, rating, email, testimonial_id });
+    // sendTestimonialEmailToAdmin({
+    //   name,
+    //   testimonial,
+    //   rating,
+    //   email,
+    //   testimonial_id,
+    // });
 
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {
