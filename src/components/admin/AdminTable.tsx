@@ -8,8 +8,7 @@ export interface AdminTableColumn {
 };
 
 export interface AdminTableProps {
-  columns: AdminTableColumn[];
-  // data: TestimonialAdminData[];
+  columns: AdminTableColumn[]; // for creating the headers
 };
 
 const AdminTable = ({ columns }: AdminTableProps) => {
@@ -32,7 +31,6 @@ const AdminTable = ({ columns }: AdminTableProps) => {
         </thead>
         
         <AdminTableBody />
-        {/* <AdminTableBody columns={columns} data={data} /> */}
       </table>
     </div>
   );
