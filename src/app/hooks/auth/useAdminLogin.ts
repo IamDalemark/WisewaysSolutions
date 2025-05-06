@@ -15,7 +15,6 @@ export async function signInAdmin(email: string, password: string) {
       .from("admin")
       .select("*");
 
-    console.log("Supabase response data:", data); 
     console.error("Supabase error:", error);
     if (error) {
       console.error("Supabase error:", error);

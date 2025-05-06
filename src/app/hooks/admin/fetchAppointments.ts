@@ -1,7 +1,7 @@
 import { supabase } from "@/lib/supabaseClient";
-import { BookingFormData } from "@/types/bookings.type";
+import { BookingAdminData, BookingFormData } from "@/types/bookings.type";
 
-export const fetchAppointments = async (): Promise<BookingFormData[]> => {
+export const fetchAppointments = async (): Promise<BookingAdminData[]> => {
   const { data, error } = await supabase
     .from("booking") 
     .select()
