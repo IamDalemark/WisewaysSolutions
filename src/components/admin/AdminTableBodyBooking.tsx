@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from "react";
 import { fetchAppointments } from "@/app/hooks/admin/fetchAppointments";
-import { BookingFormData } from "@/types/bookings.type";
+import { BookingAdminData } from "@/types/bookings.type";
 import StatusColumnButtonsAppointments from "./StatusColumnButtonsBooking";
 import TableCellDropDown from "./TableCellDropDown";
 import { supabase } from "@/lib/supabaseClient";
@@ -24,7 +24,7 @@ const maxLengths: Record<string, number> = {
 
 const AdminTableBodyBooking: React.FC = () => {
   const [error, setError] = useState("");
-  const [bookings, setBookings] = useState<BookingFormData[]>([]);
+  const [bookings, setBookings] = useState<BookingAdminData[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
@@ -50,7 +50,7 @@ const AdminTableBodyBooking: React.FC = () => {
           table: "booking",
         },
         (payload) => {
-          const updated = payload.new as BookingFormData;
+          const updated = payload.new as BookingAdminData;
           setBookings((prev) =>
             prev.map((b) =>
               b.booking_id === updated.booking_id ? updated : b
@@ -87,9 +87,8 @@ const AdminTableBodyBooking: React.FC = () => {
           }
         >
           {columns.map((col, colIdx) => {
-            let cellValue = row[col.accessor as keyof BookingFormData];
+            let cellValue = row[col.accessor as keyof BookingAdminData];
 
-            // Convert `date` to local string
             if (col.accessor === "date" && typeof cellValue === "string") {
               const dateObj = new Date(cellValue);
               cellValue = dateObj.toLocaleDateString(undefined, {

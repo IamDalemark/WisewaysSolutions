@@ -17,7 +17,20 @@ export type BookingDetails = {
   service: string;
 };
 
-export interface BookingFormData {
+export type BookingFormData = {
+  name: string;
+  email: string;
+  service: string;
+  date: string;
+  time: string;
+};
+
+export type SubmitBookingResult = {
+  success: boolean;
+  error?: string;
+};
+
+export interface BookingAdminData {
   booking_id: string;
   name: string;
   email: string;
@@ -27,9 +40,4 @@ export interface BookingFormData {
   status: string;
   created_at: string;
   managed_by: string;
-};
-
-export type SubmitBookingResult = {
-  success: boolean;
-  error?: string;
 };
