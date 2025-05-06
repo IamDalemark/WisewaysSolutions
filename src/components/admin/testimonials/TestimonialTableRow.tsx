@@ -1,8 +1,8 @@
 import React from "react";
-import StatusColumnButtons from "./StatusColumnButtons";
-import TableCellDropDown from "./TableCellDropDown";
+import TestimonialStatusButtons from "./TestimonialStatusButtons";
+import TableCellDropDown from "../TableCellDropDown";
 import { TestimonialAdminData } from "@/types/testimonials.type";
-import { testimonialColumns } from "@/app/admin/(dashboard)/testimonials/page";
+import { testimonialTableColumns } from "@/constants/adminTableColumns";
 
 type Props = {
   row: TestimonialAdminData;
@@ -15,12 +15,12 @@ const maxLengths: Record<string, number> = {
   email: 30,
 };
 
-const AdminTableRow: React.FC<Props> = ({row, isLastRow}) => {
+const TestimonialTableRow: React.FC<Props> = ({row, isLastRow}) => {
     return (
         <tr
         className={`${isLastRow ? "" : "border-b-neutral-300 border-b-1"}`}
         >
-          {testimonialColumns.map((col, colIdx) => {
+          {testimonialTableColumns.map((col, colIdx) => {
             const cellValue = row[col.accessor as keyof TestimonialAdminData];
             const maxLength = maxLengths[col.accessor] ?? Infinity;
 
@@ -37,7 +37,7 @@ const AdminTableRow: React.FC<Props> = ({row, isLastRow}) => {
                     row.is_approved === "Accepted" || row.is_approved === "Declined" ? (
                       <span>{row.is_approved}</span>
                     ) : (
-                      <StatusColumnButtons rowId={row.testimonial_id} />
+                      <TestimonialStatusButtons rowId={row.testimonial_id} />
                     )
                   ) : shouldTruncate ? (
                     <TableCellDropDown shortText={shortText} fullText={cellValue} isReview={col.accessor === "testimonial"}/>
@@ -51,5 +51,5 @@ const AdminTableRow: React.FC<Props> = ({row, isLastRow}) => {
     );
 };
 
-export default AdminTableRow;
+export default TestimonialTableRow;
 

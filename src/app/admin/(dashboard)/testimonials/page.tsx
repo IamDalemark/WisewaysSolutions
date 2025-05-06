@@ -1,13 +1,5 @@
 import AdminTable from "@/components/admin/AdminTable";
-// import { testimonialAdminData } from "@/mockData/testimonialAdminTable.sample";
-
-export const testimonialColumns = [
-  { header: "Name", accessor: "name" },
-  { header: "Email", accessor: "email" },
-  { header: "Review", accessor: "testimonial" },
-  { header: "Rating", accessor: "rating" },
-  { header: "Status", accessor: "is_approved" },
-];
+import { testimonialTableColumns } from "@/constants/adminTableColumns";
 
 const AdminTestimonialsPage = () => {
   return (
@@ -16,7 +8,7 @@ const AdminTestimonialsPage = () => {
         <p className="text-4xl font-bold">Testimonials</p>
         <button>Filter by</button>
       </div>
-      <AdminTable columns={testimonialColumns}/>
+      <AdminTable columns={testimonialTableColumns} table="Testimonials"/>
     </div>
   );
 };

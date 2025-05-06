@@ -1,6 +1,5 @@
 import React from "react";
-import AdminTableBody from "./AdminTableBody";
-// import { TestimonialAdminData } from "@/types/testimonials.type";
+import TestimonialTableBody from "./testimonials/TestimonialTableBody";
 
 export interface AdminTableColumn {
   header: string;
@@ -9,9 +8,10 @@ export interface AdminTableColumn {
 
 export interface AdminTableProps {
   columns: AdminTableColumn[]; // for creating the headers
+  table: "Appointments" | "Testimonials";
 };
 
-const AdminTable = ({ columns }: AdminTableProps) => {
+const AdminTable = ({ columns, table }: AdminTableProps) => {
   return (
     <div className="flex w-full h-full justify-center items-center mt-1">
       <table className="bg-[#f3f3f3] w-full rounded-xl">
@@ -30,7 +30,12 @@ const AdminTable = ({ columns }: AdminTableProps) => {
           </tr>
         </thead>
         
-        <AdminTableBody />
+        {table === "Testimonials" ? (
+          <TestimonialTableBody/>
+        ) : (
+          null
+        )
+        }
       </table>
     </div>
   );

@@ -1,12 +1,12 @@
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabaseClient";
 
 interface Props {
     rowId: string;
   }
 
-const StatusColumnButtons = ({ rowId }: Props) => {
-    const handleStatusChange = async (status: "Pending" | "Accepted" | "Declined") => {
+const TestimonialStatusButtons = ({ rowId }: Props) => {
+    const handleStatusChange = async (status: "Accepted" | "Declined") => {
         const { error } = await supabase
           .from("testimonial")
           .update({ is_approved: status })
@@ -36,4 +36,4 @@ const StatusColumnButtons = ({ rowId }: Props) => {
     );
 };
 
-export default StatusColumnButtons;
+export default TestimonialStatusButtons;
