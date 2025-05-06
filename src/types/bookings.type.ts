@@ -17,12 +17,16 @@ export type BookingDetails = {
   service: string;
 };
 
-export type BookingFormData = {
+export interface BookingFormData {
+  booking_id: string;
   name: string;
   email: string;
   service: string;
   date: string;
   time: string;
+  status: string;
+  created_at: string;
+  managed_by: string;
 };
 
 export type SubmitBookingResult = {
