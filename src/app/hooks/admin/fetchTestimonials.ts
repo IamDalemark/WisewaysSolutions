@@ -1,17 +1,24 @@
 
-import { supabase } from "@/lib/supabaseClient";
 import { TestimonialAdminData } from "@/types/testimonials.type";
 
 export const fetchTestimonials = async (): Promise<TestimonialAdminData[]> => {
-  const { data, error } = await supabase
-    .from("testimonial")
-    .select()
-    .order("submitted_at", { ascending: false });
+  try {
+    const response = await fetch("/api/admin/testimonials", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    
+    const result = await response.json();
 
-  if (error) {
-    console.error("Fetch error:", error.message);
-    throw new Error("Could not fetch testimonials");
+    if (!response.ok) {
+      throw new Error(result.error || "Failed to fetch testimonials");
+    }
+
+    return result as TestimonialAdminData[];
+  } catch (error) {
+    console.error("Fetch error:", error);
+    throw error;
   }
-
-  return data as TestimonialAdminData[];
 };
