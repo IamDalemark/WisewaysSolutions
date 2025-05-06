@@ -4,10 +4,10 @@ import { useState } from "react";
 export const useUpdateTestimonialStatus = () => {
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateStatus = async (id: string, status: "Accepted" | "Declined") => {
+  const updateStatus = async (id: string, status: "pending" | "Accepted" | "Declined") => {
     setIsUpdating(true);
     try {
-      const res = await fetch("/api/admin/testimonials", {
+      const response = await fetch("/api/admin/testimonials", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -15,9 +15,9 @@ export const useUpdateTestimonialStatus = () => {
         body: JSON.stringify({ id, status }),
       });
 
-      const result = await res.json();
+      const result = await response.json();
 
-      if (!res.ok) {
+      if (!response.ok) {
         throw new Error(result.error || "Failed to update status");
       }
 

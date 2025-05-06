@@ -36,8 +36,8 @@ export const PATCH = async (request: Request) => {
 
     const { error } = await supabase
       .from("testimonial")
-      .update({ status })
-      .eq("id", id);
+      .update({ is_approved: status })
+      .eq("testimonial_id", id);
 
     if (error) {
       console.error("Supabase update error:", error);
