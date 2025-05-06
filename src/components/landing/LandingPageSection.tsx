@@ -2,55 +2,74 @@
 
 import Image from "next/image";
 
-interface LandingPageProps {
+interface LandingPageSectionProps {
     id: string;
     heading?: string | React.ReactNode;
     title?: string | React.ReactNode;
-    titleSize?: string;
     subtitle?: string | React.ReactNode;
     imageSrc: string;
     altText: string;
     actionButton?: React.ReactNode;
+    titleClassName?: string;
+    subTitleClassName?: string;
   }
 
-// notes: if you want a prop to be optional, add '?' before the parameter name (e.g 'title?: string')
-// if you want to pass a class style as a prop make sure to use the quotation format:
-// className={`style1 style2 style3 ${styleprop}`}
-
-const LandingPageSection = ({ id, heading, title, subtitle, imageSrc, altText, actionButton }: LandingPageProps) => {
+const LandingPageSection = ({ 
+    id, 
+    heading, 
+    title, 
+    subtitle, 
+    imageSrc, 
+    altText, 
+    actionButton,
+    titleClassName,
+    subTitleClassName
+    }: LandingPageSectionProps) => {
     return (
-        <div id={id} className="text-blue-green flex-col h-full sm:content-center lg:max-h-screen mx-[6%] pb-[20%]">
+        <section 
+            id={id} 
+            className="text-blue-green flex-col h-full sm:content-center lg:max-h-screen mx-[6%] pb-[150]"
+        >
+            {heading && (
+                <h2 className="flex text-5xl lg:text-6xl font-bold text-center justify-self-center">
+                    {heading}
+                </h2>
+            )}
 
-            <div className="flex text-5xl lg:text-6xl font-bold text-center justify-self-center mb-[3%]">
-                {heading}
-            </div>
-
-            <div className="md:flex pt-4 items-center">
-
-                <div className="sm:w-[100%] md:w-[50%] text-wrap px-4 content-center">
-                    <div className="text-3xl sm:text-4xl lg:text-5xl text-center font-medium leading-[1.1] pb-4">
-                        {title}
-                    </div>
-                    <div className="text-md text-left lg:text-xl mb-[8%]">
-                        {subtitle}
-                    </div>
-
+            <div className="flex flex-col md:flex-row pt-10 items-center">
+                {/* Text Section */}
+                <div className="w-full md:w-[50%] px-4">
+                    {title && (
+                        <h3 className={`${titleClassName || "text-3xl sm:text-4xl lg:text-5xl font-medium"} text-center leading-[1.1] pb-4`}>
+                            {title}
+                        </h3>
+                    )}
+                    {subtitle && (
+                        <h5 className={`${subTitleClassName} text-md lg:text-xl text-left mb-[8%] break-words`}>
+                            {subtitle}
+                        </h5>
+                    )}
                     {actionButton &&
-                    <div className="justify-self-center justify-items-center mb-8">
+                        <div className="flex justify-center mb-8 md:hidden">
                             {actionButton}
-                    </div>
+                        </div>
                     }
-
                 </div>
-            
-                <div className="justify-self-center self-center w-[90%] md:w-[50%]"> {/* 2:3 image ratio */}
-                    <Image src={imageSrc} alt={altText} height={400} width={600}>
-                    </Image>
+
+                {/* Image Section */}
+                <div className="w-full md:w-[50%] justify-self-center self-center"> {/* 2:3 image ratio */}
+                    <Image 
+                        src={imageSrc} 
+                        alt={altText} 
+                        height={400} 
+                        width={600} 
+                        className="object-contain max-w-full h-auto justify-self-center" 
+                    />
                 </div>
 
             </div>
 
-        </div>
+        </section>
     );
 };
 

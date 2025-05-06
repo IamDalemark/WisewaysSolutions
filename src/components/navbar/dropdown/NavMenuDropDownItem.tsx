@@ -29,7 +29,7 @@ const NavMenuDropDownItem = ({ initialOpen }: Props) => {
     }, [isMenuOpen]);
 
     return (
-        <div ref={dropdownRef} className="md:w-2/10 my-auto px-[10%] sm:px-[5%] lg:hidden justify-center cursor-pointer">
+        <div ref={dropdownRef} className="w-15 md:w-[15%] my-auto px-[10%] sm:px-[2%] lg:hidden justify-center cursor-pointer">
             <Menu color="#086B70" size={35} strokeWidth={2.5} 
             className="justify-self-center hover:stroke-[#FD8432] hover:scale-110 transition-all"
             onClick={() => setIsMenuOpen(prev => !prev)}/>

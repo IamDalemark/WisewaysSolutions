@@ -8,6 +8,7 @@ type MenuItem = {
 };
 
 interface Props {
+    
     menuItems: MenuItem[];
 }
 

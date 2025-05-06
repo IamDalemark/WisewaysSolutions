@@ -24,7 +24,7 @@ const ContactDetail = ({iconName, description}: ContactDetailProp) => {
     const icon = getIconFromName(iconName);
 
     return (
-        <div className="flex my-[3%] lg:my-[6%]">
+        <div className="flex my-[3%] lg:my-[5%]">
             {icon}
             <p className="ml-6 md:ml-3 text-md lg:text-xl font-medium">{description}</p>
         </div>
