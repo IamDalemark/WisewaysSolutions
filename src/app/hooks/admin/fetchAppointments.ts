@@ -1,16 +1,23 @@
-import { supabase } from "@/lib/supabaseClient";
-import { BookingAdminData} from "@/types/bookings.type";
+import { BookingAdminData } from "@/types/bookings.type";
 
-export const fetchAppointments = async (): Promise<BookingAdminData[]> => {
-  const { data, error } = await supabase
-    .from("booking") 
-    .select()
-    .order("date", { ascending: true });
+export const fetchAppointments= async (): Promise<BookingAdminData[]> => { 
+  try {
+    const response = await fetch("/api/admin/appointments", { 
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    
+    const result = await response.json();
 
-  if (error) {
-    console.error("Fetch error:", error.message);
-    throw new Error("Could not fetch appointments");
+    if (!response.ok) {
+      throw new Error(result.error || "Failed to fetch appointments"); 
+    }
+
+    return result as BookingAdminData[]; 
+  } catch (error) {
+    console.error("Fetch error:", error);
+    throw error;
   }
-
-  return data as BookingAdminData[];
 };
