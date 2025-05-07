@@ -55,7 +55,7 @@ export const GET = async (request: Request) => {
 
   if (
     !testimonial_id ||
-    !["approved", "rejected"].includes(is_approved || "")
+    !["Accepted", "Declined"].includes(is_approved || "")
   ) {
     return NextResponse.json({ error: "Invalid parameters" }, { status: 400 });
   }

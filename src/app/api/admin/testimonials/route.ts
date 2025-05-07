@@ -12,13 +12,19 @@ export const GET = async () => {
 
     if (error) {
       console.error("Supabase fetch error:", error);
-      return NextResponse.json({ error: "Failed to fetch testimonials" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to fetch testimonials" },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json(data, { status: 200 });
   } catch (error) {
     console.error("Server error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 };
 
@@ -41,16 +47,18 @@ export const PATCH = async (request: Request) => {
 
     if (error) {
       console.error("Supabase update error:", error);
-      return NextResponse.json({ error: "Failed to update status" }, { status: 500 });
+      return NextResponse.json(
+        { error: "Failed to update status" },
+        { status: 500 }
+      );
     }
 
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {
     console.error("Server error:", error);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
   }
 };
-
-
-  
-

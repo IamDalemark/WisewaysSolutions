@@ -27,8 +27,8 @@ const sendTestimonialEmailToAdmin = async ({
          <p>Please review! Here's what has been sent:</p>
          <blockquote>${testimonial}</blockquote>
          <p>Rating: ${rating}/5</p
-         <a href="http://localhost:3000/api/testimonials?testimonial_id=${testimonial_id}&is_approved=approved" ...>Accept</a>
-         <a href="http://localhost:3000/api/testimonials?testimonial_id=${testimonial_id}&is_approved=rejected" ...>Reject</a>
+         <a href="http://localhost:3000/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Accepted" ...>Accept</a>
+         <a href="http://localhost:3000/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Declined" ...>Decline</a>
          <p>— Wiseways Solutions</p>`
     )
     .setText("- Wiseways Solutions");
