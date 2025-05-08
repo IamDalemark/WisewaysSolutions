@@ -2,12 +2,24 @@ import { useEffect } from "react";
 
 interface CalendlyInlineWidgetProps {
   data_url: string;
+  height?: string;
+  maxWidth?: string;
+  marginTop?: string;
 }
 
-const CalendlyInlineWidget = ({ data_url }: CalendlyInlineWidgetProps) => {
+const CalendlyInlineWidget = ({
+  data_url,
+  height = "700px",
+  maxWidth = "100%",
+  marginTop = "0px",
+}: CalendlyInlineWidgetProps) => {
   const calendlyWidgetStyle: React.CSSProperties = {
     minWidth: "320px",
-    height: "700px",
+    maxWidth: maxWidth,
+    width: "100%",
+    height: height,
+    maxHeight: "100%",
+    marginTop: marginTop,
   };
   useEffect(() => {
     const script = document.createElement("script");

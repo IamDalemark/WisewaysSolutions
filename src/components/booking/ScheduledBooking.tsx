@@ -3,9 +3,15 @@ import CalendlyInlineWidget from "../calendly/InlineWidget";
 
 interface ScheduledBookingProps {
   invitee_id: string | null;
+  onHandleReschedule: () => void;
+  onHandleCancellation: () => void;
 }
 
-const ScheduledBooking = ({ invitee_id }: ScheduledBookingProps) => {
+const ScheduledBooking = ({
+  invitee_id,
+  onHandleReschedule,
+  onHandleCancellation,
+}: ScheduledBookingProps) => {
   if (!invitee_id) {
     return (
       <div className="w-full mx-auto h-full">
@@ -18,6 +24,25 @@ const ScheduledBooking = ({ invitee_id }: ScheduledBookingProps) => {
 
   return (
     <div className="w-full mx-auto h-full">
+      <div className="flex flex-col items-center text-center space-y-4 mt-20">
+        <h1 className="text-2xl font-semibold text-gray-800">
+          Do you want to make some changes?
+        </h1>
+        <div className="flex flex-wrap justify-center gap-4">
+          <button
+            className="px-6 py-2 bg-teal-700 hover:bg-teal-800 text-white rounded-2xl shadow transition-all duration-200"
+            onClick={onHandleReschedule}
+          >
+            Reschedule
+          </button>
+          <button
+            className="px-6 py-2 bg-red-500 hover:bg-teal-800 text-white rounded-2xl shadow transition-all duration-200"
+            onClick={onHandleCancellation}
+          >
+            Cancel
+          </button>
+        </div>
+      </div>
       <CalendlyInlineWidget
         data_url={`https://calendly.com/francyamada1983/30min/invitees/${invitee_id}`}
       />
