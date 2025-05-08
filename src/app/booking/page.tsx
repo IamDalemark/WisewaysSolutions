@@ -7,6 +7,7 @@ import { useGetBooking } from "../hooks/bookings/useGetBooking";
 import ScheduledBooking from "@/components/booking/ScheduledBooking";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import CancelBooking from "@/components/booking/CancelBooking";
+import RescheduleBooking from "@/components/booking/RescheduleBooking";
 
 const BookingPage = () => {
   const { user } = useUser();
@@ -48,7 +49,12 @@ const BookingPage = () => {
           />
         );
       case 1:
-        return;
+        return (
+          <RescheduleBooking
+            invitee_id={booking!.invitee_id}
+            onHandleReturn={() => setCurrentState(0)}
+          />
+        );
       case 2:
         return (
           <CancelBooking

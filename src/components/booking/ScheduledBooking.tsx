@@ -23,9 +23,9 @@ const ScheduledBooking = ({
   }
 
   return (
-    <div className="w-full mx-auto h-full">
-      <div className="flex flex-col items-center text-center space-y-4 mt-20">
-        <h1 className="text-2xl font-semibold text-gray-800">
+    <div className="w-full mx-auto">
+      <div className="flex flex-col items-center text-center space-y-4 mt-32 mb-6">
+        <h1 className="text-lg font-bold text-gray-800">
           Do you want to make some changes?
         </h1>
         <div className="flex flex-wrap justify-center gap-4">
