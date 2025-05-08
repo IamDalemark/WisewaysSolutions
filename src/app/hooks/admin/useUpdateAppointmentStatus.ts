@@ -1,10 +1,12 @@
-
 import { useState } from "react";
 
 export const useUpdateAppointmentStatus = () => {
   const [isUpdating, setIsUpdating] = useState(false);
 
-  const updateStatus = async (id: string, status: "pending" | "Accepted" | "Declined") => {
+  const updateStatus = async (
+    id: string,
+    status: "pending" | "Accepted" | "Declined"
+  ) => {
     setIsUpdating(true);
     try {
       const response = await fetch("/api/admin/appointments", {
@@ -14,7 +16,7 @@ export const useUpdateAppointmentStatus = () => {
         },
         body: JSON.stringify({ id, status }),
       });
-
+      console.log(id, status);
       const result = await response.json();
 
       if (!response.ok) {
@@ -24,7 +26,10 @@ export const useUpdateAppointmentStatus = () => {
       return { success: true };
     } catch (error) {
       console.error("Error updating status:", error);
-      return { success: false, error: error instanceof Error ? error.message : "Unknown error" };
+      return {
+        success: false,
+        error: error instanceof Error ? error.message : "Unknown error",
+      };
     } finally {
       setIsUpdating(false);
     }
