@@ -1,11 +1,12 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import CalendlyScheduler from "@/components/booking/CalendlyScheduler";
-import BookingPageContent from "@/components/booking/BookingPageContent";
+import BookingPageLanding from "@/components/booking/BookingPageLanding";
 import { useUser } from "@/components/contexts/UserContext";
 import { useGetBooking } from "../hooks/bookings/useGetBooking";
 import ScheduledBooking from "@/components/booking/ScheduledBooking";
 import { AlertTriangle, Loader2 } from "lucide-react";
+import CancelBooking from "@/components/booking/CancelBooking";
 
 const BookingPage = () => {
   const { user } = useUser();
@@ -13,6 +14,7 @@ const BookingPage = () => {
   const { booking, error, isFetching } = useGetBooking(userID ?? "");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [currentState, setCurrentState] = useState(0);
 
   const [hasBooking, setHasBooking] = useState(false);
   const [isSchedulingBooking, setIsSchedulingBooking] = useState(false);
@@ -33,6 +35,28 @@ const BookingPage = () => {
   const handleBookingConfirmation = () => {
     setIsSchedulingBooking(false);
     setUserID(user!.id);
+  };
+
+  const renderScheduledBooking = () => {
+    switch (currentState) {
+      case 0:
+        return (
+          <ScheduledBooking
+            invitee_id={booking!.invitee_id}
+            onHandleReschedule={() => setCurrentState(1)}
+            onHandleCancellation={() => setCurrentState(2)}
+          />
+        );
+      case 1:
+        return;
+      case 2:
+        return (
+          <CancelBooking
+            invitee_id={booking!.invitee_id}
+            onHandleReturn={() => setCurrentState(0)}
+          />
+        );
+    }
   };
 
   if (!user || isFetching) {
@@ -69,7 +93,7 @@ const BookingPage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#E1E1E1]">
-      <div className="mt-20 w-full max-w-6xl">
+      <div className="h-full w-full">
         {isSchedulingBooking ? (
           <CalendlyScheduler
             name={name}
@@ -78,9 +102,9 @@ const BookingPage = () => {
             onSubmit={handleBookingConfirmation}
           />
         ) : hasBooking ? (
-          <ScheduledBooking invitee_id={booking!.invitee_id} />
+          renderScheduledBooking()
         ) : (
-          <BookingPageContent
+          <BookingPageLanding
             onStartBookingProcess={() => setIsSchedulingBooking(true)}
           />
         )}
