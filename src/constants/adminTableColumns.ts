@@ -1,5 +1,5 @@
 export const testimonialTableColumns = [
-    { header: "Name", accessor: "name" },
+    { header: "User", accessor: "name" },
     { header: "Email", accessor: "email" },
     { header: "Review", accessor: "testimonial" },
     { header: "Rating", accessor: "rating" },

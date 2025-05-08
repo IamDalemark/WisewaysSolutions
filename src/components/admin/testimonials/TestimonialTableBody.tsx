@@ -61,7 +61,7 @@ const TestimonialTableBody: React.FC = () => {
   }
 
   return (
-    <tbody className="text-center text-sm w-full">
+    <tbody className="w-full">
       {testimonials.map((row, rowIdx) => (
         <TestimonialTableRow key={row.testimonial_id} row={row} isLastRow={rowIdx === testimonials.length - 1} />
       ))

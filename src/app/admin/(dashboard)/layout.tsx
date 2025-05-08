@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter, Inter_Tight } from "next/font/google";
 import AdminNavbar from "@/components/admin/AdminNavbar";
-import AdminSidebar from "@/components/admin/AdminSidebar";
+// import AdminSidebar from "@/components/admin/AdminSidebar";
 import "@/app/globals.css";
 import { SidebarProvider } from "@/components/ui/sidebar";
 
@@ -22,13 +22,14 @@ export default function AdminDashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}>
+    <div className={`${inter.className} ${interTight.className} 
+    bg-gray-white antialiased sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300`}>
       <SidebarProvider>
         <div className="flex w-screen">
-          <AdminSidebar />
+          {/* <AdminSidebar /> */}
           <div className="flex-1"> 
             <AdminNavbar />
-            <main className="mt-36 px-10 w-full">{children}</main> 
+            <main className="mt-36 px-5 md:px-15 w-full">{children}</main> 
           </div>
         </div>
       </SidebarProvider>

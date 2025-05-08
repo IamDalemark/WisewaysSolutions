@@ -32,23 +32,27 @@ const TableCellDropDown = ({ shortText, fullText, isReview }: Props) => {
   return (
     <div className="relative" ref={dropdownRef}>
       <button
-        className="text-[#0D767A] hover:text-[#FD8432] hover: flex justify-self-center items-center gap-1"
+        className="flex w-full text-left hover:text-[#FD8432] hover:scale-105 transition-all cursor-pointer 
+        justify-self-start justify-between items-center gap-1"
         onClick={() => setIsOpen(!isOpen)}
       >
-        {shortText} {isOpen ? <ChevronUp size={16} strokeWidth={3} /> : <ChevronDown size={16} strokeWidth={3} />}
+        {shortText}
+        <div className="w-[10%]">
+          {isOpen ? <ChevronUp size={16} strokeWidth={3} /> : <ChevronDown size={16} strokeWidth={3} />}
+        </div>
       </button>
-
+      
       {isOpen && (
         <div 
-          className={`absolute left-[50%] -translate-x-[50%] z-10 mt-1 bg-white text-[#0D767A] border 
-          rounded-md shadow-md text-sm ${isReview ? "pl-5 pr-2 w-80" : "px-5 w-64"} overflow-hidden`}
+          className={`absolute z-10 mt-2 bg-white text-[#0D767A] border 
+          rounded-md shadow-md text-sm ${isReview ? "-left-[40%] sm:left-[50%] sm:-translate-x-[50%] pl-5 pr-2 py-4 w-80" : "px-5 py-3 w-64"} overflow-hidden`}
         >
-          <div className={`${isReview ? "pr-3 py-4 text-left max-h-50" : "py-3 text-center text-wrap"} overflow-auto`}>
+          <div className={`${isReview ? "pr-3 text-left max-h-70 md:max-h-50" : "text-center text-wrap"} overflow-auto`}>
             {fullText}
           </div>
         </div>
       )}
-    </div>
+    </div> // left-[50%] -translate-x-[50%]
   );
 };
 
