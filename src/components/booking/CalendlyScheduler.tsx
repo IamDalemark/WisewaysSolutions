@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import { useSubmitBooking } from "@/app/hooks/bookings/useSubmitBooking";
 import CalendlyInlineWidget from "../calendly/InlineWidget";
 import { Loader2 } from "lucide-react";
+import { useModal } from "../contexts/ModalContext";
 
-interface DateAndTimeSelectionProps {
+interface CalendlySchedulerProps {
   user_id: string;
   name: string;
   email: string;
@@ -16,13 +17,14 @@ const CalendlyScheduler = ({
   name,
   email,
   onSubmit,
-}: DateAndTimeSelectionProps) => {
-  const [service, setService] = useState("Any");
+}: CalendlySchedulerProps) => {
   const { submitBooking, isSubmitting } = useSubmitBooking();
+  const { fromService } = useModal();
+  const [service, setService] = useState("Any");
 
   // Set up event listener for Calendly events
   useEffect(() => {
-    setService("Any for now.");
+    setService(fromService);
 
     // Set up event listener for Calendly events
     const handleCalendlyMessage = (e: MessageEvent) => {
@@ -96,7 +98,7 @@ const CalendlyScheduler = ({
     <div className="w-full mx-auto h-full">
       <CalendlyInlineWidget
         data_url={`https://calendly.com/${process.env
-          .NEXT_PUBLIC_CALENDLY_EMAIL!}/30min?back=1&hide_gdpr_banner=1&name=${name}&email=${email}`}
+          .NEXT_PUBLIC_CALENDLY_EMAIL!}/30min?back=1&hide_gdpr_banner=1&name=${name}&email=${email}&a1=${service}`}
       />
     </div>
   );
