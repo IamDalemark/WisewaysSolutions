@@ -1,4 +1,5 @@
 "use client";
+import { useToast } from "@/components/contexts/ToastContext";
 import { useUser } from "@/components/contexts/UserContext";
 import { supabase } from "@/lib/supabaseClient";
 import { Loader2 } from "lucide-react";
@@ -20,6 +21,7 @@ interface ResetPasswordForm {
 
 export default function ResetPasswordPage() {
   const router = useRouter();
+  const { addToast } = useToast();
   const { changingPassword } = useUser();
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<ResetPasswordErrors>({});
@@ -84,10 +86,12 @@ export default function ResetPasswordPage() {
         password: resetForm.password,
       });
       if (result.error) {
-        setErrors({ general: result.error.message });
-      } else {
-        router.push("/");
+        addToast(result.error.message, "error");
+        setLoading(false);
+        return;
       }
+      addToast("Change Password Successful!", "success");
+      router.push("/");
     } else {
       const emailValidationErrors = validateEmail();
       setErrors(emailValidationErrors);
@@ -97,8 +101,11 @@ export default function ResetPasswordPage() {
       }
       const result = await supabase.auth.resetPasswordForEmail(resetForm.email);
       if (result.error) {
-        setErrors({ general: result.error.message });
+        addToast(result.error.message, "error", 10000);
+        setLoading(false);
+        return;
       }
+      addToast("Verification Email Sent!", "success");
     }
     setLoading(false);
   };
@@ -108,7 +115,7 @@ export default function ResetPasswordPage() {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black/50">
       <div className="bg-white rounded-3xl shadow-lg p-8 max-w-md w-full relative border border-gray-200">
         <button
           onClick={onHandleCancel}

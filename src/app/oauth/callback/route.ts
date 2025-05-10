@@ -7,7 +7,9 @@ export async function GET(req: NextRequest) {
   const code = url.searchParams.get("code");
   console.log(code);
   if (!code) {
-    return Response.redirect("http://localhost:3000/admin/login?error=missing_code");
+    return Response.redirect(
+      "http://localhost:3000/admin/login?error=missing_code"
+    );
   }
 
   try {
@@ -26,15 +28,16 @@ export async function GET(req: NextRequest) {
         },
       }
     );
-    (await cookies()).set("calendly_access_token", tokenRes.data.access_token,  {
+    (await cookies()).set("calendly_access_token", tokenRes.data.access_token, {
       httpOnly: true,
       path: "/",
-  
     });
     console.log("Token response:", tokenRes.data);
     return NextResponse.redirect("http://localhost:3000/admin/testimonials");
   } catch (err) {
     console.error("Calendly login error:", err);
-    return Response.redirect("http://localhost:3000/admin/login?error=oauth_failed");
+    return Response.redirect(
+      "http://localhost:3000/admin/login?error=oauth_failed"
+    );
   }
 }

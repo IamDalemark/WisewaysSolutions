@@ -20,10 +20,7 @@ const TestimonialSection = () => {
   };
 
   return (
-    <div
-      id="testimonial"
-      className="w-[90vw] justify-self-center p-4 z-0"
-    >
+    <div id="testimonial" className="w-[90vw] justify-self-center p-4 z-0">
       <div className="place-content-center md:pb-12">
         <div className="justify-self-center text-center text-5xl lg:text-6xl font-bold leading-[1.1]">
           What Our Customers Say

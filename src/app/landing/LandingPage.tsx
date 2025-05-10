@@ -76,8 +76,7 @@ const LandingPage = () => {
             Learn More About
             <span className="text-[#FD8432] font-extrabold ml-3">
               Wiseways
-            </span>
-            {" "}
+            </span>{" "}
           </p>
         }
         subtitle="At Wiseways, we believe in progress with purpose. We don’t just adapt to the digital world,

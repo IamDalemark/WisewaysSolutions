@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import useSignInAdmin from "../hooks/auth/useAdminLogin";
 
 interface LogInErrors {
   email?: string;
@@ -15,9 +16,9 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<LogInErrors>({});
-  const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showCalendlyConnect, setShowCalendlyConnect] = useState(false);
+  const { signInAdmin, loginLoading } = useSignInAdmin();
 
   const router = useRouter();
 
@@ -36,39 +37,15 @@ export default function AdminLoginPage() {
     const validationErrors = validate();
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
+    
+    const result = await signInAdmin(email, password);
 
-    setIsLoading(true);
-
-    try {
-      const res = await fetch("/api/adminlogin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
-
-      const result = await res.json();
-      setIsLoading(false);
-
-      if (!res.ok || !result.success) {
-        setErrors({ general: result.message || "Login failed" });
+    if (result?.success) {
+      setSuccessMessage("Login successful!");
+      setShowCalendlyConnect(true);
+      setTimeout(() => {
         setSuccessMessage(null);
-      } else {
-        localStorage.setItem("token", result.token);
-        setSuccessMessage("Login successful!");
-        
-        setShowCalendlyConnect(true);
-        
-        setTimeout(() => {
-          setSuccessMessage(null);
-        }, 3000);
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      setIsLoading(false);
-      setErrors({ general: "Something went wrong. Please try again." });
-      setSuccessMessage(null);
+      }, 3000);
     }
   };
 
@@ -101,7 +78,9 @@ export default function AdminLoginPage() {
               </div>
             )}
             <div>
-              <label className="block text-teal-700 font-medium mb-1">Email</label>
+              <label className="block text-teal-700 font-medium mb-1">
+                Email
+              </label>
               <input
                 type="text"
                 name="email"
@@ -116,7 +95,9 @@ export default function AdminLoginPage() {
             </div>
 
             <div>
-              <label className="block text-teal-700 font-medium mb-1">Password</label>
+              <label className="block text-teal-700 font-medium mb-1">
+                Password
+              </label>
               <input
                 type={showPassword ? "text" : "password"}
                 name="password"
@@ -143,10 +124,10 @@ export default function AdminLoginPage() {
 
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={loginLoading}
               className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
             >
-              {isLoading ? (
+              {loginLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Logging In...

@@ -9,12 +9,14 @@ type ModalProps = {
   email?: string;
   password?: string;
   confirmPassword?: string;
+  acceptedTerms?: boolean;
   showPassword?: boolean;
   validationErrors?: {
     username?: string;
     email?: string;
     password?: string;
     confirmPassword?: string;
+    acceptedTerms?: boolean;
     general?: string;
   };
 };
@@ -30,8 +32,10 @@ interface StorybookModalProviderProps {
     email?: string;
     password?: string;
     confirmPassword?: string;
+    acceptedTerms?: boolean;
     general?: string;
   };
+  fromService: string;
 }
 
 export const StorybookModalProvider = ({
@@ -39,12 +43,14 @@ export const StorybookModalProvider = ({
   modalProps,
   showValidationErrors = false,
   validationErrors = {},
+  fromService = "Any.",
 }: StorybookModalProviderProps) => {
   const [signUpFormState, setSignUpFormState] = useState({
     username: modalProps.username || "",
     email: modalProps.email || "",
     password: modalProps.password || "",
     confirmPassword: modalProps.confirmPassword || "",
+    acceptedTerms: modalProps.acceptedTerms || false,
   });
 
   const [loginFormState, setLoginFormState] = useState({
@@ -97,6 +103,7 @@ export const StorybookModalProvider = ({
         loginForm: loginFormState,
         setSignUpForm: setSignUpFormState,
         setLoginForm: setLoginFormState,
+        fromService: fromService,
       }}
     >
       {children}

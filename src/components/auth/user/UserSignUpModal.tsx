@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useModal } from "@/components/contexts/ModalContext";
 import { Loader2 } from "lucide-react";
+import TermsAndConditions from "./TermsAndConditions";
 
 export interface UserSignUpModalProps {
   show: boolean;
@@ -14,6 +15,7 @@ export interface UserSignUpModalProps {
   password?: string;
   confirmPassword?: string;
   showPassword?: boolean;
+  acceptedTerms?: boolean;
   validationErrors?: {
     username?: string;
     email?: string;
@@ -29,6 +31,7 @@ interface SignUpErrors {
   password?: string;
   confirmPassword?: string;
   general?: string;
+  acceptedTerms?: string;
 }
 
 const UserSignUpModal = ({
@@ -38,6 +41,7 @@ const UserSignUpModal = ({
   email = "",
   password = "",
   confirmPassword = "",
+  acceptedTerms = false,
   showPassword = false,
   validationErrors = {},
 }: UserSignUpModalProps) => {
@@ -49,12 +53,13 @@ const UserSignUpModal = ({
     handleSignUp: contextSignUp,
     closeSignUpModal,
     openLogInModal: contextOpenLogInModal,
-  } = useModal(); // Use ModalContext
+  } = useModal();
 
-  // Initialize with any validation errors passed as props
   const [errors, setErrors] = useState<SignUpErrors>({
     ...validationErrors,
   });
+
+  const [showingTerms, setShowingTerms] = useState(false);
 
   useEffect(() => {
     setSignUpForm({
@@ -62,11 +67,11 @@ const UserSignUpModal = ({
       email: email || "",
       password: password || "",
       confirmPassword: confirmPassword || "",
+      acceptedTerms: acceptedTerms || false,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [username, email, password, confirmPassword]);
+  }, [username, email, password, confirmPassword, acceptedTerms]);
 
-  // Update errors when validationErrors prop changes
   useEffect(() => {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
@@ -79,17 +84,22 @@ const UserSignUpModal = ({
       signUpForm.email === "" &&
       signUpForm.password === "" &&
       signUpForm.confirmPassword === "" &&
+      signUpForm.acceptedTerms === false &&
       !show
     ) {
+      setShowingTerms(false);
       setErrors({});
     }
   }, [signUpForm, show]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setSignUpForm((prev) => ({ ...prev, [name]: value }));
+    const { name, type, value, checked } = e.target;
 
-    // Clear specific error when user starts typing in a field
+    setSignUpForm((prev) => ({
+      ...prev,
+      [name]: type === "checkbox" ? checked : value,
+    }));
+
     if (errors[name as keyof SignUpErrors]) {
       setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
@@ -105,6 +115,8 @@ const UserSignUpModal = ({
     if (!signUpForm.password) newErrors.password = "Password is required.";
     if (!signUpForm.confirmPassword)
       newErrors.confirmPassword = "Please confirm your password.";
+    if (!signUpForm.acceptedTerms)
+      newErrors.acceptedTerms = "You need to accept the terms.";
     if (
       signUpForm.password &&
       signUpForm.confirmPassword &&
@@ -115,6 +127,7 @@ const UserSignUpModal = ({
     if (signUpForm.password && signUpForm.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters.";
     }
+
     return newErrors;
   };
 
@@ -130,6 +143,11 @@ const UserSignUpModal = ({
     }
   };
 
+  const handleAcceptTerms = () => {
+    signUpForm.acceptedTerms = true;
+    setShowingTerms(false);
+  };
+
   if (!showSignUpModal && !show) return null;
 
   return (
@@ -141,110 +159,150 @@ const UserSignUpModal = ({
         >
           &times;
         </button>
-        <h2 className="text-2xl font-semibold text-center text-teal-700 mb-6">
-          Create Account
-        </h2>
+        {showingTerms ? (
+          <TermsAndConditions
+            onHandleAccept={handleAcceptTerms}
+            onHandleCancel={() => setShowingTerms(false)}
+          />
+        ) : (
+          <>
+            <h2 className="text-2xl font-semibold text-center text-teal-700 mb-2">
+              Create Account
+            </h2>
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          {errors.general && (
-            <div className="text-red-500 text-center mb-2">
-              {errors.general}
+            <form className="space-y-3" onSubmit={handleSubmit}>
+              {errors.general && (
+                <div className="text-red-500 text-center mb-2">
+                  {errors.general}
+                </div>
+              )}
+              <div>
+                <label className="block text-teal-700 font-medium mb-1">
+                  Username
+                </label>
+                <input
+                  type="text"
+                  name="username"
+                  value={signUpForm.username}
+                  onChange={handleChange}
+                  placeholder="Enter username"
+                  className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                />
+                {errors.username && (
+                  <p className="text-red-500 text-sm">{errors.username}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-teal-700 font-medium mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  value={signUpForm.email}
+                  onChange={handleChange}
+                  placeholder="Enter email"
+                  className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                />
+                {errors.email && (
+                  <p className="text-red-500 text-sm">{errors.email}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-teal-700 font-medium mb-1">
+                  Password
+                </label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  value={signUpForm.password}
+                  onChange={handleChange}
+                  placeholder="Enter password"
+                  className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                />
+                {errors.password && (
+                  <p className="text-red-500 text-sm">{errors.password}</p>
+                )}
+              </div>
+
+              <div>
+                <label className="block text-teal-700 font-medium mb-1">
+                  Confirm Password
+                </label>
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="confirmPassword"
+                  value={signUpForm.confirmPassword}
+                  onChange={handleChange}
+                  placeholder="Confirm password"
+                  className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                />
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-sm">
+                    {errors.confirmPassword}
+                  </p>
+                )}
+              </div>
+
+              <div>
+                <div className="gap-4 flex">
+                  <input
+                    type="checkbox"
+                    name="acceptedTerms"
+                    checked={signUpForm.acceptedTerms}
+                    onChange={handleChange}
+                    className="h-4 w-4 text-teal-600 border-gray-300 rounded max-w-6"
+                  />
+                  <label
+                    htmlFor="terms"
+                    className="text-sm font-medium text-gray-700"
+                  >
+                    I agree to the{" "}
+                    <button
+                      type="button"
+                      onClick={() => setShowingTerms(true)}
+                      className="text-teal-700 font-semibold hover:underline"
+                    >
+                      Terms and Services
+                    </button>
+                  </label>
+                </div>
+
+                {errors.acceptedTerms && (
+                  <p className="text-red-500 text-sm">{errors.acceptedTerms}</p>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={isLoading || signUpLoading}
+                className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
+              >
+                {isLoading || signUpLoading ? (
+                  <>
+                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    Creating Account...
+                  </>
+                ) : (
+                  "Sign Up"
+                )}
+              </button>
+            </form>
+
+            <hr className="my-4" />
+            <div className="text-center text-sm text-teal-700">
+              Already have an account?{" "}
+              <button
+                onClick={contextOpenLogInModal}
+                className="font-semibold hover:underline"
+              >
+                Log In
+              </button>
             </div>
-          )}
-          <div>
-            <label className="block text-teal-700 font-medium mb-1">
-              Username
-            </label>
-            <input
-              type="text"
-              name="username"
-              value={signUpForm.username}
-              onChange={handleChange}
-              placeholder="Enter username"
-              className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
-            />
-            {errors.username && (
-              <p className="text-red-500 text-sm">{errors.username}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-teal-700 font-medium mb-1">
-              Email
-            </label>
-            <input
-              type="email"
-              name="email"
-              value={signUpForm.email}
-              onChange={handleChange}
-              placeholder="Enter email"
-              className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-teal-700 font-medium mb-1">
-              Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={signUpForm.password}
-              onChange={handleChange}
-              placeholder="Enter password"
-              className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password}</p>
-            )}
-          </div>
-
-          <div>
-            <label className="block text-teal-700 font-medium mb-1">
-              Confirm Password
-            </label>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="confirmPassword"
-              value={signUpForm.confirmPassword}
-              onChange={handleChange}
-              placeholder="Confirm password"
-              className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
-            />
-            {errors.confirmPassword && (
-              <p className="text-red-500 text-sm">{errors.confirmPassword}</p>
-            )}
-          </div>
-
-          <button
-            type="submit"
-            disabled={isLoading || signUpLoading}
-            className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
-          >
-            {isLoading || signUpLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Creating Account...
-              </>
-            ) : (
-              "Sign Up"
-            )}
-          </button>
-        </form>
-
-        <hr className="my-4" />
-        <div className="text-center text-sm text-teal-700">
-          Already have an account?{" "}
-          <button
-            onClick={contextOpenLogInModal}
-            className="font-semibold hover:underline"
-          >
-            Log In
-          </button>
-        </div>
+          </>
+        )}
       </div>
     </div>
   );
