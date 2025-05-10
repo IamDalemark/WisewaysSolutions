@@ -21,6 +21,7 @@ export default function AdminDashboardLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
   return (
     <div
       className={`${inter.className} ${interTight.className} bg-gray-white antialiased`}
@@ -28,9 +29,9 @@ export default function AdminDashboardLayout({
       <SidebarProvider>
         <div className="flex w-screen">
           <AdminSidebar />
-          <div className="flex-1">
+          <div className="flex-1"> 
             <AdminNavbar />
-            <main className="mt-36 px-10 w-full">{children}</main>
+            <main className="mt-36 px-0 md:px-8 lg:px-15 w-full">{children}</main> 
           </div>
         </div>
       </SidebarProvider>
