@@ -9,12 +9,14 @@ type ModalProps = {
   email?: string;
   password?: string;
   confirmPassword?: string;
+  acceptedTerms?: boolean;
   showPassword?: boolean;
   validationErrors?: {
     username?: string;
     email?: string;
     password?: string;
     confirmPassword?: string;
+    acceptedTerms?: boolean;
     general?: string;
   };
 };
@@ -30,6 +32,7 @@ interface StorybookModalProviderProps {
     email?: string;
     password?: string;
     confirmPassword?: string;
+    acceptedTerms?: boolean;
     general?: string;
   };
 }
@@ -45,6 +48,7 @@ export const StorybookModalProvider = ({
     email: modalProps.email || "",
     password: modalProps.password || "",
     confirmPassword: modalProps.confirmPassword || "",
+    acceptedTerms: modalProps.acceptedTerms || false,
   });
 
   const [loginFormState, setLoginFormState] = useState({
