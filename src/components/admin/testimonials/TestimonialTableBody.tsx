@@ -21,10 +21,14 @@ interface AdminTableBodyTestimonialProps {
     status?: string;
     rating?: string;
   };
+  currentPage: number;
+  setTotalPages: (n: number) => void;
 }
 
+const ROWS_PER_PAGE = 10;
+
 const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
-  filters = {},
+  filters = {}, currentPage, setTotalPages
 }) => {
   const [error, setError] = useState("");
   const [testimonials, setTestimonials] = useState<TestimonialAdminData[]>([]);
@@ -105,6 +109,16 @@ const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
     };
   }, []);
 
+  useEffect(() => {
+    const total = Math.ceil(filteredTestimonials.length / ROWS_PER_PAGE);
+    setTotalPages(total);
+  }, [filteredTestimonials, setTotalPages]);
+
+  const paginatedTestimonials = filteredTestimonials.slice(
+    (currentPage - 1) * ROWS_PER_PAGE,
+    currentPage * ROWS_PER_PAGE
+  );
+
   if (error) {
     return (
       <tbody>
@@ -135,7 +149,7 @@ const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
     );
   }
 
-  if (filteredTestimonials.length === 0) {
+  if (paginatedTestimonials.length === 0) {
     return (
       <tbody>
         <tr>
@@ -149,7 +163,7 @@ const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
 
   return (
     <tbody className="w-full">
-      {filteredTestimonials.map((row, rowIdx) => (
+      {paginatedTestimonials.map((row, rowIdx) => (
         <TestimonialTableRow
           key={row.testimonial_id}
           row={row}

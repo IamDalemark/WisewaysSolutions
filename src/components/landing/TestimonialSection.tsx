@@ -32,7 +32,7 @@ const TestimonialSection = () => {
           {loading
             ? "Loading testimonials..."
             : testimonials.length > 0
-            ? "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus eos optio voluptates saepe veritatis vero rerum"
+            ? "Discover how our tailored solutions have empowered clients to streamline operations and drive success."
             : "No testimonials available yet"}
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import TestimonialTableBody from "./testimonials/TestimonialTableBody";
+import TestimonialTableBody from "./TestimonialTableBody";
 
 export interface AdminTableColumn {
   header: string;
@@ -18,6 +18,9 @@ export interface AdminTableProps {
     date?: string;
     clientName?: string;
   };
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  setTotalPages: (total: number) => void;
 };
 
 const isColumnVisible = (header: string) => {
@@ -27,7 +30,7 @@ const isColumnVisible = (header: string) => {
   return true;
 };
 
-const AdminTable = ({ columns, body }: AdminTableProps) => {
+export const TestimonialTable = ({ columns, body, filters, currentPage, setTotalPages }: AdminTableProps) => {
   const [visibleHeaders, setVisibleHeaders] = useState<AdminTableColumn[]>([]);
 
   useEffect(() => {
@@ -42,7 +45,7 @@ const AdminTable = ({ columns, body }: AdminTableProps) => {
   }, [columns]);  
 
   return (
-    <div className="flex w-full h-full justify-center items-center mt-1 shadow-xl">
+    <div className="flex flex-col w-full h-full justify-center items-center mt-1 shadow-xl">
       <table className="bg-[#f3f3f3] w-full rounded-xl">
         <thead>
           <tr className="bg-blue-green text-[#f3f3f3] overflow-hidden">
@@ -67,11 +70,15 @@ const AdminTable = ({ columns, body }: AdminTableProps) => {
             })}
           </tr>
         </thead>
-        
-        {body || <TestimonialTableBody />}
+        {body || (
+            <TestimonialTableBody 
+            currentPage={currentPage} 
+            setTotalPages={setTotalPages}
+            filters={filters}
+            />
+          )
+        }
       </table>
     </div>
   );
 };
-
-export default AdminTable;

@@ -105,7 +105,7 @@ const LandingPage = () => {
         subtitle={
           <ul className="justify-self-center">
             <ContactDetail iconName="Phone" description="(63) 000-000-0000" />
-            <ContactDetail iconName="Mail" description="loremisum@gmail.com" />
+            <ContactDetail iconName="Mail" description="info@wisewayssolutions.us" />
             <ContactDetail iconName="MapPin"description="Iloilo City, Philippines"/>
           </ul>
         }

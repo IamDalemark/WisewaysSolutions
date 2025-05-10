@@ -2,10 +2,10 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import AdminTable from "@/components/admin/AdminTable";
+import { TestimonialTable } from "@/components/admin/testimonials/TestimonialTable";
 import { testimonialTableColumns } from "@/constants/adminTableColumns";
 import TestimonialFilterButton from "@/components/admin/testimonials/TestimonialFilterButton";
-import TestimonialTableBody from "@/components/admin/testimonials/TestimonialTableBody";
+import PaginationControls from "@/components/admin/PaginationControls";
 
 const AdminTestimonialsPage = () => {
   const router = useRouter();
@@ -14,6 +14,8 @@ const AdminTestimonialsPage = () => {
     status?: string;
     rating?: string;
   }>({});
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -43,11 +45,17 @@ const AdminTestimonialsPage = () => {
           onReset={handleResetFilters} 
         />
       </div>
-      <AdminTable 
-        columns={testimonialTableColumns} 
-        body={
-          <TestimonialTableBody filters={filters} />
-        }
+      <TestimonialTable
+        columns={testimonialTableColumns}
+        filters={filters}
+        currentPage={currentPage}
+        setCurrentPage={setCurrentPage}
+        setTotalPages={setTotalPages}
+      />
+      <PaginationControls
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
       />
     </div>
   );
