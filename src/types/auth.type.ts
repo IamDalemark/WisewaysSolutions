@@ -11,3 +11,8 @@ export type LogInResult = {
   error?: string;
   user?: User | null;
 };
+
+export type LogOutResult = {
+  success: boolean;
+  error?: string;
+};

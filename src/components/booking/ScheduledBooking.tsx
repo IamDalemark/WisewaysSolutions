@@ -30,13 +30,13 @@ const ScheduledBooking = ({
         </h1>
         <div className="flex flex-wrap justify-center gap-4">
           <button
-            className="px-6 py-2 bg-teal-700 hover:bg-teal-800 text-white rounded-2xl shadow transition-all duration-200"
+            className="px-6 py-2 bg-teal-700 hover:bg-teal-800 text-white lg:w-36 rounded-2xl shadow transition-all duration-200"
             onClick={onHandleReschedule}
           >
             Reschedule
           </button>
           <button
-            className="px-6 py-2 bg-red-500 hover:bg-teal-800 text-white rounded-2xl shadow transition-all duration-200"
+            className="px-6 py-2 bg-red-500 hover:bg-red-800 text-white lg:w-36 rounded-2xl shadow transition-all duration-200"
             onClick={onHandleCancellation}
           >
             Cancel

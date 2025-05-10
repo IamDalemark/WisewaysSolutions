@@ -17,7 +17,7 @@ const CalendlyScheduler = ({
   email,
   onSubmit,
 }: DateAndTimeSelectionProps) => {
-  const [service, setService] = useState("");
+  const [service, setService] = useState("Any");
   const { submitBooking, isSubmitting } = useSubmitBooking();
 
   // Set up event listener for Calendly events

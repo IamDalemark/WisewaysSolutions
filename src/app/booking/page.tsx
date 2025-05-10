@@ -101,12 +101,14 @@ const BookingPage = () => {
     <div className="flex flex-col items-center justify-center min-h-screen bg-[#E1E1E1]">
       <div className="h-full w-full">
         {isSchedulingBooking ? (
-          <CalendlyScheduler
-            name={name}
-            email={email}
-            user_id={user!.id}
-            onSubmit={handleBookingConfirmation}
-          />
+          <div className="lg:mt-20 sm:mt-36">
+            <CalendlyScheduler
+              name={name}
+              email={email}
+              user_id={user!.id}
+              onSubmit={handleBookingConfirmation}
+            />
+          </div>
         ) : hasBooking ? (
           renderScheduledBooking()
         ) : (
