@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import useSignInAdmin from "../hooks/auth/useAdminLogin";
 
 interface LogInErrors {
   email?: string;
@@ -15,10 +16,10 @@ export default function AdminLoginPage() {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<LogInErrors>({});
-  const [isLoading, setIsLoading] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [showCalendlyConnect, setShowCalendlyConnect] = useState(false);
 
+  const { signInAdmin, loginLoading } = useSignInAdmin();
   const router = useRouter();
 
   const validate = (): LogInErrors => {
@@ -37,37 +38,15 @@ export default function AdminLoginPage() {
     setErrors(validationErrors);
     if (Object.keys(validationErrors).length > 0) return;
 
-    setIsLoading(true);
+    const result = await signInAdmin(email, password);
 
-    try {
-      const res = await fetch("/api/adminlogin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
-      });
+    if (result?.success) {
+      setSuccessMessage("Login successful!");
+      setShowCalendlyConnect(true);
 
-      const result = await res.json();
-      setIsLoading(false);
-
-      if (!res.ok || !result.success) {
-        setErrors({ general: result.message || "Login failed" });
-        setSuccessMessage(null);
-      } else {
-        localStorage.setItem("token", result.token);
-        setSuccessMessage("Login successful!");
-        
-        setShowCalendlyConnect(true);
-        
-        setTimeout(() => {
-          setSuccessMessage(null);
-        }, 3000);
-      }
-    } catch (err) {
-      console.error("Login error:", err);
-      setIsLoading(false);
-      setErrors({ general: "Something went wrong. Please try again." });
+      setTimeout(() => setSuccessMessage(null), 3000);
+    } else {
+      setErrors({ general: result?.message || "Login failed" });
       setSuccessMessage(null);
     }
   };
@@ -86,7 +65,7 @@ export default function AdminLoginPage() {
         <h2 className="text-2xl font-semibold text-center text-teal-700 mb-6">
           Admin Log In
         </h2>
-        
+
         {successMessage && (
           <div className="text-green-500 text-center mb-2">
             {successMessage}
@@ -143,10 +122,10 @@ export default function AdminLoginPage() {
 
             <button
               type="submit"
-              disabled={isLoading}
+              disabled={loginLoading}
               className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
             >
-              {isLoading ? (
+              {loginLoading ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
                   Logging In...
@@ -164,14 +143,14 @@ export default function AdminLoginPage() {
             <p className="text-gray-600 mb-4">
               Connect your Calendly account to manage appointments directly.
             </p>
-            
+
             <button
               onClick={connectCalendly}
               className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-xl transition"
             >
               Connect Calendly
             </button>
-            
+
             <button
               onClick={skipCalendly}
               className="w-full text-gray-600 hover:text-gray-800 font-medium py-2 rounded-xl transition"

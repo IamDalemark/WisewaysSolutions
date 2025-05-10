@@ -40,6 +40,10 @@ const UserDropDownItem = ({ initialOpen }: Props) => {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    setIsOpen(false);
+  }, [user]);
+
   return (
     <div ref={dropdownRef} className="flex justify-items-end items-center">
       <div

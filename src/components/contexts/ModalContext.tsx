@@ -31,6 +31,7 @@ interface ModalContextType {
     email: string;
     password: string;
     confirmPassword: string;
+    acceptedTerms: boolean;
   };
   loginForm: {
     email: string;
@@ -75,6 +76,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     email: "",
     password: "",
     confirmPassword: "",
+    acceptedTerms: false,
   });
 
   const [loginForm, setLoginForm] = useState({
@@ -109,6 +111,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       email: "",
       password: "",
       confirmPassword: "",
+      acceptedTerms: false,
     });
     setLoginForm({
       email: "",
@@ -138,11 +141,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         openLogInModal();
         return result;
       } else {
-        // console.error("Signup failed:", result.error);
         return result;
       }
     } catch (error) {
-      //   console.error("Error during signup:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : "Error during Sign Up.",

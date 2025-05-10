@@ -2,8 +2,10 @@ import { useState } from "react";
 import { UserData } from "@/types/users.type";
 import { SignUpResult } from "@/types/auth.type";
 import { supabase } from "@/lib/supabaseClient";
+import { useToast } from "@/components/contexts/ToastContext";
 
 export const useSignUp = () => {
+  const { addToast } = useToast();
   const [signUpLoading, setSignUpLoading] = useState(false);
 
   const signUp = async (userData: UserData): Promise<SignUpResult> => {
@@ -22,10 +24,10 @@ export const useSignUp = () => {
       if (error) {
         throw new Error(error.message || "Failed to Sign Up.");
       }
-
+      addToast("Verification Email Sent!", "success");
       return { success: true, user: data.user };
     } catch (error) {
-      //   console.error("Error Signing Up:", error);
+      addToast("Failed to Sign Up!", "error");
       return {
         success: false,
         error:
