@@ -4,7 +4,9 @@ const AccountingAndBookkeepingPage = () => {
   return (
     <ServicePage
       title="Accounting and Bookkeeping"
-      subtitle="Crunching numbers so you don’t have to."
+      subtitle="Reliable and accurate financial management to keep your business on solid ground. 
+      Our services cover day-to-day bookkeeping, financial reporting, and compliance support, giving you 
+      clarity, confidence, and control over your numbers."
       imageSrc="/service-accounting.png"
       altText="Accounting illustration"
     />
