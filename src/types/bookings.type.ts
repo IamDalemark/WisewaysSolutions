@@ -18,11 +18,9 @@ export type BookingDetails = {
 };
 
 export type BookingFormData = {
-  user_id?: string;
-  booking_id?: string | undefined;
-  invitee_id?: string | undefined;
-  time: string;
-  date: string;
+  user_id: string;
+  booking_id: string | undefined;
+  invitee_id: string | undefined;
   name: string;
   email: string;
   service?: string;

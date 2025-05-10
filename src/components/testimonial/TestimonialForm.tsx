@@ -19,6 +19,7 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
     email: "",
     rating: 0,
     testimonial: "",
+    title: "",
   });
   useEffect(() => {
     if (user) {
@@ -53,6 +54,7 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
   const validate = (): FormErrors => {
     const errors: FormErrors = {};
     if (!formData.name.trim()) errors.name = "Name is required";
+    if (!formData.title.trim()) errors.title = "Title is required";
     if (!formData.rating) errors.rating = "Rating is required";
     if (!formData.email.trim()) errors.email = "Email is required";
     else if (!/\S+@\S+\.\S+/.test(formData.email))
@@ -128,6 +130,26 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
             />
             {formErrors.email && (
               <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>
+            )}
+          </div>
+
+          <div className="mt-4">
+            <label htmlFor="title" className="text-blue-green-dark block mb-1">
+              Title / Position / Company
+            </label>
+            <Input
+              id="title"
+              name="title"
+              data-testid="form-title"
+              placeholder="Your title"
+              value={formData.title ?? ""}
+              onChange={handleChange}
+              aria-required="true"
+              aria-invalid={!!formErrors.title}
+              className={formErrors.title ? "border-red-500" : ""}
+            />
+            {formErrors.title && (
+              <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
             )}
           </div>
         </div>
