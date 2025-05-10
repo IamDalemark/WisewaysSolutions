@@ -96,7 +96,7 @@ const CalendlyScheduler = ({
     <div className="w-full mx-auto h-full">
       <CalendlyInlineWidget
         data_url={`https://calendly.com/${process.env
-          .CALENDLY_EMAIL!}/30min?back=1&hide_gdpr_banner=1&name=${name}&email=${email}`}
+          .NEXT_PUBLIC_CALENDLY_EMAIL!}/30min?back=1&hide_gdpr_banner=1&name=${name}&email=${email}`}
       />
     </div>
   );

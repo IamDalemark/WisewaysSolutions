@@ -45,7 +45,7 @@ const ScheduledBooking = ({
       </div>
       <CalendlyInlineWidget
         data_url={`https://calendly.com/${process.env
-          .CALENDLY_EMAIL!}/30min/invitees/${invitee_id}`}
+          .NEXT_PUBLIC_CALENDLY_EMAIL!}/30min/invitees/${invitee_id}`}
       />
     </div>
   );
