@@ -60,8 +60,14 @@ const TestimonialSection = () => {
                   </CarouselItem>
                 ))}
               </CarouselContent>
-              <CarouselPrevious className="top-1/2 -translate-y-1/2 left-2 sm:-left-5 md:-left-5" />
-              <CarouselNext className="top-1/2 -translate-y-1/2 right-2 sm:right-0 md:-right-5" />
+              {testimonials.length >= 4 || window.outerWidth <= 720 ? (
+                <>
+                  <CarouselPrevious className="top-1/2 -translate-y-1/2 left-2 sm:-left-5 md:-left-5" />
+                  <CarouselNext className="top-1/2 -translate-y-1/2 right-2 sm:right-0 md:-right-5" />
+                </>
+              ) : (
+                <></>
+              )}
             </Carousel>
             <div className="justify-self-center self-center mt-4 md:mt-10">
               <Button
