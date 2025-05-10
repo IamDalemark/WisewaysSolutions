@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useCreateTestimonial } from "@/app/hooks/testimonials/useSubmitTestimonial";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -10,15 +10,25 @@ import {
   TestimonialFormData,
   FormErrors,
 } from "@/types/testimonials.type";
+import { useUser } from "@/components/contexts/UserContext";
 
 const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
+  const user = useUser();
   const [formData, setFormData] = useState<TestimonialFormData>({
     name: "",
     email: "",
     rating: 0,
     testimonial: "",
   });
-
+  useEffect(() => {
+    if (user) {
+      setFormData((prev) => ({
+        ...prev,
+        name: user.user?.user_metadata.username,
+        email: user.user?.user_metadata.email,
+      }));
+    }
+  }, [user]);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const { submitTestimonial, isSubmitting } = useCreateTestimonial();
   const handleChange = (
@@ -89,7 +99,7 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
               name="name"
               data-testid="form-name"
               placeholder="Your name"
-              value={formData.name}
+              value={formData.name ?? ""}
               onChange={handleChange}
               aria-required="true"
               aria-invalid={!!formErrors.name}
@@ -110,7 +120,7 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
               type="email"
               data-testid="form-email"
               placeholder="Your email"
-              value={formData.email}
+              value={formData.email ?? ""}
               onChange={handleChange}
               aria-required="true"
               aria-invalid={!!formErrors.email}

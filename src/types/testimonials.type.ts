@@ -8,7 +8,7 @@ export type SentTestimonialProps = {
 export type TestimonialProps = {
   testimonial: string;
   name: string;
-  ratings: number;
+  rating: number;
 };
 
 export type TestimonialFormData = {
@@ -37,4 +37,14 @@ export interface TestimonialAdminData {
   testimonial: string;
   rating: string;
   is_approved: string;
+}
+
+export interface Testimonial {
+  testimonial_id: string;
+  name: string;
+  email: string;
+  rating: number;
+  testimonial: string;
+  is_approved: string;
+  created_at?: string;
 }

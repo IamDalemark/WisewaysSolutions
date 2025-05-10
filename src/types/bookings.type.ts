@@ -29,3 +29,15 @@ export type SubmitBookingResult = {
   success: boolean;
   error?: string;
 };
+
+export interface BookingAdminData {
+  booking_id: string;
+  name: string;
+  email: string;
+  service: string;
+  date: string;
+  time: string;
+  status: string;
+  created_at: string;
+  managed_by: string;
+};
