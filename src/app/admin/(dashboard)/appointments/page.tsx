@@ -4,7 +4,7 @@ import AdminTableBooking from "@/components/admin/appointments/AppointmentTable"
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import FilterButtonBooking from "@/components/admin/appointments/AppointmentFilterButton";
-
+import CalendlyEvents from "@/components/calendly/Events";
 const appointmentAdminColumns = [
   { header: "Client Name", accessor: "name" },
   { header: "Email", accessor: "email" },
@@ -45,12 +45,22 @@ const AdminAppointmentsPage = () => {
     <div className="flex flex-col w-full text-blue-green mb-20">
       <div className="flex flex-row justify-between px-3 mb-1">
         <p className="text-4xl font-bold">Appointments</p>
-        <FilterButtonBooking onFilter={handleFilter} onReset={handleResetFilters} />
+        <FilterButtonBooking
+          onFilter={handleFilter}
+          onReset={handleResetFilters}
+        />
       </div>
-      <AdminTableBooking 
-        columns={appointmentAdminColumns} 
-        filters={filters}
-      />
+      <AdminTableBooking columns={appointmentAdminColumns} filters={filters} />
+
+      <div className="container mx-auto py-8 px-4">
+        <h1 className="text-3xl font-bold mb-8">Synced Appointments</h1>
+        <p className="mb-6 text-gray-600">
+          This page shows Calendly events matched with your Supabase bookings
+          database. Events highlighted in green have matching bookings in your
+          system.
+        </p>
+        <CalendlyEvents />
+      </div>
     </div>
   );
 };
