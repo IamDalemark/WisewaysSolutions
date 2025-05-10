@@ -18,9 +18,7 @@ const AdminNavbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
           className="w-6 h-6 hover:text-[#FD8432] hover:scale-110 transition-all cursor-pointer"
           onClick={toggleSidebar}
         />
-        <h1 className="text-2xl font-semibold">
-          DASHBOARD
-        </h1>
+        <h1 className="text-2xl font-semibold">DASHBOARD</h1>
       </div>
       <Button
         variant="outline"
