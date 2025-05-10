@@ -15,7 +15,7 @@ const UserLoggedInDropDown = ({ user }: Props) => {
   const onLogout = async () => {
     const result = await logOut();
     if (result!.success) {
-      window.location.reload();
+      router.refresh();
     }
   };
 

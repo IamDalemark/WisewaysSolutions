@@ -33,11 +33,14 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setUser(session.user);
       }
       setLoading(false);
-      if (event == "PASSWORD_RECOVERY") {
+      if (event === "PASSWORD_RECOVERY") {
         setChangingPassword(true);
         router.replace("/resetpassword");
+      } else if (event === "SIGNED_OUT") {
+        setUser(null);
       }
     });
+
     const { subscription } = data;
 
     return () => {

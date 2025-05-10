@@ -95,7 +95,8 @@ const CalendlyScheduler = ({
   return (
     <div className="w-full mx-auto h-full">
       <CalendlyInlineWidget
-        data_url={`https://calendly.com/francyamada1983/30min?back=1&hide_gdpr_banner=1&name=${name}&email=${email}`}
+        data_url={`https://calendly.com/${process.env
+          .NEXT_PUBLIC_CALENDLY_EMAIL!}/30min?back=1&hide_gdpr_banner=1&name=${name}&email=${email}`}
       />
     </div>
   );
