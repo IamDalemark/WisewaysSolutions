@@ -17,7 +17,13 @@ export const GET = async () => {
       );
     }
 
-    return NextResponse.json(data, { status: 200 });
+    const formattedData = data.map(booking => ({
+      ...booking,
+      date: formatDate(booking.created_at),
+      time: formatTime(booking.created_at)
+    }));
+
+    return NextResponse.json(formattedData, { status: 200 });
   } catch (error) {
     console.error("Server error:", error);
     return NextResponse.json(
@@ -26,6 +32,34 @@ export const GET = async () => {
     );
   }
 };
+
+function formatDate(timestamp: string): string {
+  try {
+    const dateObj = new Date(timestamp);
+    return dateObj.toLocaleDateString(undefined, {
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    });
+  } catch (e) {
+    console.error("Error formatting date:", e);
+    return "Invalid date";
+  }
+}
+
+function formatTime(timestamp: string): string {
+  try {
+    const dateObj = new Date(timestamp);
+    return dateObj.toLocaleTimeString(undefined, {
+      hour: "2-digit",
+      minute: "2-digit",
+      hour12: true
+    });
+  } catch (e) {
+    console.error("Error formatting time:", e);
+    return "Invalid time";
+  }
+}
 
 export const POST = async (request: Request) => {
   try {

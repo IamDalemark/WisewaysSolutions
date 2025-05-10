@@ -1,11 +1,11 @@
-import { Button } from "../ui/button";
+import { Button } from "@/components/ui/button";
 import { supabase } from "@/lib/supabaseClient";
 
 interface Props {
   rowId: string;
 }
 
-const StatusColumnButtonsAppointments = ({ rowId }: Props) => {
+const StatusColumnButtonsBooking = ({ rowId }: Props) => {
   const handleStatusChange = async (status: "Pending" | "Accepted" | "Declined") => {
     const { error } = await supabase
       .from("booking")
@@ -35,4 +35,4 @@ const StatusColumnButtonsAppointments = ({ rowId }: Props) => {
   );
 };
 
-export default StatusColumnButtonsAppointments;
+export default StatusColumnButtonsBooking;
