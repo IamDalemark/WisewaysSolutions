@@ -28,7 +28,7 @@ const LandingPageSection = ({
     return (
         <section 
             id={id} 
-            className="text-blue-green flex-col h-full sm:content-center lg:max-h-screen mx-[6%] pb-[150]"
+            className="text-blue-green flex-col h-screen sm:h-full sm:content-center lg:max-h-screen mx-[6%] pb-[150]"
         >
             {heading && (
                 <h2 className="flex text-5xl lg:text-6xl font-bold text-center justify-self-center">

@@ -34,7 +34,8 @@ const TestimonialTableRow: React.FC<Props> = ({row, isLastRow}) => {
           : cellValue;
 
           return (
-            <td key={colIdx} className={`${col.header === "Rating" || col.header === "Status" ? "text-center px-4" : "text-left pl-4 pr-3 md:pl-8 md:pr-4"}
+            <td key={colIdx} className={`${col.header === "Rating" || col.header === "Status" ? 
+              "text-center px-4" : "text-left pl-4 pr-3 md:pl-8 md:pr-4"}
             ${col.header === "User" ? "text-base" : ""}
             ${col.header === "Email" ? "hidden lg:table-cell" : ""} 
             ${col.header === "Status" ? "hidden md:table-cell" : ""}
@@ -49,7 +50,11 @@ const TestimonialTableRow: React.FC<Props> = ({row, isLastRow}) => {
                   <TestimonialStatusButtons rowId={row.testimonial_id} />
                 )
               ) : shouldTruncate ? (
-                <TableCellDropDown shortText={shortText} fullText={cellValue} isReview={col.accessor === "testimonial"}/>
+                <TableCellDropDown 
+                  shortText={shortText} 
+                  fullText={cellValue} 
+                  isReview={col.accessor === "testimonial"}
+                />
               ) : (
                 cellValue
               )}
