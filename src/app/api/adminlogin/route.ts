@@ -1,25 +1,52 @@
-import { signInAdmin } from "@/app/hooks/auth/useAdminLogin";
 import { NextResponse } from "next/server";
+import { supabase } from "@/lib/supabaseClient";
 
-export async function POST(request: Request) {
+export const POST = async (request: Request) => {
   try {
     const { email, password } = await request.json();
-    const result = await signInAdmin(email, password);
+    const { data, error } = await supabase
+      .from("admin")
+      .select("*")
+      .eq("email", email);
 
-    if (!result.success) {
-      return NextResponse.json(result, { status: 401 });
+    if (error) {
+      console.error("Supabase error:", error);
+      return {
+        success: false,
+        message: "An error occurred while retrieving data.",
+      };
     }
 
-    return NextResponse.json({
-      success: true,
-      token: result.token,
-      message: "Logged in successfully",
-    });
+    if (!data || data.length === 0) {
+      return NextResponse.json(
+        { success: false, message: "Invalid email or password." },
+        { status: 400 }
+      );
+    }
+
+    const admin = data[0];
+
+    if (admin.password !== password) {
+      return NextResponse.json(
+        { success: false, message: "Invalid email or password." },
+        { status: 400 }
+      );
+    }
+
+    const token = `${admin.admin_id}-${admin.email}`;
+    return NextResponse.json(
+      {
+        success: true,
+        token: token,
+        message: "Logged in successfully",
+      },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("Login route error:", error);
+    console.error("Login error:", error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 }
     );
   }
-}
+};

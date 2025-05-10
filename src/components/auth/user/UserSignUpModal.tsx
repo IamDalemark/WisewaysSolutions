@@ -53,9 +53,8 @@ const UserSignUpModal = ({
     handleSignUp: contextSignUp,
     closeSignUpModal,
     openLogInModal: contextOpenLogInModal,
-  } = useModal(); // Use ModalContext
+  } = useModal();
 
-  // Initialize with any validation errors passed as props
   const [errors, setErrors] = useState<SignUpErrors>({
     ...validationErrors,
   });
@@ -73,7 +72,6 @@ const UserSignUpModal = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [username, email, password, confirmPassword, acceptedTerms]);
 
-  // Update errors when validationErrors prop changes
   useEffect(() => {
     if (Object.keys(validationErrors).length > 0) {
       setErrors(validationErrors);
