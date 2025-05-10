@@ -15,41 +15,42 @@ const maxLengths: Record<string, number> = {
   email: 30,
 };
 
-const TestimonialTableRow: React.FC<Props> = ({row, isLastRow}) => {
-    return (
-        <tr
-        className={`${isLastRow ? "" : "border-b-neutral-300 border-b-1"}`}
-        >
-          {testimonialTableColumns.map((col, colIdx) => {
-            const cellValue = row[col.accessor as keyof TestimonialAdminData];
-            const maxLength = maxLengths[col.accessor] ?? Infinity;
+const TestimonialTableRow: React.FC<Props> = ({ row, isLastRow }) => {
+  return (
+    <tr className={isLastRow ? "" : "border-b border-neutral-300"}>
+      {testimonialTableColumns.map((col, colIdx) => {
+        const cellValue = row[col.accessor as keyof TestimonialAdminData];
+        const maxLength = maxLengths[col.accessor] ?? Infinity;
+        const shouldTruncate =
+          typeof cellValue === "string" && cellValue.length > maxLength;
+        const shortText = shouldTruncate
+          ? `${cellValue.slice(0, maxLength)}...`
+          : cellValue;
 
-            const shouldTruncate =
-              typeof cellValue === "string" && cellValue.length > maxLength;
-
-            const shortText = shouldTruncate
-              ? `${cellValue.slice(0, maxLength)}...`
-              : cellValue;
-
-              return (
-                <td key={colIdx} className="px-4 py-2 text-center h-14">
-                  { col.accessor === "is_approved" ? (
-                    row.is_approved === "Accepted" || row.is_approved === "Declined" ? (
-                      <span>{row.is_approved}</span>
-                    ) : (
-                      <TestimonialStatusButtons rowId={row.testimonial_id} />
-                    )
-                  ) : shouldTruncate ? (
-                    <TableCellDropDown shortText={shortText} fullText={cellValue} isReview={col.accessor === "testimonial"}/>
-                  ) : (
-                    cellValue
-                  )}
-                </td>
-              );
-          })}
-        </tr>
-    );
+        return (
+          <td key={colIdx} className="px-4 py-2 text-center h-14">
+            {col.accessor === "is_approved" ? (
+              row.is_approved === "Accepted" || row.is_approved === "Declined" ? (
+                <span>{row.is_approved}</span>
+              ) : (
+                <TestimonialStatusButtons rowId={row.testimonial_id} />
+              )
+            ) : col.accessor === "rating" ? (
+              `${cellValue} Star${cellValue === "1" ? "" : "s"}`
+            ) : shouldTruncate ? (
+              <TableCellDropDown 
+                shortText={shortText} 
+                fullText={cellValue} 
+                isReview={col.accessor === "testimonial"}
+              />
+            ) : (
+              cellValue
+            )}
+          </td>
+        );
+      })}
+    </tr>
+  );
 };
 
 export default TestimonialTableRow;
-

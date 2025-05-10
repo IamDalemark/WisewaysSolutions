@@ -1,8 +1,9 @@
 "use client";
 
-import AdminTableBooking from "@/components/admin/AdminTableBooking";
-import { useEffect } from "react";
+import AdminTableBooking from "@/components/admin/appointments/AppointmentTable";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import FilterButtonBooking from "@/components/admin/appointments/AppointmentFilterButton";
 
 const appointmentAdminColumns = [
   { header: "Client Name", accessor: "name" },
@@ -15,22 +16,41 @@ const appointmentAdminColumns = [
 
 const AdminAppointmentsPage = () => {
   const router = useRouter();
+  const [filters, setFilters] = useState<{
+    date?: string;
+    status?: string;
+    clientName?: string;
+  }>({});
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       router.push("/admin");
-    } else {
     }
   }, [router]);
+
+  const handleFilter = (newFilters: {
+    date?: string;
+    status?: string;
+    clientName?: string;
+  }) => {
+    setFilters(newFilters);
+  };
+
+  const handleResetFilters = () => {
+    setFilters({});
+  };
+
   return (
     <div className="flex flex-col w-full text-blue-green mb-20">
       <div className="flex flex-row justify-between px-3 mb-1">
         <p className="text-4xl font-bold">Appointments</p>
-        <button>Filter by</button>
+        <FilterButtonBooking onFilter={handleFilter} onReset={handleResetFilters} />
       </div>
-      <AdminTableBooking columns={appointmentAdminColumns}>
-      </AdminTableBooking>
+      <AdminTableBooking 
+        columns={appointmentAdminColumns} 
+        filters={filters}
+      />
     </div>
   );
 };

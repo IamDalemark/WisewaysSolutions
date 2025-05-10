@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import TestimonialTableBody from "./testimonials/TestimonialTableBody";
+import AdminTableBodyBooking from "./AppointmentTableBody";
 
 export interface AdminTableColumn {
   header: string;
@@ -8,18 +10,14 @@ export interface AdminTableColumn {
 
 export interface AdminTableProps {
   columns: AdminTableColumn[];
-  table?: "Appointments" | "Testimonials"; 
-  body?: React.ReactNode; 
   filters?: {
-    name?: string;
-    status?: string;
-    rating?: string;
     date?: string;
+    status?: string;
     clientName?: string;
   };
 };
 
-const AdminTable = ({ columns, table, body }: AdminTableProps) => {
+const AdminTableBooking = ({ columns, filters = {} }: AdminTableProps) => {
   return (
     <div className="flex w-full h-full justify-center items-center mt-1">
       <table className="bg-[#f3f3f3] w-full rounded-xl">
@@ -29,22 +27,18 @@ const AdminTable = ({ columns, table, body }: AdminTableProps) => {
               <th
                 key={idx}
                 className={`${idx === 0 ? "rounded-tl-xl" : ""} ${
-                  idx === columns.length - 1 ? "rounded-tr-xl" : ""} 
-                  px-4 py-3`}
+                  idx === columns.length - 1 ? "rounded-tr-xl" : ""
+                } px-4 py-3`}
               >
                 {col.header}
               </th>
             ))}
           </tr>
         </thead>
-        {body || (
-          table === "Testimonials" ? (
-            <TestimonialTableBody />
-          ) : null
-        )}
+        <AdminTableBodyBooking filters={filters} />
       </table>
     </div>
   );
 };
 
-export default AdminTable;
+export default AdminTableBooking;
