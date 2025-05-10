@@ -15,12 +15,6 @@ const columns = [
   { header: "Status", accessor: "is_approved" },
 ];
 
-const maxLengths: Record<string, number> = {
-  name: 20,
-  email: 30,
-  testimonial: 35,
-};
-
 interface AdminTableBodyTestimonialProps {
   filters?: {
     name?: string;
