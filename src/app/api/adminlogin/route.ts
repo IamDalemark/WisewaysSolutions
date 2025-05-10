@@ -11,10 +11,7 @@ export const POST = async (request: Request) => {
 
     if (error) {
       console.error("Supabase error:", error);
-      return {
-        success: false,
-        message: "An error occurred while retrieving data.",
-      };
+      throw error;
     }
 
     if (!data || data.length === 0) {
@@ -43,7 +40,7 @@ export const POST = async (request: Request) => {
       { status: 200 }
     );
   } catch (error) {
-    console.error("Login error:", error);
+    console.log("Error: ", error);
     return NextResponse.json(
       { success: false, message: "Internal server error" },
       { status: 500 }
