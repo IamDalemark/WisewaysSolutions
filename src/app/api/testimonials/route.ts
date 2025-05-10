@@ -4,9 +4,9 @@ import { supabase } from "@/lib/supabaseClient";
 export const POST = async (request: Request) => {
   try {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const { name, email, rating, testimonial } = await request.json();
+    const { name, email, rating, testimonial, title } = await request.json();
 
-    if (!name || !email || !rating || !testimonial) {
+    if (!name || !email || !rating || !testimonial || !title) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
@@ -22,7 +22,7 @@ export const POST = async (request: Request) => {
 
     const { data, error } = await supabase
       .from("testimonial")
-      .insert([{ name, email, rating, testimonial }])
+      .insert([{ name, email, rating, testimonial, title }])
       .select();
 
     if (error) {
