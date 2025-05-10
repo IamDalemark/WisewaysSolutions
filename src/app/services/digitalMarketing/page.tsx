@@ -4,7 +4,10 @@ const DigitalMarketingPage = () => {
   return (
     <ServicePage
       title="Digital Marketing"
-      subtitle="SEO, social media management, and online ads to make sure people actually find your business."
+      subtitle="Strategic digital marketing solutions designed to amplify your brand’s visibility and 
+      drive measurable results. From search engine optimization (SEO) and social media management to targeted 
+      online advertising, we craft data-driven campaigns that attract the right audience, boost engagement, 
+      and convert clicks into customers."
       imageSrc="/service-marketing.png"
       altText="Digital Marketing illustration"
     />

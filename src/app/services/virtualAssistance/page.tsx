@@ -4,7 +4,9 @@ const VirtualAssistancePage = () => {
   return (
     <ServicePage
       title="Virtual Assistance"
-      subtitle="Calendar management, email handling, and keeping executives from missing meetings (or their sanity)."
+      subtitle="Providing reliable administrative support through efficient calendar management, email 
+      coordination, and task organization. Our virtual assistants help executives stay on track, optimize 
+      productivity, and focus on high-priority work, without the overwhelm."
       imageSrc="/service-assistant.png"
       altText="Virtual assistance illustration"
     />
