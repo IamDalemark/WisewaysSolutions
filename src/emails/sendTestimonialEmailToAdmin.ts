@@ -22,6 +22,7 @@ const sendTestimonialEmailToAdmin = async ({
     .setFrom(domain)
     .setTo(admin)
     .setSubject(`New testimonial from ${name}`)
+
     .setHtml(
       `<div
       style="
