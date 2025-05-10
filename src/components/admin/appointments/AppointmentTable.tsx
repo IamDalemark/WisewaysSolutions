@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AdminTableBodyBooking from "./AppointmentTableBody";
 
 export interface AdminTableColumn {
@@ -10,35 +10,79 @@ export interface AdminTableColumn {
 
 export interface AdminTableProps {
   columns: AdminTableColumn[];
+  body?: React.ReactNode; 
   filters?: {
     date?: string;
     status?: string;
     clientName?: string;
   };
+  currentPage: number;
+  setCurrentPage: (page: number) => void;
+  setTotalPages: (total: number) => void;
 };
 
-const AdminTableBooking = ({ columns, filters = {} }: AdminTableProps) => {
+const getVisibleColumns = (columns: AdminTableColumn[], width: number) => {
+  return columns.filter((col) => {
+    if (col.header === "Email") return width >= 1024;
+    if (col.header === "Status" || col.header === "Status") return width >= 768;
+    if (col.header === "Rating") return width >= 640;
+    return true;
+  });
+};
+
+const AppointmentTable = ({ columns, body, filters, currentPage, setTotalPages }: AdminTableProps) => {
+  const [visibleHeaders, setVisibleHeaders] = useState<AdminTableColumn[]>([]);
+  
+  useEffect(() => {
+      const updateVisibleHeaders = () => {
+        setVisibleHeaders(getVisibleColumns(columns, window.innerWidth));
+      };
+  
+      updateVisibleHeaders();
+      window.addEventListener("resize", updateVisibleHeaders);
+      return () => window.removeEventListener("resize", updateVisibleHeaders);
+  }, [columns]);
+
   return (
-    <div className="flex w-full h-full justify-center items-center mt-1">
+    <div className="flex flex-col w-full h-full justify-center items-center mt-1 shadow-xl">
       <table className="bg-[#f3f3f3] w-full rounded-xl">
         <thead>
-          <tr className="bg-blue-green text-[#f3f3f3]">
-            {columns.map((col, idx) => (
+          <tr className="bg-blue-green text-[#f3f3f3] overflow-hidden">
+          {columns.map((col, idx) => {
+            const isVisible = visibleHeaders.find((v) => v.header === col.header);
+            if (!isVisible) return null;
+
+            const isFirst = visibleHeaders[0]?.header === col.header;
+            const isLast = visibleHeaders[visibleHeaders.length - 1]?.header === col.header;
+
+            return (
               <th
                 key={idx}
-                className={`${idx === 0 ? "rounded-tl-xl" : ""} ${
-                  idx === columns.length - 1 ? "rounded-tr-xl" : ""
-                } px-4 py-3`}
+                className={`px-4 md:px-8 py-3
+                  ${isFirst ? "rounded-tl-xl" : ""} ${isLast ? "rounded-tr-xl" : ""}
+                  ${col.header === "User" || col.header === "Email" ? "text-left" : "text-center"}
+                  ${col.header === "Email" ? "hidden lg:table-cell" : ""}
+                  ${col.header === "Time" || col.header === "Status" ? "hidden md:table-cell" : ""}
+                  ${col.header === "Service" ? "hidden sm:table-cell md:px-4" : ""}
+                `}
               >
                 {col.header}
               </th>
-            ))}
+            );
+          })}
           </tr>
         </thead>
-        <AdminTableBodyBooking filters={filters} />
+        {body || (
+          <AdminTableBodyBooking
+            currentPage={currentPage}
+            setTotalPages={setTotalPages}
+            filters={filters}
+          />
+        )}
       </table>
     </div>
+
   );
 };
 
-export default AdminTableBooking;
+export default AppointmentTable;

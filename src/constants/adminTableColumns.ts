@@ -6,4 +6,11 @@ export const testimonialTableColumns = [
     { header: "Status", accessor: "is_approved" },
   ];
 
-// export const appointmentTableColumns = [{}];
+export const appointmentTableColumns = [
+  { header: "User", accessor: "name" },
+  { header: "Email", accessor: "email" },
+  { header: "Service", accessor: "service" },
+  { header: "Date", accessor: "date" },
+  { header: "Time", accessor: "time" },
+  { header: "Status", accessor: "status" },
+];

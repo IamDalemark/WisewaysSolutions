@@ -1,3 +1,5 @@
+"use client";
+
 import { useToast } from "@/components/contexts/ToastContext";
 import { useState } from "react";
 

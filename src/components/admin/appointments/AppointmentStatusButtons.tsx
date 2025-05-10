@@ -5,7 +5,7 @@ interface Props {
   rowId: string;
 }
 
-const StatusColumnButtonsBooking = ({ rowId }: Props) => {
+const AppointmentStatusButtons = ({ rowId }: Props) => {
   const handleStatusChange = async (
     status: "Pending" | "Accepted" | "Declined"
   ) => {
@@ -37,4 +37,4 @@ const StatusColumnButtonsBooking = ({ rowId }: Props) => {
   );
 };
 
-export default StatusColumnButtonsBooking;
+export default AppointmentStatusButtons;
