@@ -2,6 +2,7 @@
 
 import { useModal } from "@/components/contexts/ModalContext";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export interface UserLoginModalProps {
@@ -33,6 +34,7 @@ const UserLoginModal = ({
   showPassword = false,
   validationErrors = {},
 }: UserLoginModalProps) => {
+  const router = useRouter();
   const {
     logInLoading,
     showLogInModal,
@@ -110,6 +112,11 @@ const UserLoginModal = ({
     }
   };
 
+  const handleForgetPassword = async () => {
+    closeLogInModal();
+    router.push("/resetpassword");
+  };
+
   if (!showLogInModal && !show) return null;
 
   return (
@@ -182,9 +189,9 @@ const UserLoginModal = ({
         </form>
 
         <div className="text-sm text-center text-teal-700 mt-4">
-          <a href="#" className="hover:underline">
+          <button className="hover:underline" onClick={handleForgetPassword}>
             Forgot Password?
-          </a>
+          </button>
         </div>
 
         <hr className="my-4" />
