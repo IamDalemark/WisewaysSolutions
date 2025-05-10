@@ -12,9 +12,9 @@ interface TestimonialFilterButtonProps {
   onReset: () => void;
 }
 
-const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({ 
-  onFilter, 
-  onReset 
+const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
+  onFilter,
+  onReset,
 }) => {
   const [showFilters, setShowFilters] = useState(false);
   const [name, setName] = useState("");
@@ -22,10 +22,10 @@ const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
   const [rating, setRating] = useState("");
 
   const handleApply = () => {
-    onFilter({ 
-      name: name.trim() || undefined, 
-      status: status || undefined, 
-      rating: rating || undefined 
+    onFilter({
+      name: name.trim() || undefined,
+      status: status || undefined,
+      rating: rating || undefined,
     });
     setShowFilters(false);
   };
@@ -40,7 +40,7 @@ const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
 
   return (
     <div className="relative">
-      <Button 
+      <Button
         onClick={() => setShowFilters(!showFilters)}
         className="bg-blue-green text-white hover:bg-blue-green-dark"
         aria-expanded={showFilters}
@@ -50,14 +50,17 @@ const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
       </Button>
 
       {showFilters && (
-        <div 
+        <div
           className="absolute right-0 mt-2 w-64 bg-white rounded-md shadow-lg p-4 z-10 border border-gray-200"
           role="dialog"
           aria-modal="true"
         >
           <div className="space-y-3">
             <div>
-              <label htmlFor="name-filter" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="name-filter"
+                className="block text-sm font-medium mb-1"
+              >
                 Name
               </label>
               <input
@@ -71,7 +74,10 @@ const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
             </div>
 
             <div>
-              <label htmlFor="status-filter" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="status-filter"
+                className="block text-sm font-medium mb-1"
+              >
                 Status
               </label>
               <select
@@ -88,7 +94,10 @@ const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
             </div>
 
             <div>
-              <label htmlFor="rating-filter" className="block text-sm font-medium mb-1">
+              <label
+                htmlFor="rating-filter"
+                className="block text-sm font-medium mb-1"
+              >
                 Rating
               </label>
               <select
