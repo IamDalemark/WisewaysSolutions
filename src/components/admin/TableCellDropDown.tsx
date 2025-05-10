@@ -52,7 +52,7 @@ const TableCellDropDown = ({ shortText, fullText, isReview }: Props) => {
           </div>
         </div>
       )}
-    </div> // left-[50%] -translate-x-[50%]
+    </div>
   );
 };
 

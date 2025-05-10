@@ -19,11 +19,11 @@ const UserLoggedInDropDown = ({ user }: Props) => {
 
   return (
     <div
-      className="rounded-xl bg-[#f3f3f3] min-h-32 w-60 sm:w-60 mt-10 py-3 px-4 absolute drop-shadow-xl
+      className="rounded-xl bg-[#f3f3f3] min-h-32 w-60 sm:w-60 mt-10 py-4 px-4 absolute drop-shadow-xl
         overflow-auto -right-[0%] top-[70%]"
     >
       <div className="flex flex-col gap-2">
-        <p className="text-lg font-semibold text-blue-green">
+        <p className="text-xl font-semibold text-blue-green">
           {user!.user_metadata.username}
         </p>
         <p className="text-sm font-regular text-[#979797]">{user!.email}</p>
