@@ -1,5 +1,5 @@
-import { Button } from "@/components/ui/button";
 import { useUpdateTestimonialStatus } from "@/app/hooks/admin/useUpdateTestimonialStatus";
+import { Check, X } from "lucide-react";
 
 interface Props {
     rowId: string;
@@ -19,18 +19,18 @@ const TestimonialStatusButtons = ({ rowId }: Props) => {
 
     return (
         <div className="flex gap-2 justify-center">
-            <Button 
-                className="bg-blue-green text-white px-3 py-1 rounded-md hover:bg-blue-green-dark hover:scale-105 transition-all cursor-pointer"
+            <button 
+                className="bg-transparent text-blue-green justify-items-center h-8 w-8 sm:h-9 sm:w-9 rounded-full scale-90 hover:bg-gray-300 hover:text-green-500 hover:scale-110 transition-all cursor-pointer"
                 onClick={() => handleClick("Accepted")}
             >
-            Accept
-            </Button>
-            <Button 
-                className="bg-blue-green text-white px-3 py-1 rounded-md hover:bg-blue-green-dark hover:scale-105 transition-all cursor-pointer"
+            <Check size={30} strokeWidth={2.5}/>
+            </button>
+            <button 
+                className="bg-transparent text-blue-green justify-items-center h-8 w-8 sm:h-9 sm:w-9 rounded-full scale-90 hover:bg-gray-300 hover:text-red-500 hover:scale-110 transition-all cursor-pointer"
                 onClick={() => handleClick("Declined")}
             >
-            Decline
-            </Button>
+            <X size={30} strokeWidth={2.5}/>
+            </button>
         </div>
     );
 };
