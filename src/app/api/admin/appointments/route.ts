@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
-import sendAppointmentConfirmationToCLient from "@/emails/sendAppointmentConfirmationToClient";
+// import sendAppointmentConfirmationToCLient from "@/emails/sendAppointmentConfirmationToClient";
+import { formatTime } from "@/utils/timeUtils";
 
 export const GET = async () => {
   try {
@@ -17,10 +18,10 @@ export const GET = async () => {
       );
     }
 
-    const formattedData = data.map(booking => ({
+    const formattedData = data.map((booking) => ({
       ...booking,
       date: formatDate(booking.created_at),
-      time: formatTime(booking.created_at)
+      time: formatTime(booking.created_at),
     }));
 
     return NextResponse.json(formattedData, { status: 200 });
@@ -44,20 +45,6 @@ function formatDate(timestamp: string): string {
   } catch (e) {
     console.error("Error formatting date:", e);
     return "Invalid date";
-  }
-}
-
-function formatTime(timestamp: string): string {
-  try {
-    const dateObj = new Date(timestamp);
-    return dateObj.toLocaleTimeString(undefined, {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true
-    });
-  } catch (e) {
-    console.error("Error formatting time:", e);
-    return "Invalid time";
   }
 }
 
@@ -129,13 +116,6 @@ export const PATCH = async (request: Request) => {
     console.log(status);
     if (status === "Accepted") {
       console.log(data);
-      sendAppointmentConfirmationToCLient({
-        name: data.name,
-        service: data.service,
-        email: data.email,
-        date: data.date,
-        time: data.time,
-      });
     }
     return NextResponse.json({ success: true }, { status: 200 });
   } catch (error) {

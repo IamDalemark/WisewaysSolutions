@@ -46,7 +46,7 @@ export default function AdminDashboardShell({
 
         <div className="min-h-screen">
           <AdminNavbar toggleSidebar={() => setIsOpen(prev => !prev)} />
-          <main className="mt-16 px-0 md:px-15 transition-all">{children}</main>
+          <main className="mt-16 px-0 sm:px-10 md:px-15 transition-all">{children}</main>
         </div>
       </div>
     </SidebarProvider>

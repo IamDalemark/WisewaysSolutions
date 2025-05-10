@@ -3,8 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { fetchAppointments } from "@/app/hooks/admin/fetchAppointments";
 import { BookingAdminData } from "@/types/bookings.type";
-import StatusColumnButtonsBooking from "./AppointmentStatusButtons";
-import TableCellDropDown from "../TableCellDropDown";
+import AdminTableRowBooking from "./AppointmentTableRow";
 import { supabase } from "@/lib/supabaseClient";
 import { Loader2 } from "lucide-react";
 
@@ -17,25 +16,40 @@ const columns = [
   { header: "Status", accessor: "status" },
 ];
 
-const maxLengths: Record<string, number> = {
-  name: 20,
-  email: 30,
-  service: 25,
-};
-
 interface AdminTableBodyBookingProps {
   filters?: {
     date?: string;
     status?: string;
     clientName?: string;
   };
+  currentPage: number;
+  setTotalPages: (n: number) => void;
 }
 
-const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters = {} }) => {
+const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({ 
+  filters = {}, currentPage, setTotalPages
+}) => {
   const [error, setError] = useState("");
   const [bookings, setBookings] = useState<BookingAdminData[]>([]);
   const [filteredBookings, setFilteredBookings] = useState<BookingAdminData[]>([]);
   const [loading, setLoading] = useState(true);
+
+  const PAGE_SIZE = 5;
+
+  useEffect(() => {
+    if (!filteredBookings.length) {
+      setTotalPages(1);
+    } else {
+      const total = Math.ceil(filteredBookings.length / PAGE_SIZE);
+      setTotalPages(total);
+    }
+  }, [filteredBookings, setTotalPages]);
+
+  const paginatedBookings = filteredBookings.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
+
 
   useEffect(() => {
     const loadData = async () => {
@@ -185,46 +199,17 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
   }
 
   return (
-    <tbody className="text-center text-sm w-full">
-      {filteredBookings.map((row, rowIdx) => (
-        <tr
-          key={rowIdx}
-          className={
-            rowIdx === filteredBookings.length - 1 ? "" : "border-b border-neutral-300"
-          }
-        >
-          {columns.map((col, colIdx) => {
-            const cellValue = row[col.accessor as keyof BookingAdminData];
-            const maxLength = maxLengths[col.accessor] ?? Infinity;
-            const shouldTruncate =
-              typeof cellValue === "string" && cellValue.length > maxLength;
-            const shortText = shouldTruncate
-              ? `${cellValue.slice(0, maxLength)}...`
-              : cellValue;
-
-            return (
-              <td key={colIdx} className="px-4 py-2 text-center h-14">
-                {col.accessor === "status" ? (
-                  row.status === "Accepted" || row.status === "Declined" ? (
-                    <span>{row.status}</span>
-                  ) : (
-                    <StatusColumnButtonsBooking rowId={row.booking_id} />
-                  )
-                ) : shouldTruncate ? (
-                  <TableCellDropDown
-                    shortText={String(shortText)}
-                    fullText={cellValue as string}
-                  />
-                ) : (
-                  cellValue
-                )}
-              </td>
-            );
-          })}
-        </tr>
+    <tbody className="w-full">
+      {paginatedBookings.map((row, rowIdx) => (
+        <AdminTableRowBooking
+          key={row.booking_id}
+          row={row}
+          isLastRow={rowIdx === paginatedBookings.length - 1}
+        />
       ))}
     </tbody>
+
   );
 };
 
-export default AdminTableBodyBooking;
+export default AppointmentTableBody;

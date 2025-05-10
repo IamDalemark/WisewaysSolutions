@@ -25,9 +25,9 @@ interface AdminTableBodyTestimonialProps {
   setTotalPages: (n: number) => void;
 }
 
-const ROWS_PER_PAGE = 10;
+const ROWS_PER_PAGE = 12;
 
-const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
+export const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
   filters = {}, currentPage, setTotalPages
 }) => {
   const [error, setError] = useState("");
@@ -173,5 +173,3 @@ const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
     </tbody>
   );
 };
-
-export default TestimonialTableBody;
