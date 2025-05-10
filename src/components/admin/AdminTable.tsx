@@ -9,8 +9,16 @@ export interface AdminTableColumn {
 };
 
 export interface AdminTableProps {
-  columns: AdminTableColumn[]; // for creating the headers
-  table: "Appointments" | "Testimonials";
+  columns: AdminTableColumn[];
+  table?: "Appointments" | "Testimonials"; 
+  body?: React.ReactNode; 
+  filters?: {
+    name?: string;
+    status?: string;
+    rating?: string;
+    date?: string;
+    clientName?: string;
+  };
 };
 
 const isColumnVisible = (header: string) => {
@@ -20,7 +28,7 @@ const isColumnVisible = (header: string) => {
   return true;
 };
 
-const AdminTable = ({ columns, table }: AdminTableProps) => {
+const AdminTable = ({ columns, table, body }: AdminTableProps) => {
   const [visibleHeaders, setVisibleHeaders] = useState<AdminTableColumn[]>([]);
 
   useEffect(() => {
@@ -60,13 +68,11 @@ const AdminTable = ({ columns, table }: AdminTableProps) => {
             })}
           </tr>
         </thead>
-        
-        {table === "Testimonials" ? (
-          <TestimonialTableBody/>
-        ) : (
-          null
-        )
-        }
+        {body || (
+          table === "Testimonials" ? (
+            <TestimonialTableBody />
+          ) : null
+        )}
       </table>
     </div>
   );

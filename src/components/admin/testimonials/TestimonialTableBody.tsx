@@ -1,28 +1,80 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { fetchTestimonials } from "@/app/hooks/admin/fetchTestimonials";
 import { TestimonialAdminData } from "@/types/testimonials.type";
 import { supabase } from "@/lib/supabaseClient";
 import { Loader2 } from "lucide-react";
 import TestimonialTableRow from "./TestimonialTableRow";
 
-const TestimonialTableBody: React.FC = () => {
+const columns = [
+  { header: "Name", accessor: "name" },
+  { header: "Email", accessor: "email" },
+  { header: "Testimonial", accessor: "testimonial" },
+  { header: "Rating", accessor: "rating" },
+  { header: "Status", accessor: "is_approved" },
+];
+
+const maxLengths: Record<string, number> = {
+  name: 20,
+  email: 30,
+  testimonial: 35,
+};
+
+interface AdminTableBodyTestimonialProps {
+  filters?: {
+    name?: string;
+    status?: string;
+    rating?: string;
+  };
+}
+
+const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({ filters = {} }) => {
   const [error, setError] = useState("");
-  const [testimonials, setTestimonials] = useState<TestimonialAdminData[] | null>(null);
+  const [testimonials, setTestimonials] = useState<TestimonialAdminData[]>([]);
+  const [filteredTestimonials, setFilteredTestimonials] = useState<TestimonialAdminData[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadData = async () => {
       try {
+        setLoading(true);
         const data = await fetchTestimonials();
         setTestimonials(data);
+        setFilteredTestimonials(data);
       } catch (err) {
         setError((err as Error).message);
+      } finally {
+        setLoading(false);
       }
     };
 
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (testimonials.length === 0) return;
+
+    let result = [...testimonials];
+
+    if (filters.name) {
+      result = result.filter(testimonial =>
+        testimonial.name.toLowerCase().includes(filters.name!.toLowerCase())
+      );
+    }
+
+    if (filters.status) {
+      result = result.filter(testimonial => testimonial.is_approved === filters.status);
+    }
+
+    if (filters.rating) {
+      result = result.filter(testimonial => 
+        testimonial.rating.toString() === filters.rating
+      );
+    }
+
+    setFilteredTestimonials(result);
+  }, [filters, testimonials]);
 
   useEffect(() => {
     const channel = supabase
@@ -49,19 +101,20 @@ const TestimonialTableBody: React.FC = () => {
       supabase.removeChannel(channel);
     };
   }, []);
-  
 
   if (error) {
     return (
       <tbody>
         <tr>
-          <td colSpan={5} className="text-red-600 text-center py-4">{error}</td>
+          <td colSpan={columns.length} className="text-red-600 text-center py-4">
+            {error}
+          </td>
         </tr>
       </tbody>
     );
   }
 
-  if (testimonials === null) {
+  if (loading) {
     return (
       <tbody>
         <tr className="w-full">
@@ -70,6 +123,18 @@ const TestimonialTableBody: React.FC = () => {
               <Loader2 className="h-4 w-4 animate-spin" />
               <span>Loading testimonials...</span>
             </div>
+          </td>
+        </tr>
+      </tbody>
+    );
+  }
+
+  if (filteredTestimonials.length === 0) {
+    return (
+      <tbody>
+        <tr>
+          <td colSpan={columns.length} className="text-center py-4">
+            No testimonials found
           </td>
         </tr>
       </tbody>

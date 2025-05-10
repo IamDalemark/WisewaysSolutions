@@ -93,4 +93,3 @@ const TestimonialTableRow: React.FC<Props> = ({row, isLastRow}) => {
 };
 
 export default TestimonialTableRow;
-
