@@ -37,23 +37,34 @@ const LandingPage = () => {
       {/* intro section */}
       <LandingPageSection
         id="intro"
-        title="Welcome to WiseWays Solutions!"
-        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                  tempor incididunt ut labore et dolore magna aliqua."
+        heading="Wiseways Solutions"
+        title="Shaping the Future, Not Just Adapting to It"
+        subtitle="At Wiseways, we believe in progress with purpose. We don’t just adapt to the digital world,
+        we help shape it. Our team combines innovation, strategy, and emerging tech to create smarter ways of 
+        working and growing.
+        From streamlining everyday tasks to building future-ready solutions, we help businesses stay ahead
+        faster, leaner, and more agile. Change doesn’t have to be overwhelming. With the right partner, it 
+        becomes opportunity. Let’s build what’s next, together."
         imageSrc="/landing-page1.png"
         altText="Website Landing page"
-        titleClassName="text-5xl lg:text-6xl font-bold"
+        headingClassName="text-5xl pb-5"
+        titleClassName="text-4xl lg:text-5xl font-semibold"
       />
 
       {/* services section */}
       <LandingPageSection
         id="services"
-        heading="Check out our available Services"
-        title="Solutions for Your Small Business"
-        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                          tempor incididunt ut labore et dolore magna aliqua."
+        heading="Smart Services & Scalable Solutions to Power Your Business"
+        title="From Strategy to Execution"
+        subtitle="We offer intelligent, tech-driven services designed to evolve with your business. 
+        Whether you're streamlining operations, enhancing customer experiences, or exploring 
+        AI-powered innovations, our scalable solutions are built to grow with you. We don’t do 
+        one-size-fits-all, we build what fits you best, so you can stay agile, competitive, and ready for 
+        what’s next."
         imageSrc="/landing-services.png"
         altText="Services"
+        headingClassName=""
+        titleClassName="text-4xl lg:text-5xl font-semibold"
       />
 
       {/* about section */}
@@ -65,18 +76,22 @@ const LandingPage = () => {
             Learn More About
             <span className="text-[#FD8432] font-extrabold ml-3">
               Wiseways
-            </span>{" "}
+            </span>
+            {" "}
           </p>
         }
-        subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat. Duis aute irure dolor in
-            reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident."
+        subtitle="At Wiseways, we believe in progress with purpose. We don’t just adapt to the digital world,
+        we help shape it. Our team combines innovation, strategy, and emerging tech to create smarter ways of 
+        working and growing.
+
+        From streamlining everyday tasks to building future-ready solutions, we help businesses stay ahead
+        faster, leaner, and more agile. Change doesn’t have to be overwhelming. With the right partner, it 
+        becomes opportunity. 
+        
+        Let’s build what’s next, together."
         imageSrc="/landing-about.png"
         altText="About Us"
-        subTitleClassName="lg:px-[5%] leading-7 lg:leading-9"
+        subTitleClassName="lg:px-[5%] lg:leading-9 text-lg lg:text-xl"
       />
 
       {/* testimonial section */}
@@ -88,13 +103,10 @@ const LandingPage = () => {
         heading="CONTACT US"
         title="Feel free to connect with us if you have any questions or concerns"
         subtitle={
-          <ul className="justify-self-center text-lg">
+          <ul className="justify-self-center">
             <ContactDetail iconName="Phone" description="(63) 000-000-0000" />
             <ContactDetail iconName="Mail" description="loremisum@gmail.com" />
-            <ContactDetail
-              iconName="MapPin"
-              description="999 Lorem Ipsum road, Dolor sit Amet City"
-            />
+            <ContactDetail iconName="MapPin"description="Iloilo City, Philippines"/>
           </ul>
         }
         imageSrc="/landing-contact.png"
