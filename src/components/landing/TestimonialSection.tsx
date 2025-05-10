@@ -48,13 +48,13 @@ const TestimonialSection = () => {
                 align: "center",
                 loop: true,
               }}
-              className="w-[90vw] max-w-[95%] md:max-w-[85%] justify-self-center"
+              className="w-[90vw] max-w-[95%] md:max-w-[85%] justify-self-center "
             >
               <CarouselContent>
                 {testimonials.map((props) => (
                   <CarouselItem
                     key={props.testimonial_id}
-                    className="md:basis-2/3 lg:basis-1/3"
+                    className="md:basis-2/3 lg:basis-1/3 pb-16"
                   >
                     <Testimonial {...props} />
                   </CarouselItem>
@@ -63,7 +63,7 @@ const TestimonialSection = () => {
               <CarouselPrevious className="top-1/2 -translate-y-1/2 left-2 sm:-left-5 md:-left-5" />
               <CarouselNext className="top-1/2 -translate-y-1/2 right-2 sm:right-0 md:-right-5" />
             </Carousel>
-            <div className="justify-self-center self-center mt-4 md:mt-10">
+            <div className="justify-self-center self-center mt-4 md:-mt-2">
               <Button
                 className="bg-blue-green hover:bg-blue-green-dark mb-28"
                 onClick={onSubmit}
