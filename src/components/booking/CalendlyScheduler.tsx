@@ -30,7 +30,9 @@ const CalendlyScheduler = ({
         if (isCalendlyEventScheduled(e)) {
           console.log("Event scheduled! URI: ", e.data.payload.event.uri);
           console.log("Invitee URI: ", e.data.payload.invitee.uri);
-          createBooking(e.data.payload.event.uri, e.data.payload.invitee.uri);
+          if (!isSubmitting) {
+            createBooking(e.data.payload.event.uri, e.data.payload.invitee.uri);
+          }
         }
       }
     };

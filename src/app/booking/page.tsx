@@ -8,9 +8,11 @@ import ScheduledBooking from "@/components/booking/ScheduledBooking";
 import { AlertTriangle, Loader2 } from "lucide-react";
 import CancelBooking from "@/components/booking/CancelBooking";
 import RescheduleBooking from "@/components/booking/RescheduleBooking";
+import { useRouter } from "next/navigation";
 
 const BookingPage = () => {
-  const { user } = useUser();
+  const router = useRouter();
+  const { user, loading } = useUser();
   const [userID, setUserID] = useState("");
   const { booking, error, isFetching } = useGetBooking(userID ?? "");
   const [name, setName] = useState("");
@@ -26,7 +28,10 @@ const BookingPage = () => {
       setName(user.user_metadata.username.replaceAll(" ", "%20"));
       setUserID(user.id);
     }
-  }, [user]);
+    if (!user && !loading) {
+      router.replace("/");
+    }
+  }, [user, loading, router]);
 
   useEffect(() => {
     setHasBooking(!!booking);
@@ -65,7 +70,7 @@ const BookingPage = () => {
     }
   };
 
-  if (!user || isFetching) {
+  if (!user || loading || isFetching) {
     return (
       <div className="flex flex-col items-center justify-center min-h-screen bg-[#E1E1E1] px-4">
         <Loader2 className="w-10 h-10 text-gray-600 animate-spin mb-4" />

@@ -14,7 +14,6 @@ export const useLogout = () => {
         throw new Error(error.message || "Failed to Log Out.");
       }
 
-      console.log(error);
       return { success: true };
     } catch (error) {
       return {
