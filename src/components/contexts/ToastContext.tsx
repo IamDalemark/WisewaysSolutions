@@ -48,11 +48,11 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({ children }) => {
 
       if (duration !== Infinity) {
         setTimeout(() => {
-          // eslint-disable-next-line react-hooks/exhaustive-deps
           removeToast(id);
         }, duration);
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
