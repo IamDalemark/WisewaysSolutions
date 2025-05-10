@@ -6,6 +6,7 @@ import { BookingAdminData } from "@/types/bookings.type";
 import StatusColumnButtonsBooking from "./AppointmentStatusButtons";
 import TableCellDropDown from "../TableCellDropDown";
 import { supabase } from "@/lib/supabaseClient";
+import { Loader2 } from "lucide-react";
 
 const columns = [
   { header: "Name", accessor: "name" },
@@ -141,30 +142,36 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
     }
   }
 
-  if (loading) {
-    return (
-      <tbody>
-        <tr>
-          <td colSpan={6} className="text-center py-4">
-            Loading appointments...
-          </td>
-        </tr>
-      </tbody>
-    );
-  }
-
-  if (error) {
-    return (
-      <tbody>
-        <tr>
-          <td colSpan={6} className="text-red-600 text-center py-4">
-            {error}
-          </td>
-        </tr>
-      </tbody>
-    );
-  }
-
+   if (error) {
+     return (
+       <tbody>
+         <tr>
+           <td
+             colSpan={columns.length}
+             className="text-red-600 text-center py-4"
+           >
+             {error}
+           </td>
+         </tr>
+       </tbody>
+     );
+   }
+ 
+   if (loading) {
+     return (
+       <tbody>
+         <tr className="w-full">
+           <td colSpan={6} className="py-4">
+             <div className="flex justify-center items-center text-gray-500 gap-2">
+               <Loader2 className="h-4 w-4 animate-spin" />
+               <span>Loading appointments...</span>
+             </div>
+           </td>
+         </tr>
+       </tbody>
+     );
+   }
+ 
   if (filteredBookings.length === 0) {
     return (
       <tbody>

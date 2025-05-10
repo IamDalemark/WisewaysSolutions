@@ -47,7 +47,7 @@ const UserDropDownItem = ({ initialOpen }: Props) => {
   return (
     <div ref={dropdownRef} className="flex justify-items-end items-center">
       <div
-        className="flex group h-11 w-11 ml-2 rounded-[2.5rem] hover:scale-105 transition-all"
+        className="flex group h-11 w-11 ml-2 rounded-[2.5rem] hover:scale-105 transition-all cursor-pointer"
         onClick={() => setIsOpen(!isOpen)}
       >
         <div className="h-11 w-11 rounded-full ">
