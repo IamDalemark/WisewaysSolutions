@@ -20,10 +20,7 @@ const TestimonialSection = () => {
   };
 
   return (
-    <div
-      id="testimonial"
-      className="w-[90vw] justify-self-center p-4 z-0"
-    >
+    <div id="testimonial" className="w-[90vw] justify-self-center p-4 z-0">
       <div className="place-content-center md:pb-12">
         <div className="justify-self-center text-center text-5xl lg:text-6xl font-bold leading-[1.1]">
           What Our Customers Say
@@ -32,7 +29,7 @@ const TestimonialSection = () => {
           {loading
             ? "Loading testimonials..."
             : testimonials.length > 0
-            ? "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusamus eos optio voluptates saepe veritatis vero rerum"
+            ? "Discover how our tailored solutions have empowered clients to streamline operations and drive success."
             : "No testimonials available yet"}
         </div>
       </div>

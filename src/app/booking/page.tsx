@@ -35,7 +35,7 @@ const BookingPage = () => {
 
   useEffect(() => {
     setHasBooking(!!booking);
-    console.log(booking);
+    // console.log(booking);
   }, [booking]);
 
   const handleBookingConfirmation = () => {

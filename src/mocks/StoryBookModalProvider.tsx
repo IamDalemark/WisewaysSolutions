@@ -35,6 +35,7 @@ interface StorybookModalProviderProps {
     acceptedTerms?: boolean;
     general?: string;
   };
+  fromService: string;
 }
 
 export const StorybookModalProvider = ({
@@ -42,6 +43,7 @@ export const StorybookModalProvider = ({
   modalProps,
   showValidationErrors = false,
   validationErrors = {},
+  fromService = "Any.",
 }: StorybookModalProviderProps) => {
   const [signUpFormState, setSignUpFormState] = useState({
     username: modalProps.username || "",
@@ -101,6 +103,7 @@ export const StorybookModalProvider = ({
         loginForm: loginFormState,
         setSignUpForm: setSignUpFormState,
         setLoginForm: setLoginFormState,
+        fromService: fromService,
       }}
     >
       {children}

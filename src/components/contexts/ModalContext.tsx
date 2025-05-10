@@ -26,6 +26,7 @@ interface ModalContextType {
   handleLogIn: () => Promise<LogInResult>;
   signUpLoading: boolean;
   logInLoading: boolean;
+  fromService: string;
   signUpForm: {
     username: string;
     email: string;
@@ -61,6 +62,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
   const { user, loading: userLoading } = useUser();
   const [isLoggedIn, setIsLoggedIn] = useState(user != null);
+  const [fromService, setFromService] = useState<string>("Any.");
 
   useEffect(() => {
     // console.log('User Auth Data:', user);
@@ -123,6 +125,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const handleScheduleAppointment = () => {
     if (userLoading) return;
     setIsBooking(false);
+    const splitURL = window.location.href.split("/");
+    const endOfURL = splitURL[splitURL.length - 1];
+    setFromService(
+      window.location.href.split("/")[3] === "services" ? endOfURL : "Any."
+    );
     if (isLoggedIn) {
       router.push("/booking");
     } else {
@@ -194,6 +201,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         loginForm,
         setSignUpForm,
         setLoginForm,
+        fromService,
       }}
     >
       {children}
