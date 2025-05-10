@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
-
+// import sendTestimonialEmailToAdmin from "@/emails/sendTestimonialEmailToAdmin";
 export const POST = async (request: Request) => {
   try {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -30,6 +30,14 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ error: error }, { status: 500 });
     }
 
+    // sendTestimonialEmailToAdmin({
+    //   name,
+    //   testimonial,
+    //   rating,
+    //   email,
+    //   testimonial_id,
+    // });
+
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {
     console.error("Server error:", error);
@@ -40,5 +48,28 @@ export const POST = async (request: Request) => {
   }
 };
 
+export const GET = async (request: Request) => {
+  const { searchParams } = new URL(request.url);
+  const testimonial_id = searchParams.get("testimonial_id");
+  const is_approved = searchParams.get("is_approved");
 
+  if (
+    !testimonial_id ||
+    !["Accepted", "Declined"].includes(is_approved || "")
+  ) {
+    return NextResponse.json({ error: "Invalid parameters" }, { status: 400 });
+  }
+  console.log("test_id", testimonial_id, "is+approv", is_approved);
+  const { error } = await supabase
+    .from("testimonial")
+    .update({ is_approved })
+    .eq("testimonial_id", testimonial_id);
 
+  if (error) {
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+
+  return new Response(
+    `Testimonial ${is_approved}. This has been processed successfully.`
+  );
+};

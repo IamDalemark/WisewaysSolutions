@@ -7,11 +7,19 @@ export interface AdminTableColumn {
 };
 
 export interface AdminTableProps {
-  columns: AdminTableColumn[]; // for creating the headers
-  table: "Appointments" | "Testimonials";
+  columns: AdminTableColumn[];
+  table?: "Appointments" | "Testimonials"; 
+  body?: React.ReactNode; 
+  filters?: {
+    name?: string;
+    status?: string;
+    rating?: string;
+    date?: string;
+    clientName?: string;
+  };
 };
 
-const AdminTable = ({ columns, table }: AdminTableProps) => {
+const AdminTable = ({ columns, table, body }: AdminTableProps) => {
   return (
     <div className="flex w-full h-full justify-center items-center mt-1">
       <table className="bg-[#f3f3f3] w-full rounded-xl">
@@ -29,13 +37,11 @@ const AdminTable = ({ columns, table }: AdminTableProps) => {
             ))}
           </tr>
         </thead>
-        
-        {table === "Testimonials" ? (
-          <TestimonialTableBody/>
-        ) : (
-          null
-        )
-        }
+        {body || (
+          table === "Testimonials" ? (
+            <TestimonialTableBody />
+          ) : null
+        )}
       </table>
     </div>
   );

@@ -16,6 +16,7 @@ export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<LogInErrors>({});
   const [isLoading, setIsLoading] = useState(false);
+  const [successMessage, setSuccessMessage] = useState<string | null>(null); 
 
   const router = useRouter();
 
@@ -51,14 +52,22 @@ export default function AdminLoginPage() {
 
       if (!res.ok || !result.success) {
         setErrors({ general: result.message || "Login failed" });
+        setSuccessMessage(null); 
       } else {
         localStorage.setItem("token", result.token);
+        setSuccessMessage("Login successful!");
+
+        setTimeout(() => {
+          setSuccessMessage(null);
+        }, 3000);
+
         router.push("/admin/testimonials");
       }
     } catch (err) {
       console.error("Login error:", err);
       setIsLoading(false);
       setErrors({ general: "Something went wrong. Please try again." });
+      setSuccessMessage(null); 
     }
   };
 
@@ -68,6 +77,14 @@ export default function AdminLoginPage() {
         <h2 className="text-2xl font-semibold text-center text-teal-700 mb-6">
           Admin Log In
         </h2>
+        
+        {/* success message alert */}
+        {successMessage && (
+          <div className="text-green-500 text-center mb-2">
+            {successMessage}
+          </div>
+        )}
+
         <form className="space-y-4" onSubmit={handleSubmit}>
           {errors.general && (
             <div className="text-red-500 text-center mb-2">

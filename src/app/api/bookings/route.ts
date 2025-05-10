@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
+// import sendAppointmentEmailToAdmin from "@/emails/sendAppointmentEmailToAdmin";
 
 export const POST = async (request: Request) => {
   try {
@@ -31,7 +32,7 @@ export const POST = async (request: Request) => {
       console.error("Supabase error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
-
+    // sendAppointmentEmailToAdmin({ service, name, email, date, time });
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {
     console.error("Server error:", error);

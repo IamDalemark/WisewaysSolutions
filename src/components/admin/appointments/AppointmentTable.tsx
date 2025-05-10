@@ -1,5 +1,7 @@
+"use client";
+
 import React from "react";
-import AdminTableBodyBooking from "./AdminTableBodyBooking";
+import AdminTableBodyBooking from "./AppointmentTableBody";
 
 export interface AdminTableColumn {
   header: string;
@@ -8,9 +10,14 @@ export interface AdminTableColumn {
 
 export interface AdminTableProps {
   columns: AdminTableColumn[];
+  filters?: {
+    date?: string;
+    status?: string;
+    clientName?: string;
+  };
 };
 
-const AdminTableBooking = ({ columns }: AdminTableProps) => {
+const AdminTableBooking = ({ columns, filters = {} }: AdminTableProps) => {
   return (
     <div className="flex w-full h-full justify-center items-center mt-1">
       <table className="bg-[#f3f3f3] w-full rounded-xl">
@@ -20,17 +27,15 @@ const AdminTableBooking = ({ columns }: AdminTableProps) => {
               <th
                 key={idx}
                 className={`${idx === 0 ? "rounded-tl-xl" : ""} ${
-                  idx === columns.length - 1 ? "rounded-tr-xl" : ""} 
-                  px-4 py-3`}
+                  idx === columns.length - 1 ? "rounded-tr-xl" : ""
+                } px-4 py-3`}
               >
                 {col.header}
               </th>
             ))}
           </tr>
         </thead>
-        
-        <AdminTableBodyBooking />
-        {/* <AdminTableBody columns={columns} data={data} /> */}
+        <AdminTableBodyBooking filters={filters} />
       </table>
     </div>
   );
