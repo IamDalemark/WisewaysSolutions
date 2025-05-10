@@ -43,7 +43,7 @@ const UserLoggedInDropDown = ({ user }: Props) => {
           Reset Password
         </button>
       </div>
-      <div className="pt-4">
+      <div>
         {logOutLoading ? (
           <div
             className="flex text-base py-2 leading-[1] text-left 
