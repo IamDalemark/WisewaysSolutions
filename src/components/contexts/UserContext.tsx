@@ -26,9 +26,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
       console.log("Auth event:", event);
       if (session?.user) {
-        // console.log(session.user);
         setUser(session.user);
-        // signOut();
       }
       setLoading(false);
     });
@@ -38,10 +36,6 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       subscription.unsubscribe();
     };
   }, []);
-
-  //   const signOut = async () => {
-  //     await supabase.auth.signOut({ scope: "local" });
-  //   };
 
   return (
     <UserContext.Provider
