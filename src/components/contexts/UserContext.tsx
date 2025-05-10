@@ -9,18 +9,22 @@ import {
 } from "react";
 import { User } from "@supabase/auth-helpers-react";
 import { supabase } from "@/lib/supabaseClient";
+import { useRouter } from "next/navigation";
 
 interface UserContextType {
   user: User | null;
   loading: boolean;
   error?: string | null;
+  changingPassword: boolean;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
   const [loading, setLoading] = useState<boolean>(true);
   const [user, setUser] = useState<User | null>(null);
+  const [changingPassword, setChangingPassword] = useState(false);
 
   useEffect(() => {
     const { data } = supabase.auth.onAuthStateChange((event, session) => {
@@ -29,12 +33,17 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setUser(session.user);
       }
       setLoading(false);
+      if (event == "PASSWORD_RECOVERY") {
+        setChangingPassword(true);
+        router.replace("/resetpassword");
+      }
     });
     const { subscription } = data;
 
     return () => {
       subscription.unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -43,6 +52,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         user,
         loading,
         error: user ? null : "Error fetching user.",
+        changingPassword,
       }}
     >
       {children}
