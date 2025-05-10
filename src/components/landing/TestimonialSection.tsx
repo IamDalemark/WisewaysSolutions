@@ -22,13 +22,13 @@ const TestimonialSection = () => {
   return (
     <div
       id="testimonial"
-      className="grid grid-rows-6 w-[90vw] justify-self-center p-4 z-0"
+      className="w-[90vw] justify-self-center p-4 z-0"
     >
-      <div className="row-span-2 place-content-center">
-        <div className="justify-self-center text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1]">
+      <div className="place-content-center md:pb-12">
+        <div className="justify-self-center text-center text-5xl lg:text-6xl font-bold leading-[1.1]">
           What Our Customers Say
         </div>
-        <div className="justify-self-center text-md lg:text-xl p-4">
+        <div className="justify-self-center text-xl lg:text-2xl px-4 py-8">
           {loading
             ? "Loading testimonials..."
             : testimonials.length > 0
@@ -36,7 +36,7 @@ const TestimonialSection = () => {
             : "No testimonials available yet"}
         </div>
       </div>
-      <div className="row-span-4 grid">
+      <div>
         {loading ? (
           <div className="flex justify-center items-center h-full">
             <Loader2 className="animate-spin w-10 h-10 text-blue-green" />
@@ -69,9 +69,10 @@ const TestimonialSection = () => {
                 <></>
               )}
             </Carousel>
-            <div className="justify-self-center self-center mt-4 md:-mt-2">
+            <div className="justify-self-center self-center mt-8 md:mt-10">
               <Button
-                className="bg-blue-green hover:bg-blue-green-dark mb-28"
+                className="bg-blue-green hover:bg-blue-green-dark mb-28 text-xl p-6 rounded-xl
+                hover:scale-103 transition-all cursor-pointer"
                 onClick={onSubmit}
               >
                 Submit Testimonial
