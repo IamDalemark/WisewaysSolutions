@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import LandingPageSection from "@/components/landing/LandingPageSection";
-import TestimonialSection from "@/components/page_sections/TestimonialSection";
+import TestimonialSection from "@/components/landing/TestimonialSection";
 import ContactDetail from "@/components/landing/ContactDetail";
 import AppointmentButton from "@/components/navbar/AppointmentButton";
 import { useModal } from "@/components/contexts/ModalContext";
@@ -19,8 +19,9 @@ const LandingPage = () => {
       if (target) {
         setTimeout(() => {
           const yOffset = -120;
-          const y = target.getBoundingClientRect().top + window.pageYOffset + yOffset;
-          window.scrollTo({ top: y, behavior: "smooth"});
+          const y =
+            target.getBoundingClientRect().top + window.pageYOffset + yOffset;
+          window.scrollTo({ top: y, behavior: "smooth" });
         }, 300);
       }
     }
@@ -29,9 +30,10 @@ const LandingPage = () => {
 
   return (
     //    sm:bg-fuchsia-200 md:bg-amber-200 lg:bg-blue-200 xl:bg-green-300
-    <main className="bg-[#E3E3E3]
-    text-blue-green w-full h-full pt-36 lg:pt-32 static">
-
+    <main
+      className="bg-[#E3E3E3]
+    text-blue-green w-full h-full pt-36 lg:pt-32 static"
+    >
       {/* intro section */}
       <LandingPageSection
         id="intro"
@@ -61,7 +63,9 @@ const LandingPage = () => {
           <p className="flex flex-wrap justify-center">
             {" "}
             Learn More About
-            <span className="text-[#FD8432] font-extrabold ml-3">Wiseways</span>{" "}
+            <span className="text-[#FD8432] font-extrabold ml-3">
+              Wiseways
+            </span>{" "}
           </p>
         }
         subtitle="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
@@ -87,7 +91,10 @@ const LandingPage = () => {
           <ul className="justify-self-center text-lg">
             <ContactDetail iconName="Phone" description="(63) 000-000-0000" />
             <ContactDetail iconName="Mail" description="loremisum@gmail.com" />
-            <ContactDetail iconName="MapPin" description="999 Lorem Ipsum road, Dolor sit Amet City"/>
+            <ContactDetail
+              iconName="MapPin"
+              description="999 Lorem Ipsum road, Dolor sit Amet City"
+            />
           </ul>
         }
         imageSrc="/landing-contact.png"
@@ -99,7 +106,6 @@ const LandingPage = () => {
         }
         titleClassName="text-2xl md:text-3xl lg:text-4xl font-medium"
       />
-
     </main>
   );
 };
