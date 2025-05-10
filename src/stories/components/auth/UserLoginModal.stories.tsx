@@ -31,7 +31,7 @@ const MockUserProvider = ({ children }: { children: ReactNode }) => {
 const Template: StoryFn<UserLoginModalProps> = (args) => {
   return (
     <MockUserProvider>
-      <StorybookModalProvider modalProps={args}>
+      <StorybookModalProvider modalProps={args} fromService="Any">
         <UserLoginModal {...args} />
       </StorybookModalProvider>
     </MockUserProvider>
@@ -46,6 +46,7 @@ const ValidationErrorTemplate: StoryFn<UserLoginModalProps> = (args) => {
         modalProps={args}
         showValidationErrors={true}
         validationErrors={args.validationErrors}
+        fromService="Any"
       >
         <UserLoginModal {...args} />
       </StorybookModalProvider>
