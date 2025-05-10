@@ -47,7 +47,7 @@ const LandingPage = () => {
         becomes opportunity. Let’s build what’s next, together."
         imageSrc="/landing-page1.png"
         altText="Website Landing page"
-        headingClassName="text-5xl pb-5"
+        headingClassName="text-5xl"
         titleClassName="text-4xl lg:text-5xl font-semibold"
       />
 

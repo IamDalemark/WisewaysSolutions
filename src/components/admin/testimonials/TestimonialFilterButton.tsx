@@ -42,7 +42,8 @@ const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
     <div className="relative">
       <Button
         onClick={() => setShowFilters(!showFilters)}
-        className="bg-blue-green text-white hover:bg-blue-green-dark"
+        className="bg-blue-green text-white hover:bg-blue-green-dark
+        hover:scale-105 transition-all cursor-pointer"
         aria-expanded={showFilters}
         aria-haspopup="dialog"
       >
@@ -119,13 +120,14 @@ const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
               <Button
                 variant="outline"
                 onClick={handleReset}
-                className="px-3 py-1 text-sm"
+                className="px-3 py-1 text-sm hover:scale-105 transition-all cursor-pointer"
               >
                 Reset
               </Button>
               <Button
                 onClick={handleApply}
-                className="px-3 py-1 text-sm bg-blue-green text-white hover:bg-blue-green-dark"
+                className="px-3 py-1 text-sm bg-blue-green text-white hover:bg-blue-green-dark
+                hover:scale-105 transition-all cursor-pointer"
               >
                 Apply
               </Button>
