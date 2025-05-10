@@ -39,7 +39,8 @@ const FilterButtonBooking: React.FC<FilterButtonBookingProps> = ({ onFilter, onR
     <div className="relative">
       <Button 
         onClick={() => setShowFilters(!showFilters)}
-        className="bg-blue-green text-white hover:bg-blue-green-dark"
+        className="bg-blue-green text-white hover:bg-blue-green-dark
+        hover:scale-105 transition-all cursor-pointer"
       >
         Filter by
       </Button>

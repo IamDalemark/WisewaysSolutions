@@ -33,7 +33,7 @@ const LandingPageSection = ({
       className="text-blue-green flex-col h-full sm:content-center lg:max-h-screen mx-[6%] pb-[150]"
     >
       {heading && (
-        <h2 className={`${headingClassName || "text-4xl pb-10"} flex lg:text-6xl font-bold text-center justify-self-center`}>
+        <h2 className={`${headingClassName || "text-4xl"} pb-10 flex lg:text-6xl font-bold text-center justify-self-center`}>
           {heading}
         </h2>
       )}

@@ -27,7 +27,7 @@ const items = [
 const AdminSidebar = () => {
   const pathname = usePathname();
   return (
-    <Sidebar>
+    <Sidebar className="h-full w-65">
       <SidebarHeader>
         <Image
           src={"/wiseways_navbar_logo.png"}
