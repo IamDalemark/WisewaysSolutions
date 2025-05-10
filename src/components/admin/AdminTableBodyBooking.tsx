@@ -22,15 +22,25 @@ const maxLengths: Record<string, number> = {
   service: 25,
 };
 
-const AdminTableBodyBooking: React.FC = () => {
+interface AdminTableBodyBookingProps {
+  filters?: {
+    date?: string;
+    status?: string;
+    clientName?: string;
+  };
+}
+
+const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters = {} }) => {
   const [error, setError] = useState("");
   const [bookings, setBookings] = useState<BookingAdminData[]>([]);
+  const [filteredBookings, setFilteredBookings] = useState<BookingAdminData[]>([]);
 
   useEffect(() => {
     const loadData = async () => {
       try {
         const data = await fetchAppointments();
         setBookings(data);
+        setFilteredBookings(data);
       } catch (err) {
         setError((err as Error).message);
       }
@@ -38,6 +48,31 @@ const AdminTableBodyBooking: React.FC = () => {
 
     loadData();
   }, []);
+
+  useEffect(() => {
+    if (bookings.length === 0) return;
+
+    let result = [...bookings];
+
+    if (filters.clientName) {
+      result = result.filter(booking =>
+        booking.name.toLowerCase().includes(filters.clientName!.toLowerCase())
+      );
+    }
+
+    if (filters.status) {
+      result = result.filter(booking => booking.status === filters.status);
+    }
+
+    if (filters.date) {
+      result = result.filter(booking => {
+        const bookingDate = new Date(booking.date).toISOString().split("T")[0];
+        return bookingDate === filters.date;
+      });
+    }
+
+    setFilteredBookings(result);
+  }, [filters, bookings]);
 
   useEffect(() => {
     const channel = supabase
@@ -79,11 +114,11 @@ const AdminTableBodyBooking: React.FC = () => {
 
   return (
     <tbody className="text-center text-sm w-full">
-      {bookings.map((row, rowIdx) => (
+      {filteredBookings.map((row, rowIdx) => (
         <tr
           key={rowIdx}
           className={
-            rowIdx === bookings.length - 1 ? "" : "border-b border-neutral-300"
+            rowIdx === filteredBookings.length - 1 ? "" : "border-b border-neutral-300"
           }
         >
           {columns.map((col, colIdx) => {
