@@ -4,7 +4,10 @@ const DataEntryAndProcessingPage = () => {
   return (
     <ServicePage
       title="Data Entry and Processing"
-      subtitle="Turning messy info into organized spreadsheets — a true unsung hero."
+      subtitle="Accurate, efficient, and detail-oriented data management services that transform 
+      disorganized information into structured, actionable formats. Whether it's database updating, 
+      spreadsheet creation, or records maintenance, we ensure data integrity and consistency to support 
+      smarter business decisions."
       imageSrc="/service-dataentry.png"
       altText="Data entry and processing illustration"
     />

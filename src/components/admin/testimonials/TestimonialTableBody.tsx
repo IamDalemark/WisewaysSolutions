@@ -23,10 +23,14 @@ interface AdminTableBodyTestimonialProps {
   };
 }
 
-const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({ filters = {} }) => {
+const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
+  filters = {},
+}) => {
   const [error, setError] = useState("");
   const [testimonials, setTestimonials] = useState<TestimonialAdminData[]>([]);
-  const [filteredTestimonials, setFilteredTestimonials] = useState<TestimonialAdminData[]>([]);
+  const [filteredTestimonials, setFilteredTestimonials] = useState<
+    TestimonialAdminData[]
+  >([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -52,18 +56,21 @@ const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({ filter
     let result = [...testimonials];
 
     if (filters.name) {
-      result = result.filter(testimonial =>
+      result = result.filter((testimonial) =>
         testimonial.name.toLowerCase().includes(filters.name!.toLowerCase())
       );
+      console.log(result);
     }
 
     if (filters.status) {
-      result = result.filter(testimonial => testimonial.is_approved === filters.status);
+      result = result.filter(
+        (testimonial) => testimonial.is_approved === filters.status
+      );
     }
 
     if (filters.rating) {
-      result = result.filter(testimonial => 
-        testimonial.rating.toString() === filters.rating
+      result = result.filter(
+        (testimonial) => testimonial.rating.toString() === filters.rating
       );
     }
 
@@ -83,14 +90,16 @@ const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({ filter
         (payload) => {
           const updated = payload.new as TestimonialAdminData;
           setTestimonials((prev) =>
-            prev ? 
-              prev.map((t) => t.testimonial_id === updated.testimonial_id ? updated : t)
+            prev
+              ? prev.map((t) =>
+                  t.testimonial_id === updated.testimonial_id ? updated : t
+                )
               : [updated]
           );
         }
       )
       .subscribe();
-  
+
     return () => {
       supabase.removeChannel(channel);
     };
@@ -100,7 +109,10 @@ const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({ filter
     return (
       <tbody>
         <tr>
-          <td colSpan={columns.length} className="text-red-600 text-center py-4">
+          <td
+            colSpan={columns.length}
+            className="text-red-600 text-center py-4"
+          >
             {error}
           </td>
         </tr>
@@ -137,14 +149,13 @@ const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({ filter
 
   return (
     <tbody className="w-full">
-      {testimonials.map((row, rowIdx) => (
-        <TestimonialTableRow 
-          key={row.testimonial_id} 
-          row={row} 
-          isLastRow={rowIdx === testimonials.length - 1} 
+      {filteredTestimonials.map((row, rowIdx) => (
+        <TestimonialTableRow
+          key={row.testimonial_id}
+          row={row}
+          isLastRow={rowIdx === testimonials.length - 1}
         />
-      ))
-      }
+      ))}
     </tbody>
   );
 };

@@ -15,7 +15,7 @@ const NavBar = () => {
   const { handleScheduleAppointment } = useModal();
 
   return (
-    <nav className="w-[90%] flex items-center bg-[#F3F3F3] fixed top-6 mx-[5%] rounded-3xl h-20 shadow-lg px-[2%] justify-between z-1">
+    <nav className="w-[90%] flex items-center bg-[#fbfbfb] fixed top-6 mx-[5%] rounded-3xl h-20 shadow-lg px-[2%] justify-between z-1">
       <div className="flex w-[60%] md:w-[40%] lg:w-[65%] xl:w-[70%]">
         <Link href="/" className="w-[80%] lg:w-[35%] xl:w-[30%] h-full mx-[2%]">
           <Image

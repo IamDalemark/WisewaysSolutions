@@ -10,7 +10,6 @@ export interface AdminTableColumn {
 
 export interface AdminTableProps {
   columns: AdminTableColumn[];
-  table?: "Appointments" | "Testimonials"; 
   body?: React.ReactNode; 
   filters?: {
     name?: string;
@@ -28,7 +27,7 @@ const isColumnVisible = (header: string) => {
   return true;
 };
 
-const AdminTable = ({ columns, table, body }: AdminTableProps) => {
+const AdminTable = ({ columns, body }: AdminTableProps) => {
   const [visibleHeaders, setVisibleHeaders] = useState<AdminTableColumn[]>([]);
 
   useEffect(() => {
@@ -68,11 +67,8 @@ const AdminTable = ({ columns, table, body }: AdminTableProps) => {
             })}
           </tr>
         </thead>
-        {body || (
-          table === "Testimonials" ? (
-            <TestimonialTableBody />
-          ) : null
-        )}
+        
+        {body || <TestimonialTableBody />}
       </table>
     </div>
   );

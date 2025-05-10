@@ -9,6 +9,7 @@ export type TestimonialProps = {
   testimonial: string;
   name: string;
   rating: number;
+  title: string;
 };
 
 export type TestimonialFormData = {
@@ -16,6 +17,7 @@ export type TestimonialFormData = {
   email: string;
   rating: number;
   testimonial: string;
+  title: string;
 };
 
 export type FormErrors = {
@@ -23,6 +25,7 @@ export type FormErrors = {
   email?: string;
   rating?: string;
   testimonial?: string;
+  title?: string;
 };
 
 export type SubmitTestimonialResult = {
@@ -47,4 +50,5 @@ export interface Testimonial {
   testimonial: string;
   is_approved: string;
   created_at?: string;
+  title: string;
 }
