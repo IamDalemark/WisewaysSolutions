@@ -16,7 +16,8 @@ export default function AdminLoginPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [errors, setErrors] = useState<LogInErrors>({});
   const [isLoading, setIsLoading] = useState(false);
-  const [successMessage, setSuccessMessage] = useState<string | null>(null); 
+  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [showCalendlyConnect, setShowCalendlyConnect] = useState(false);
 
   const router = useRouter();
 
@@ -52,23 +53,31 @@ export default function AdminLoginPage() {
 
       if (!res.ok || !result.success) {
         setErrors({ general: result.message || "Login failed" });
-        setSuccessMessage(null); 
+        setSuccessMessage(null);
       } else {
         localStorage.setItem("token", result.token);
         setSuccessMessage("Login successful!");
-
+        
+        setShowCalendlyConnect(true);
+        
         setTimeout(() => {
           setSuccessMessage(null);
         }, 3000);
-
-        router.push("/admin/testimonials");
       }
     } catch (err) {
       console.error("Login error:", err);
       setIsLoading(false);
       setErrors({ general: "Something went wrong. Please try again." });
-      setSuccessMessage(null); 
+      setSuccessMessage(null);
     }
+  };
+
+  const connectCalendly = () => {
+    window.location.href = "/api/calendly/auth";
+  };
+
+  const skipCalendly = () => {
+    router.push("/admin/testimonials");
   };
 
   return (
@@ -78,75 +87,99 @@ export default function AdminLoginPage() {
           Admin Log In
         </h2>
         
-        {/* success message alert */}
         {successMessage && (
           <div className="text-green-500 text-center mb-2">
             {successMessage}
           </div>
         )}
 
-        <form className="space-y-4" onSubmit={handleSubmit}>
-          {errors.general && (
-            <div className="text-red-500 text-center mb-2">
-              {errors.general}
+        {!showCalendlyConnect ? (
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {errors.general && (
+              <div className="text-red-500 text-center mb-2">
+                {errors.general}
+              </div>
+            )}
+            <div>
+              <label className="block text-teal-700 font-medium mb-1">Email</label>
+              <input
+                type="text"
+                name="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                placeholder="Enter Email"
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email}</p>
+              )}
             </div>
-          )}
-          <div>
-            <label className="block text-teal-700 font-medium mb-1">Email</label>
-            <input
-              type="text"
-              name="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
-              placeholder="Enter Email"
-            />
-            {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email}</p>
-            )}
-          </div>
 
-          <div>
-            <label className="block text-teal-700 font-medium mb-1">Password</label>
-            <input
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full border border-gray-400 rounded-md px-4 py-2 pr-2 outline-none focus:ring-2 focus:ring-teal-300"
-              placeholder="Enter Password"
-            />
-            {errors.password && (
-              <p className="text-red-500 text-sm">{errors.password}</p>
-            )}
-            <div className="mt-1 text-sm">
-              <label className="inline-flex items-center">
-                <input
-                  type="checkbox"
-                  checked={showPassword}
-                  onChange={() => setShowPassword((prev) => !prev)}
-                  className="mr-2"
-                />
-                Show password
-              </label>
+            <div>
+              <label className="block text-teal-700 font-medium mb-1">Password</label>
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full border border-gray-400 rounded-md px-4 py-2 pr-2 outline-none focus:ring-2 focus:ring-teal-300"
+                placeholder="Enter Password"
+              />
+              {errors.password && (
+                <p className="text-red-500 text-sm">{errors.password}</p>
+              )}
+              <div className="mt-1 text-sm">
+                <label className="inline-flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={showPassword}
+                    onChange={() => setShowPassword((prev) => !prev)}
+                    className="mr-2"
+                  />
+                  Show password
+                </label>
+              </div>
             </div>
-          </div>
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
-          >
-            {isLoading ? (
-              <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                Logging In...
-              </>
-            ) : (
-              "Log In"
-            )}
-          </button>
-        </form>
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                  Logging In...
+                </>
+              ) : (
+                "Log In"
+              )}
+            </button>
+          </form>
+        ) : (
+          <div className="space-y-4 text-center">
+            <h3 className="text-lg font-medium text-teal-700">
+              Connect Calendly Account
+            </h3>
+            <p className="text-gray-600 mb-4">
+              Connect your Calendly account to manage appointments directly.
+            </p>
+            
+            <button
+              onClick={connectCalendly}
+              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 rounded-xl transition"
+            >
+              Connect Calendly
+            </button>
+            
+            <button
+              onClick={skipCalendly}
+              className="w-full text-gray-600 hover:text-gray-800 font-medium py-2 rounded-xl transition"
+            >
+              Skip for now
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );
