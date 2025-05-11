@@ -2,85 +2,11 @@
 
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
-
-interface Booking {
-  booking_id: string;
-  name: string;
-  email: string;
-  service: string;
-  status: string;
-  date: string;
-  time: string;
-  invitee_id: string;
-  managed_by: string | null;
-  created_at: string;
-}
-
-interface CalendlyInvitee {
-  email: string;
-  name: string;
-  status: string;
-  has_no_show?: boolean;
-  canceled?: boolean;
-}
-
-interface CalendlyEvent {
-  uri: string;
-  name: string;
-  status: string;
-  start_time: string;
-  end_time: string;
-  event_type: string;
-  location?: {
-    type: string;
-    location?: string;
-    join_url?: string;
-    status?: string;
-  };
-  cancellation?: {
-    canceled_by: string;
-    reason: string;
-    canceler_type: string;
-    created_at: string;
-  };
-  invitees_counter: {
-    total: number;
-    active: number;
-    limit: number;
-  };
-  rescheduled: boolean;
-  created_at: string;
-  updated_at: string;
-  event_memberships: Array<{
-    user: string;
-  }>;
-  event_guests: Array<{
-    email: string;
-    name?: string;
-  }>;
-  meeting_notes_html: string | null;
-  meeting_notes_plain: string | null;
-  invitees?: CalendlyInvitee[];
-  associated_booking?: Booking | null;
-  // We won't add 'canceled' property to the interface, but handle it in the code
-}
-
-interface PaginationData {
-  count: number;
-  next_page: string | null;
-  previous_page: string | null;
-  next_page_token: string | null;
-  previous_page_token: string | null;
-}
-
-interface CalendlyResponse {
-  collection?: CalendlyEvent[];
-  pagination?: PaginationData;
-  data?: {
-    collection?: CalendlyEvent[];
-    pagination?: PaginationData;
-  };
-}
+import {
+  CalendlyEvent,
+  CalendlyResponse,
+  PaginationData,
+} from "@/types/calendly.type";
 
 export default function CalendlyEvents() {
   const [events, setEvents] = useState<CalendlyEvent[]>([]);
@@ -100,9 +26,7 @@ export default function CalendlyEvents() {
       setError(null);
 
       try {
-        const params = new URLSearchParams({
-          count: "10",
-        });
+        const params = new URLSearchParams({});
 
         if (dateRange.startDate) {
           params.append(
