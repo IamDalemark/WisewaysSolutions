@@ -16,8 +16,7 @@ const sendTestimonialEmailToAdmin = async ({
   rating,
   email,
 }: sendTestimonialEmailToAdminProps) => {
-  const admin = [new Recipient("danielweg123@gmail.com", "wiegand")];
-
+  const admin = [new Recipient(process.env.ADMIN_EMAIL!, "Wiseways Solutions")];
   const emailParams = new EmailParams()
     .setFrom(domain)
     .setTo(admin)
@@ -52,7 +51,7 @@ const sendTestimonialEmailToAdmin = async ({
       </p>
       <div style="margin: 24px 0">
         <a
-          href="http://localhost:3000/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Accepted"
+          href="wisewayssolutions.us/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Accepted"
           style="
             display: inline-block;
             padding: 10px 16px;
@@ -66,7 +65,7 @@ const sendTestimonialEmailToAdmin = async ({
           Accept
         </a>
         <a
-          href="http://localhost:3000/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Declined"
+          href="wisewayssolutions.us/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Declined"
           style="
             display: inline-block;
             padding: 10px 16px;

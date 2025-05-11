@@ -1,6 +1,5 @@
 import { NextResponse } from "next/server";
 import { supabase } from "@/lib/supabaseClient";
-// import sendAppointmentEmailToAdmin from "@/emails/sendAppointmentEmailToAdmin";
 
 export const POST = async (request: Request) => {
   try {
