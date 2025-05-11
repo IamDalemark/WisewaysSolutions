@@ -51,7 +51,8 @@ const sendTestimonialEmailToAdmin = async ({
       </p>
       <div style="margin: 24px 0">
         <a
-          href="wisewayssolutions.us/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Accepted"
+          href="${process.env
+            .DOMAIN!}/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Accepted"
           style="
             display: inline-block;
             padding: 10px 16px;
@@ -65,7 +66,8 @@ const sendTestimonialEmailToAdmin = async ({
           Accept
         </a>
         <a
-          href="wisewayssolutions.us/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Declined"
+          href="${process.env
+            .DOMAIN!}/api/testimonials?testimonial_id=${testimonial_id}&is_approved=Declined"
           style="
             display: inline-block;
             padding: 10px 16px;
