@@ -114,10 +114,9 @@ interface CalendlyInviteesResponse {
   };
 }
 
-// Add new interface for the enhanced invitee with additional properties
 interface EnhancedInvitee extends CalendlyInvitee {
   canceled: boolean;
-  has_no_show: boolean; // Changed from no_show: boolean to avoid conflict
+  has_no_show: boolean;
 }
 
 interface EventWithInvitees extends CalendlyEvent {
@@ -134,7 +133,6 @@ interface SyncStats {
   errors: number;
 }
 
-// Helper function to extract ID from Calendly URI
 function extractIdFromUri(uri: string): string | null {
   const match = uri.match(/\/([^\/]+)$/);
   return match ? match[1] : null;
@@ -181,7 +179,7 @@ export async function GET() {
     // STEP 1: Fetch scheduled events from Calendly (active and canceled)
     const eventsQueryParams = new URLSearchParams({
       user: userUri,
-      count: "100", // Increase if you have many events
+      count: "100",
     });
 
     const eventsResponse = await axios.get<CalendlyEventsResponse>(
@@ -245,7 +243,7 @@ export async function GET() {
           inviteesResponse.data.collection.map((invitee) => ({
             ...invitee,
             canceled: invitee.status === "canceled",
-            has_no_show: !!invitee.no_show, // Convert to boolean using !! operator
+            has_no_show: !!invitee.no_show,
           }));
 
         eventsWithInvitees.push({
@@ -253,7 +251,6 @@ export async function GET() {
           invitees,
         });
 
-        // Count active vs canceled events
         if (event.status === "canceled") {
           stats.canceledEvents++;
         } else {
@@ -272,7 +269,6 @@ export async function GET() {
       if (a.status !== "canceled" && b.status === "canceled") return -1;
       if (a.status === "canceled" && b.status !== "canceled") return 1;
 
-      // For events with the same status, sort by date (recent first)
       return (
         new Date(b.start_time).getTime() - new Date(a.start_time).getTime()
       );
@@ -291,7 +287,7 @@ export async function GET() {
 
     // First pass - update booking_id and invitee_id for active events
     for (const event of sortedEvents) {
-      // Skip canceled events in first pass
+      // Skip canceled / no show events in first pass
       if (
         event.status === "canceled" ||
         event.invitees.some((inv) => inv.has_no_show)
@@ -446,7 +442,7 @@ export async function GET() {
     // Return statistics about the sync operation
     return NextResponse.json({
       data: {
-        collection: eventsWithInvitees,
+        collection: sortedEvents,
         pagination: eventsResponse.data.pagination,
       },
       success: true,
