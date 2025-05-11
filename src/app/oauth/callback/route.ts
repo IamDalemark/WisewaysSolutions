@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
   console.log(code);
   if (!code) {
     return Response.redirect(
-      "http://localhost:3000/admin/login?error=missing_code"
+      `${process.env.DOMAIN!}/admin/login?error=missing_code`
     );
   }
 
@@ -33,11 +33,11 @@ export async function GET(req: NextRequest) {
       path: "/",
     });
     console.log("Token response:", tokenRes.data);
-    return NextResponse.redirect("http://localhost:3000/admin/testimonials");
+    return NextResponse.redirect(`${process.env.DOMAIN!}/admin/testimonials`);
   } catch (err) {
     console.error("Calendly login error:", err);
     return Response.redirect(
-      "http://localhost:3000/admin/login?error=oauth_failed"
+      `${process.env.DOMAIN!}/admin/login?error=oauth_failed`
     );
   }
 }

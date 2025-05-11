@@ -99,7 +99,10 @@ export default function ResetPasswordPage() {
         setLoading(false);
         return;
       }
-      const result = await supabase.auth.resetPasswordForEmail(resetForm.email);
+      const result = await supabase.auth.resetPasswordForEmail(
+        resetForm.email,
+        { redirectTo: `${process.env.DOMAIN!}/resetpassword` }
+      );
       if (result.error) {
         addToast(result.error.message, "error", 10000);
         setLoading(false);
