@@ -8,7 +8,8 @@ export type SentTestimonialProps = {
 export type TestimonialProps = {
   testimonial: string;
   name: string;
-  ratings: number;
+  rating: number;
+  title: string;
 };
 
 export type TestimonialFormData = {
@@ -16,6 +17,7 @@ export type TestimonialFormData = {
   email: string;
   rating: number;
   testimonial: string;
+  title: string;
 };
 
 export type FormErrors = {
@@ -23,9 +25,30 @@ export type FormErrors = {
   email?: string;
   rating?: string;
   testimonial?: string;
+  title?: string;
 };
 
 export type SubmitTestimonialResult = {
   success: boolean;
   error?: string;
 };
+
+export interface TestimonialAdminData {
+  testimonial_id: string;
+  name: string;
+  email: string;
+  testimonial: string;
+  rating: string;
+  is_approved: string;
+}
+
+export interface Testimonial {
+  testimonial_id: string;
+  name: string;
+  email: string;
+  rating: number;
+  testimonial: string;
+  is_approved: string;
+  created_at?: string;
+  title: string;
+}

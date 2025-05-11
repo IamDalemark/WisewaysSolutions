@@ -3,27 +3,26 @@ import { supabase } from "@/lib/supabaseClient";
 
 export const POST = async (request: Request) => {
   try {
-    const { name, email, service, date, time } = await request.json();
+    const { user_id, booking_id, invitee_id, name, email, service } =
+      await request.json();
 
-    if (!name || !email || !service || !date || !time) {
+    if (!user_id || !booking_id || !invitee_id || !name || !email || !service) {
       return NextResponse.json(
         { error: "Missing required fields" },
         { status: 400 }
       );
     }
 
-    // Ensure the date is stored as an ISO string (for compatibility)
-    const isoDate = new Date(date).toISOString();
-
     const { data, error } = await supabase
       .from("booking")
       .insert([
         {
+          user_id,
+          booking_id,
+          invitee_id,
           name,
           email,
           service,
-          date: isoDate,
-          time,
         },
       ])
       .select();
@@ -31,6 +30,59 @@ export const POST = async (request: Request) => {
     if (error) {
       console.error("Supabase error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+    // sendAppointmentEmailToAdmin({ service, name, email, date, time });
+    return NextResponse.json({ success: true, data }, { status: 201 });
+  } catch (error) {
+    console.error("Server error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+};
+
+export const GET = async (request: Request) => {
+  try {
+    const { searchParams } = new URL(request.url);
+    const user_id = searchParams.get("user_id");
+
+    if (!user_id) {
+      return NextResponse.json({ error: "Missing id param" }, { status: 400 });
+    }
+
+    // Get a specific item by ID
+    const { data, error } = await supabase
+      .from("booking")
+      .select("*")
+      .eq("user_id", user_id)
+      .maybeSingle();
+
+    console.log(data, error);
+    if (error) {
+      console.error("Supabase error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    if (data) {
+      try {
+        if (data.status === "cancelled") {
+          const { error } = await supabase
+            .from("booking")
+            .delete()
+            .eq("user_id", user_id);
+
+          console.log(data, error);
+          if (error) {
+            console.error("Supabase error:", error);
+            throw error;
+          }
+          return NextResponse.json({ success: false }, { status: 201 });
+        }
+      } catch (error) {
+        console.error("Supabase error:", error);
+        return NextResponse.json({ error: "Supabase Error." }, { status: 500 });
+      }
     }
 
     return NextResponse.json({ success: true, data }, { status: 201 });

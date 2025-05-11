@@ -19,7 +19,7 @@ const Testimonial = () => {
       {isSubmitted ? (
         <SentTestimonial
           onSubmit={handleBackToHome}
-          description="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dignissimos, hic dicta temporibus nesciunt dolor molestiae et iste praesentium impedit unde velit asperiores minus fuga corrupti necessitatibus officiis rem repellat expedita!"
+          description="Your testimonial has been submitted successfully. Thank you for your feedback!"
         />
       ) : (
         <SendTestimonial onSubmit={handleSubmit} />

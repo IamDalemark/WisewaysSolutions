@@ -7,11 +7,11 @@ type Icons = "Phone" | "Mail" | "MapPin"
 const getIconFromName = (iconName: Icons) => {
   switch (iconName) {
     case "Phone":
-        return <Phone size={30}/>;
+        return <Phone size={32}/>;
     case "Mail":
-        return <Mail size={30}/>;
+        return <Mail size={32}/>;
     case "MapPin":
-        return <MapPin size={30}/>;
+        return <MapPin size={32}/>;
   };
 };
 
@@ -24,9 +24,9 @@ const ContactDetail = ({iconName, description}: ContactDetailProp) => {
     const icon = getIconFromName(iconName);
 
     return (
-        <div className="flex my-[3%] lg:my-[6%]">
+        <div className="flex my-[5%] lg:my-[7%]">
             {icon}
-            <p className="ml-6 md:ml-3 text-md lg:text-xl font-medium">{description}</p>
+            <p className="ml-6 text-xl lg:text-2xl font-medium">{description}</p>
         </div>
     );
 };

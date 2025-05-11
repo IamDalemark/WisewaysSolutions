@@ -26,11 +26,13 @@ interface ModalContextType {
   handleLogIn: () => Promise<LogInResult>;
   signUpLoading: boolean;
   logInLoading: boolean;
+  fromService: string;
   signUpForm: {
     username: string;
     email: string;
     password: string;
     confirmPassword: string;
+    acceptedTerms: boolean;
   };
   loginForm: {
     email: string;
@@ -60,6 +62,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
   const { user, loading: userLoading } = useUser();
   const [isLoggedIn, setIsLoggedIn] = useState(user != null);
+  const [fromService, setFromService] = useState<string>("Any.");
 
   useEffect(() => {
     // console.log('User Auth Data:', user);
@@ -75,6 +78,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     email: "",
     password: "",
     confirmPassword: "",
+    acceptedTerms: false,
   });
 
   const [loginForm, setLoginForm] = useState({
@@ -109,6 +113,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
       email: "",
       password: "",
       confirmPassword: "",
+      acceptedTerms: false,
     });
     setLoginForm({
       email: "",
@@ -120,6 +125,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const handleScheduleAppointment = () => {
     if (userLoading) return;
     setIsBooking(false);
+    const splitURL = window.location.href.split("/");
+    const endOfURL = splitURL[splitURL.length - 1];
+    setFromService(
+      window.location.href.split("/")[3] === "services" ? endOfURL : "Any."
+    );
     if (isLoggedIn) {
       router.push("/booking");
     } else {
@@ -138,11 +148,9 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         openLogInModal();
         return result;
       } else {
-        // console.error("Signup failed:", result.error);
         return result;
       }
     } catch (error) {
-      //   console.error("Error during signup:", error);
       return {
         success: false,
         error: error instanceof Error ? error.message : "Error during Sign Up.",
@@ -193,6 +201,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         loginForm,
         setSignUpForm,
         setLoginForm,
+        fromService,
       }}
     >
       {children}
