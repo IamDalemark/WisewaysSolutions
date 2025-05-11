@@ -31,10 +31,14 @@ interface AdminTableBodyBookingProps {
   };
 }
 
-const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters = {} }) => {
+const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({
+  filters = {},
+}) => {
   const [error, setError] = useState("");
   const [bookings, setBookings] = useState<BookingAdminData[]>([]);
-  const [filteredBookings, setFilteredBookings] = useState<BookingAdminData[]>([]);
+  const [filteredBookings, setFilteredBookings] = useState<BookingAdminData[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -42,10 +46,10 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
       try {
         setLoading(true);
         const data = await fetchAppointments();
-        const formattedData = data.map(booking => ({
+        const formattedData = data.map((booking) => ({
           ...booking,
           date: formatDate(booking.created_at),
-          time: formatTime(booking.created_at)
+          time: formatTime(booking.created_at),
         }));
         setBookings(formattedData);
         setFilteredBookings(formattedData);
@@ -65,18 +69,20 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
     let result = [...bookings];
 
     if (filters.clientName) {
-      result = result.filter(booking =>
+      result = result.filter((booking) =>
         booking.name.toLowerCase().includes(filters.clientName!.toLowerCase())
       );
     }
 
     if (filters.status) {
-      result = result.filter(booking => booking.status === filters.status);
+      result = result.filter((booking) => booking.status === filters.status);
     }
 
     if (filters.date) {
-      result = result.filter(booking => {
-        const bookingDate = new Date(booking.created_at).toISOString().split("T")[0];
+      result = result.filter((booking) => {
+        const bookingDate = new Date(booking.created_at)
+          .toISOString()
+          .split("T")[0];
         return bookingDate === filters.date;
       });
     }
@@ -98,11 +104,13 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
           const updated = payload.new as BookingAdminData;
           setBookings((prev) =>
             prev.map((b) =>
-              b.booking_id === updated.booking_id ? { 
-                ...updated,
-                date: formatDate(updated.created_at),
-                time: formatTime(updated.created_at)
-              } : b
+              b.booking_id === updated.booking_id
+                ? {
+                    ...updated,
+                    date: formatDate(updated.created_at),
+                    time: formatTime(updated.created_at),
+                  }
+                : b
             )
           );
         }
@@ -134,7 +142,7 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
       return dateObj.toLocaleTimeString(undefined, {
         hour: "2-digit",
         minute: "2-digit",
-        hour12: true
+        hour12: true,
       });
     } catch (e) {
       console.error("Error formatting time:", e);
@@ -142,36 +150,36 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
     }
   }
 
-   if (error) {
-     return (
-       <tbody>
-         <tr>
-           <td
-             colSpan={columns.length}
-             className="text-red-600 text-center py-4"
-           >
-             {error}
-           </td>
-         </tr>
-       </tbody>
-     );
-   }
- 
-   if (loading) {
-     return (
-       <tbody>
-         <tr className="w-full">
-           <td colSpan={6} className="py-4">
-             <div className="flex justify-center items-center text-gray-500 gap-2">
-               <Loader2 className="h-4 w-4 animate-spin" />
-               <span>Loading appointments...</span>
-             </div>
-           </td>
-         </tr>
-       </tbody>
-     );
-   }
- 
+  if (error) {
+    return (
+      <tbody>
+        <tr>
+          <td
+            colSpan={columns.length}
+            className="text-red-600 text-center py-4"
+          >
+            {error}
+          </td>
+        </tr>
+      </tbody>
+    );
+  }
+
+  if (loading) {
+    return (
+      <tbody>
+        <tr className="w-full">
+          <td colSpan={6} className="py-4">
+            <div className="flex justify-center items-center text-gray-500 gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Loading appointments...</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    );
+  }
+
   if (filteredBookings.length === 0) {
     return (
       <tbody>
@@ -190,7 +198,9 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
         <tr
           key={rowIdx}
           className={
-            rowIdx === filteredBookings.length - 1 ? "" : "border-b border-neutral-300"
+            rowIdx === filteredBookings.length - 1
+              ? ""
+              : "border-b border-neutral-300"
           }
         >
           {columns.map((col, colIdx) => {
@@ -205,7 +215,7 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({ filters =
             return (
               <td key={colIdx} className="px-4 py-2 text-center h-14">
                 {col.accessor === "status" ? (
-                  row.status === "Accepted" || row.status === "Declined" ? (
+                  row.status === "accepted" || row.status === "cancelled" ? (
                     <span>{row.status}</span>
                   ) : (
                     <StatusColumnButtonsBooking rowId={row.booking_id} />

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { useSubmitBooking } from "@/app/hooks/bookings/useSubmitBooking";
 import CalendlyInlineWidget from "../calendly/InlineWidget";
@@ -18,6 +18,7 @@ const CalendlyScheduler = ({
   email,
   onSubmit,
 }: CalendlySchedulerProps) => {
+  const hasSubmittedRef = useRef(false);
   const { submitBooking, isSubmitting } = useSubmitBooking();
   const { fromService } = useModal();
   const [service, setService] = useState("Any");
@@ -32,9 +33,7 @@ const CalendlyScheduler = ({
         if (isCalendlyEventScheduled(e)) {
           console.log("Event scheduled! URI: ", e.data.payload.event.uri);
           console.log("Invitee URI: ", e.data.payload.invitee.uri);
-          if (!isSubmitting) {
-            createBooking(e.data.payload.event.uri, e.data.payload.invitee.uri);
-          }
+          createBooking(e.data.payload.event.uri, e.data.payload.invitee.uri);
         }
       }
     };
@@ -55,6 +54,9 @@ const CalendlyScheduler = ({
   };
 
   const createBooking = async (booking_uri: string, invitee_uri: string) => {
+    if (hasSubmittedRef.current) return; // prevent duplicate submission
+    hasSubmittedRef.current = true;
+
     const booking_id = booking_uri.split("/").pop();
     const invitee_id = invitee_uri.split("/").pop();
     console.log("Booking ID: ", booking_id);
@@ -80,6 +82,7 @@ const CalendlyScheduler = ({
       onSubmit();
     } else {
       console.log(result.error);
+      hasSubmittedRef.current = false;
     }
   };
 

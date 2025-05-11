@@ -2,12 +2,26 @@
 
 import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
+
 interface Booking {
-  id: string;
+  booking_id: string;
   name: string;
   email: string;
   service: string;
   status: string;
+  date: string;
+  time: string;
+  invitee_id: string;
+  managed_by: string | null;
+  created_at: string;
+}
+
+interface CalendlyInvitee {
+  email: string;
+  name: string;
+  status: string;
+  has_no_show?: boolean;
+  canceled?: boolean;
 }
 
 interface CalendlyEvent {
@@ -17,23 +31,55 @@ interface CalendlyEvent {
   start_time: string;
   end_time: string;
   event_type: string;
+  location?: {
+    type: string;
+    location?: string;
+    join_url?: string;
+    status?: string;
+  };
+  cancellation?: {
+    canceled_by: string;
+    reason: string;
+    canceler_type: string;
+    created_at: string;
+  };
   invitees_counter: {
     total: number;
     active: number;
     limit: number;
   };
+  rescheduled: boolean;
   created_at: string;
   updated_at: string;
-  rescheduled?: boolean;
-  canceled?: boolean;
-  booking?: Booking | null;
+  event_memberships: Array<{
+    user: string;
+  }>;
+  event_guests: Array<{
+    email: string;
+    name?: string;
+  }>;
+  meeting_notes_html: string | null;
+  meeting_notes_plain: string | null;
+  invitees?: CalendlyInvitee[];
+  associated_booking?: Booking | null;
+  // We won't add 'canceled' property to the interface, but handle it in the code
 }
+
 interface PaginationData {
   count: number;
   next_page: string | null;
   previous_page: string | null;
   next_page_token: string | null;
   previous_page_token: string | null;
+}
+
+interface CalendlyResponse {
+  collection?: CalendlyEvent[];
+  pagination?: PaginationData;
+  data?: {
+    collection?: CalendlyEvent[];
+    pagination?: PaginationData;
+  };
 }
 
 export default function CalendlyEvents() {
@@ -47,6 +93,7 @@ export default function CalendlyEvents() {
       .slice(0, 10), // 30 days ago
     endDate: new Date().toISOString().slice(0, 10), // today
   });
+
   const fetchEvents = useCallback(
     async (pageToken?: string) => {
       setLoading(true);
@@ -55,7 +102,6 @@ export default function CalendlyEvents() {
       try {
         const params = new URLSearchParams({
           count: "10",
-          status: "active",
         });
 
         if (dateRange.startDate) {
@@ -76,20 +122,51 @@ export default function CalendlyEvents() {
           params.append("page_token", pageToken);
         }
 
-        const response = await axios.get(
+        const response = await axios.get<CalendlyResponse>(
           `/api/calendly/events?${params.toString()}`
         );
 
-        setEvents(response.data.collection);
-        setPagination(response.data.pagination);
-      } catch {
-        console.log("Error");
+        // First, check the structure of the response
+        let eventCollection: CalendlyEvent[] = [];
+        let paginationData: PaginationData | null = null;
+
+        // Handle different possible response structures
+        if (response.data.collection) {
+          eventCollection = response.data.collection;
+          paginationData = response.data.pagination || null;
+        } else if (response.data.data?.collection) {
+          eventCollection = response.data.data.collection;
+          paginationData = response.data.data.pagination || null;
+        } else {
+          // If no collection is found, assume the response itself is the collection
+          eventCollection = Array.isArray(response.data) ? response.data : [];
+        }
+
+        setEvents(eventCollection);
+        setPagination(paginationData);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+        setError("Failed to load events. Please try again later.");
       } finally {
         setLoading(false);
       }
     },
     [dateRange, setLoading, setError, setEvents, setPagination]
   );
+
+  const syncCalendly = async () => {
+    try {
+      setLoading(true);
+      await axios.get("/api/calendly/events");
+      // Reload events after sync
+      fetchEvents();
+    } catch (error) {
+      console.error("Error syncing with Calendly:", error);
+      setError("Failed to sync with Calendly. Please try again later.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchEvents();
@@ -117,6 +194,74 @@ export default function CalendlyEvents() {
     }
   };
 
+  // Get invitee information (name, email) from the first active invitee
+  const getInviteeInfo = (event: CalendlyEvent) => {
+    if (!event.invitees || event.invitees.length === 0) {
+      return { name: "-", email: "-" };
+    }
+
+    // Try to find a non-canceled invitee
+    const activeInvitee = event.invitees.find(
+      (inv) => inv.status !== "canceled" && !inv.has_no_show
+    );
+
+    // If no active invitee, just take the first one
+    const invitee = activeInvitee || event.invitees[0];
+
+    return {
+      name: invitee.name || "-",
+      email: invitee.email || "-",
+    };
+  };
+
+  // Check if an event is considered "canceled"
+  const isEventCanceled = (event: CalendlyEvent): boolean => {
+    return (
+      event.status === "canceled" ||
+      !!event.invitees?.some((inv) => inv.canceled || inv.status === "canceled")
+    );
+  };
+
+  // Check if an event has a "no show"
+  const hasNoShow = (event: CalendlyEvent): boolean => {
+    return !!event.invitees?.some((inv) => inv.has_no_show);
+  };
+
+  // Determine event status display
+  const getEventStatusDisplay = (
+    event: CalendlyEvent
+  ): {
+    text: string;
+    className: string;
+  } => {
+    if (isEventCanceled(event)) {
+      return {
+        text: "Canceled",
+        className: "bg-red-100 text-red-800",
+      };
+    } else if (event.rescheduled) {
+      return {
+        text: "Rescheduled",
+        className: "bg-yellow-100 text-yellow-800",
+      };
+    } else if (hasNoShow(event)) {
+      return {
+        text: "No Show",
+        className: "bg-purple-100 text-purple-800",
+      };
+    } else if (event.status === "active") {
+      return {
+        text: "Active",
+        className: "bg-green-100 text-green-800",
+      };
+    } else {
+      return {
+        text: event.status.charAt(0).toUpperCase() + event.status.slice(1),
+        className: "bg-gray-100 text-gray-800",
+      };
+    }
+  };
+
   if (error) {
     return (
       <div className="p-4 bg-red-100 text-red-700 rounded-lg">{error}</div>
@@ -125,7 +270,16 @@ export default function CalendlyEvents() {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold">Calendly Events</h2>
+      <div className="flex justify-between items-center">
+        <h2 className="text-2xl font-bold">Calendly Events</h2>
+        <button
+          onClick={syncCalendly}
+          className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition"
+          disabled={loading}
+        >
+          {loading ? "Syncing..." : "Sync with Calendly"}
+        </button>
+      </div>
 
       {/* Date filter controls */}
       <div className="flex flex-col md:flex-row gap-4">
@@ -162,6 +316,15 @@ export default function CalendlyEvents() {
             className="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2"
           />
         </div>
+
+        <div className="flex items-end">
+          <button
+            onClick={() => fetchEvents()}
+            className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300 transition"
+          >
+            Apply Filters
+          </button>
+        </div>
       </div>
 
       {loading ? (
@@ -196,52 +359,40 @@ export default function CalendlyEvents() {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
-                {events.map((event) => (
-                  <tr key={event.uri} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {event.booking?.name || "-"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {event.booking?.email || "-"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {event.booking?.service || "-"}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDateTime(event.start_time)}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                      {formatDateTime(event.end_time)}
-                    </td>
+                {events.map((event) => {
+                  const inviteeInfo = getInviteeInfo(event);
+                  const status = getEventStatusDisplay(event);
 
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span
-                        className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${
-                          event.canceled
-                            ? "bg-red-100 text-red-800"
-                            : event.rescheduled
-                            ? "bg-yellow-100 text-yellow-800"
-                            : event.status === "active"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-gray-100 text-gray-800"
-                        }`}
-                      >
-                        {event.canceled
-                          ? "Canceled"
-                          : event.rescheduled
-                          ? "Rescheduled"
-                          : event.status.charAt(0).toUpperCase() +
-                            event.status.slice(1)}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
+                  return (
+                    <tr key={event.uri} className="hover:bg-gray-50">
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                        {inviteeInfo.name}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {inviteeInfo.email}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                        {event.name || event.event_type || "-"}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {formatDateTime(event.start_time)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                        {formatDateTime(event.end_time)}
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span
+                          className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${status.className}`}
+                        >
+                          {status.text}
+                        </span>
+                      </td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

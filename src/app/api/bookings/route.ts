@@ -59,9 +59,31 @@ export const GET = async (request: Request) => {
       .eq("user_id", user_id)
       .maybeSingle();
 
+    console.log(data, error);
     if (error) {
       console.error("Supabase error:", error);
       return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    if (data) {
+      try {
+        if (data.status === "cancelled") {
+          const { error } = await supabase
+            .from("booking")
+            .delete()
+            .eq("user_id", user_id);
+
+          console.log(data, error);
+          if (error) {
+            console.error("Supabase error:", error);
+            throw error;
+          }
+          return NextResponse.json({ success: false }, { status: 201 });
+        }
+      } catch (error) {
+        console.error("Supabase error:", error);
+        return NextResponse.json({ error: "Supabase Error." }, { status: 500 });
+      }
     }
 
     return NextResponse.json({ success: true, data }, { status: 201 });
