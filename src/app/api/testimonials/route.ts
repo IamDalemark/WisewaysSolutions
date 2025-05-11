@@ -30,13 +30,15 @@ export const POST = async (request: Request) => {
       return NextResponse.json({ error: error }, { status: 500 });
     }
 
-    sendTestimonialEmailToAdmin({
+    const response = await sendTestimonialEmailToAdmin({
       name,
       testimonial,
       rating,
       email,
       testimonial_id: data[0].testimonial_id,
     });
+
+    console.log(response);
 
     return NextResponse.json({ success: true, data }, { status: 201 });
   } catch (error) {

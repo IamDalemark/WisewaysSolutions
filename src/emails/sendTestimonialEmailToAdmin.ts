@@ -86,7 +86,7 @@ const sendTestimonialEmailToAdmin = async ({
     )
     .setText("- Wiseways Solutions");
 
-  await mailerSend.email.send(emailParams);
+  return await mailerSend.email.send(emailParams);
 };
 
 export default sendTestimonialEmailToAdmin;
