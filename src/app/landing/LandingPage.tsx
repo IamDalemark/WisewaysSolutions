@@ -103,15 +103,9 @@ const LandingPage = () => {
         title="Feel free to connect with us if you have any questions or concerns"
         subtitle={
           <ul className="justify-self-center">
-            <ContactDetail iconName="Phone" description="(+63) 9762493136" />
-            <ContactDetail
-              iconName="Mail"
-              description="info@wisewayssolutions.us"
-            />
-            <ContactDetail
-              iconName="MapPin"
-              description="Iloilo City, Philippines"
-            />
+            <ContactDetail iconName="Phone" description="(63) 000-000-0000" />
+            <ContactDetail iconName="Mail" description="info@wisewayssolutions.us" />
+            <ContactDetail iconName="MapPin"description="Iloilo City, Philippines"/>
           </ul>
         }
         imageSrc="/landing-contact.png"

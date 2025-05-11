@@ -20,7 +20,7 @@ const TestimonialTableRow: React.FC<Props> = ({row, isLastRow}) => {
     <tr
     className={`${isLastRow ? "" : "border-b-neutral-300 border-b-2 md:border-b-1"}
     ${row.is_approved === "Declined" ? "text-gray-400" : ""}
-    text-sm xl:text-base`}
+    text-sm xl:text-base h-27 md:h-18 lg:h-14`}
     >
       {testimonialTableColumns.map((col, colIdx) => {
         const cellValue = row[col.accessor as keyof TestimonialAdminData];
@@ -29,19 +29,18 @@ const TestimonialTableRow: React.FC<Props> = ({row, isLastRow}) => {
         const shouldTruncate =
           typeof cellValue === "string" && cellValue.length > maxLength;
 
-        const shortText = shouldTruncate
-          ? `${cellValue.slice(0, maxLength)}...`
-          : cellValue;
+        const shortText = shouldTruncate ? 
+          `${cellValue.slice(0, maxLength)}...` : cellValue;
 
           return (
             <td key={colIdx} className={`${col.header === "Rating" || col.header === "Status" ? 
               "text-center px-4" : "text-left pl-4 pr-3 md:pl-8 md:pr-4"}
-            ${col.header === "User" ? "text-base" : ""}
-            ${col.header === "Email" ? "hidden lg:table-cell" : ""} 
+            ${col.header === "User" ? "w-[15%] text-base" : ""}
+            ${col.header === "Email" ? "w-[25%] hidden lg:table-cell" : ""} 
             ${col.header === "Status" ? "hidden md:table-cell" : ""}
             ${col.header === "Rating" ? "hidden sm:table-cell w-[5%]" : ""}
-            ${col.header === "Review" ? "w-[55%] sm:w-auto" : ""}
-            pt-4 sm:pt-0 h-27 md:h-18 lg:h-14 align-top sm:align-middle`}>
+            ${col.header === "Review" ? "w-[55%] sm:w-[45%] md:w-[35%]" : ""}
+            pt-4 sm:pt-0 align-top sm:align-middle`}>
             
               { col.header === "Status" ? (
                 row.is_approved === "Accepted" || row.is_approved === "Declined" ? (

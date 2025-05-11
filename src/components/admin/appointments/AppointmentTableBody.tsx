@@ -3,10 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { fetchAppointments } from "@/app/hooks/admin/fetchAppointments";
 import { BookingAdminData } from "@/types/bookings.type";
-import StatusColumnButtonsBooking from "./AppointmentStatusButtons";
-import TableCellDropDown from "../TableCellDropDown";
 import { supabase } from "@/lib/supabaseClient";
 import { Loader2 } from "lucide-react";
+import TableCellDropDown from "../TableCellDropDown";
+import AppointmentStatusButtons from "./AppointmentStatusButtons";
 
 const columns = [
   { header: "Name", accessor: "name" },
@@ -29,10 +29,14 @@ interface AdminTableBodyBookingProps {
     status?: string;
     clientName?: string;
   };
+  currentPage: number;
+  setTotalPages: (n: number) => void;
 }
 
-const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({
+const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
   filters = {},
+  currentPage,
+  setTotalPages,
 }) => {
   const [error, setError] = useState("");
   const [bookings, setBookings] = useState<BookingAdminData[]>([]);
@@ -40,6 +44,22 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({
     []
   );
   const [loading, setLoading] = useState(true);
+
+  const PAGE_SIZE = 5;
+
+  useEffect(() => {
+    if (!filteredBookings.length) {
+      setTotalPages(1);
+    } else {
+      const total = Math.ceil(filteredBookings.length / PAGE_SIZE);
+      setTotalPages(total);
+    }
+  }, [filteredBookings, setTotalPages]);
+
+  const paginatedBookings = filteredBookings.slice(
+    (currentPage - 1) * PAGE_SIZE,
+    currentPage * PAGE_SIZE
+  );
 
   useEffect(() => {
     const loadData = async () => {
@@ -194,7 +214,7 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({
 
   return (
     <tbody className="text-center text-sm w-full">
-      {filteredBookings.map((row, rowIdx) => (
+      {paginatedBookings.map((row, rowIdx) => (
         <tr
           key={rowIdx}
           className={
@@ -218,7 +238,7 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({
                   row.status === "accepted" || row.status === "cancelled" ? (
                     <span>{row.status}</span>
                   ) : (
-                    <StatusColumnButtonsBooking rowId={row.booking_id} />
+                    <AppointmentStatusButtons rowId={row.booking_id} />
                   )
                 ) : shouldTruncate ? (
                   <TableCellDropDown
@@ -237,4 +257,4 @@ const AdminTableBodyBooking: React.FC<AdminTableBodyBookingProps> = ({
   );
 };
 
-export default AdminTableBodyBooking;
+export default AppointmentTableBody;
