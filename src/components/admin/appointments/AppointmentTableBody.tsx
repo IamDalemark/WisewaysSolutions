@@ -3,9 +3,10 @@
 import React, { useEffect, useState } from "react";
 import { fetchAppointments } from "@/app/hooks/admin/fetchAppointments";
 import { BookingAdminData } from "@/types/bookings.type";
-import AdminTableRowBooking from "./AppointmentTableRow";
 import { supabase } from "@/lib/supabaseClient";
 import { Loader2 } from "lucide-react";
+import TableCellDropDown from "../TableCellDropDown";
+import AppointmentStatusButtons from "./AppointmentStatusButtons";
 
 const columns = [
   { header: "Name", accessor: "name" },
@@ -15,6 +16,12 @@ const columns = [
   { header: "Time", accessor: "time" },
   { header: "Status", accessor: "status" },
 ];
+
+const maxLengths: Record<string, number> = {
+  name: 20,
+  email: 30,
+  service: 25,
+};
 
 interface AdminTableBodyBookingProps {
   filters?: {
@@ -26,12 +33,16 @@ interface AdminTableBodyBookingProps {
   setTotalPages: (n: number) => void;
 }
 
-const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({ 
-  filters = {}, currentPage, setTotalPages
+const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
+  filters = {},
+  currentPage,
+  setTotalPages,
 }) => {
   const [error, setError] = useState("");
   const [bookings, setBookings] = useState<BookingAdminData[]>([]);
-  const [filteredBookings, setFilteredBookings] = useState<BookingAdminData[]>([]);
+  const [filteredBookings, setFilteredBookings] = useState<BookingAdminData[]>(
+    []
+  );
   const [loading, setLoading] = useState(true);
 
   const PAGE_SIZE = 5;
@@ -50,16 +61,15 @@ const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
     currentPage * PAGE_SIZE
   );
 
-
   useEffect(() => {
     const loadData = async () => {
       try {
         setLoading(true);
         const data = await fetchAppointments();
-        const formattedData = data.map(booking => ({
+        const formattedData = data.map((booking) => ({
           ...booking,
           date: formatDate(booking.created_at),
-          time: formatTime(booking.created_at)
+          time: formatTime(booking.created_at),
         }));
         setBookings(formattedData);
         setFilteredBookings(formattedData);
@@ -79,18 +89,20 @@ const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
     let result = [...bookings];
 
     if (filters.clientName) {
-      result = result.filter(booking =>
+      result = result.filter((booking) =>
         booking.name.toLowerCase().includes(filters.clientName!.toLowerCase())
       );
     }
 
     if (filters.status) {
-      result = result.filter(booking => booking.status === filters.status);
+      result = result.filter((booking) => booking.status === filters.status);
     }
 
     if (filters.date) {
-      result = result.filter(booking => {
-        const bookingDate = new Date(booking.created_at).toISOString().split("T")[0];
+      result = result.filter((booking) => {
+        const bookingDate = new Date(booking.created_at)
+          .toISOString()
+          .split("T")[0];
         return bookingDate === filters.date;
       });
     }
@@ -112,11 +124,13 @@ const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
           const updated = payload.new as BookingAdminData;
           setBookings((prev) =>
             prev.map((b) =>
-              b.booking_id === updated.booking_id ? { 
-                ...updated,
-                date: formatDate(updated.created_at),
-                time: formatTime(updated.created_at)
-              } : b
+              b.booking_id === updated.booking_id
+                ? {
+                    ...updated,
+                    date: formatDate(updated.created_at),
+                    time: formatTime(updated.created_at),
+                  }
+                : b
             )
           );
         }
@@ -148,7 +162,7 @@ const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
       return dateObj.toLocaleTimeString(undefined, {
         hour: "2-digit",
         minute: "2-digit",
-        hour12: true
+        hour12: true,
       });
     } catch (e) {
       console.error("Error formatting time:", e);
@@ -156,36 +170,36 @@ const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
     }
   }
 
-   if (error) {
-     return (
-       <tbody>
-         <tr>
-           <td
-             colSpan={columns.length}
-             className="text-red-600 text-center py-4"
-           >
-             {error}
-           </td>
-         </tr>
-       </tbody>
-     );
-   }
- 
-   if (loading) {
-     return (
-       <tbody>
-         <tr className="w-full">
-           <td colSpan={6} className="py-4">
-             <div className="flex justify-center items-center text-gray-500 gap-2">
-               <Loader2 className="h-4 w-4 animate-spin" />
-               <span>Loading appointments...</span>
-             </div>
-           </td>
-         </tr>
-       </tbody>
-     );
-   }
- 
+  if (error) {
+    return (
+      <tbody>
+        <tr>
+          <td
+            colSpan={columns.length}
+            className="text-red-600 text-center py-4"
+          >
+            {error}
+          </td>
+        </tr>
+      </tbody>
+    );
+  }
+
+  if (loading) {
+    return (
+      <tbody>
+        <tr className="w-full">
+          <td colSpan={6} className="py-4">
+            <div className="flex justify-center items-center text-gray-500 gap-2">
+              <Loader2 className="h-4 w-4 animate-spin" />
+              <span>Loading appointments...</span>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    );
+  }
+
   if (filteredBookings.length === 0) {
     return (
       <tbody>
@@ -199,16 +213,47 @@ const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
   }
 
   return (
-    <tbody className="w-full">
+    <tbody className="text-center text-sm w-full">
       {paginatedBookings.map((row, rowIdx) => (
-        <AdminTableRowBooking
-          key={row.booking_id}
-          row={row}
-          isLastRow={rowIdx === paginatedBookings.length - 1}
-        />
+        <tr
+          key={rowIdx}
+          className={
+            rowIdx === filteredBookings.length - 1
+              ? ""
+              : "border-b border-neutral-300"
+          }
+        >
+          {columns.map((col, colIdx) => {
+            const cellValue = row[col.accessor as keyof BookingAdminData];
+            const maxLength = maxLengths[col.accessor] ?? Infinity;
+            const shouldTruncate =
+              typeof cellValue === "string" && cellValue.length > maxLength;
+            const shortText = shouldTruncate
+              ? `${cellValue.slice(0, maxLength)}...`
+              : cellValue;
+
+            return (
+              <td key={colIdx} className="px-4 py-2 text-center h-14">
+                {col.accessor === "status" ? (
+                  row.status === "accepted" || row.status === "cancelled" ? (
+                    <span>{row.status}</span>
+                  ) : (
+                    <AppointmentStatusButtons rowId={row.booking_id} />
+                  )
+                ) : shouldTruncate ? (
+                  <TableCellDropDown
+                    shortText={String(shortText)}
+                    fullText={cellValue as string}
+                  />
+                ) : (
+                  cellValue
+                )}
+              </td>
+            );
+          })}
+        </tr>
       ))}
     </tbody>
-
   );
 };
 

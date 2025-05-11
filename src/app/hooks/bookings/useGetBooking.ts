@@ -47,5 +47,5 @@ export const useGetBooking = (user_id: string | undefined) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user_id]);
 
-  return { booking, error, isFetching };
+  return { booking, error, isFetching, getBooking };
 };

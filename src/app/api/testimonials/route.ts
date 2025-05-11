@@ -35,7 +35,7 @@ export const POST = async (request: Request) => {
     //   testimonial,
     //   rating,
     //   email,
-    //   testimonial_id,
+    //   testimonial_id: data[0].testimonial_id,
     // });
 
     return NextResponse.json({ success: true, data }, { status: 201 });

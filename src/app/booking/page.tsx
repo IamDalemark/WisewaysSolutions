@@ -9,12 +9,16 @@ import { AlertTriangle, Loader2 } from "lucide-react";
 import CancelBooking from "@/components/booking/CancelBooking";
 import RescheduleBooking from "@/components/booking/RescheduleBooking";
 import { useRouter } from "next/navigation";
+import { useToast } from "@/components/contexts/ToastContext";
 
 const BookingPage = () => {
+  const { addToast } = useToast();
   const router = useRouter();
   const { user, loading } = useUser();
   const [userID, setUserID] = useState("");
-  const { booking, error, isFetching } = useGetBooking(userID ?? "");
+  const { booking, error, isFetching, getBooking } = useGetBooking(
+    userID ?? ""
+  );
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [currentState, setCurrentState] = useState(0);
@@ -35,12 +39,14 @@ const BookingPage = () => {
 
   useEffect(() => {
     setHasBooking(!!booking);
-    // console.log(booking);
   }, [booking]);
 
   const handleBookingConfirmation = () => {
     setIsSchedulingBooking(false);
     setUserID(user!.id);
+    getBooking();
+    router.refresh();
+    addToast("Successfully Booked Appointment", "success");
   };
 
   const renderScheduledBooking = () => {
