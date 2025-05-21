@@ -16,6 +16,7 @@ const SentTestimonial = ({ onSubmit }: SentTestimonialProps) => {
           <Button
             className="mt-10 bg-blue-green hover:bg-blue-green-dark sm:mb-3 hidden md:block"
             onClick={handleSubmit}
+            data-testid="back-to-homepage"
           >
             Back to Homepage
           </Button>

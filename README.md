@@ -44,3 +44,11 @@ run development server on Port: 3000
 ```bash
 npm run test
 ```
+
+### cypress (e2e)
+
+run development server on Port: 3000
+
+```bash
+npx cypress open
+```
