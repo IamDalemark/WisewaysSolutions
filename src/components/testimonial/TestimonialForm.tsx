@@ -25,8 +25,8 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
     if (user) {
       setFormData((prev) => ({
         ...prev,
-        name: user.user?.user_metadata.username,
-        email: user.user?.user_metadata.email,
+        name: user.user?.user_metadata.username ?? "",
+        email: user.user?.user_metadata.email ?? "",
       }));
     }
   }, [user]);
@@ -108,7 +108,12 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
               className={formErrors.name ? "border-red-500" : ""}
             />
             {formErrors.name && (
-              <p className="text-red-500 text-sm mt-1">{formErrors.name}</p>
+              <p
+                data-testid="form-name-error"
+                className="text-red-500 text-sm mt-1"
+              >
+                {formErrors.name}
+              </p>
             )}
           </div>
 
@@ -129,7 +134,12 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
               className={formErrors.email ? "border-red-500" : ""}
             />
             {formErrors.email && (
-              <p className="text-red-500 text-sm mt-1">{formErrors.email}</p>
+              <p
+                data-testid="form-email-error"
+                className="text-red-500 text-sm mt-1"
+              >
+                {formErrors.email}
+              </p>
             )}
           </div>
 
@@ -149,7 +159,12 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
               className={formErrors.title ? "border-red-500" : ""}
             />
             {formErrors.title && (
-              <p className="text-red-500 text-sm mt-1">{formErrors.title}</p>
+              <p
+                data-testid="form-title-error"
+                className="text-red-500 text-sm mt-1"
+              >
+                {formErrors.title}
+              </p>
             )}
           </div>
         </div>
@@ -176,7 +191,12 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
               ))}
             </div>
             {formErrors.rating && (
-              <p className="text-red-500 text-sm mt-1">{formErrors.rating}</p>
+              <p
+                data-testid="form-rating-error"
+                className="text-red-500 text-sm mt-1"
+              >
+                {formErrors.rating}
+              </p>
             )}
           </div>
 
@@ -201,7 +221,10 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
               aria-invalid={!!formErrors.testimonial}
             />
             {formErrors.testimonial && (
-              <p className="text-red-500 text-sm mt-1">
+              <p
+                data-testid="form-testimonial-error"
+                className="text-red-500 text-sm mt-1"
+              >
                 {formErrors.testimonial}
               </p>
             )}
