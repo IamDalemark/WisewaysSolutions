@@ -2,7 +2,7 @@
 import { Button } from "../ui/button";
 import { SentTestimonialProps } from "@/types/testimonials.type";
 import Image from "next/image";
-const SentTestimonial = ({ onSubmit }: SentTestimonialProps) => {
+const SentTestimonial = ({ onSubmit, description }: SentTestimonialProps) => {
   const handleSubmit = () => {
     onSubmit();
   };
@@ -13,6 +13,7 @@ const SentTestimonial = ({ onSubmit }: SentTestimonialProps) => {
           <div className="text-blue-green-dark text-4xl font-medium">
             Testimonial submitted!
           </div>
+          <div className="text-blue-green">{description}</div>
           <Button
             className="mt-10 bg-blue-green hover:bg-blue-green-dark sm:mb-3 hidden md:block"
             onClick={handleSubmit}
