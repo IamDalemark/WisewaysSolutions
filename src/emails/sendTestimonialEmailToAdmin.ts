@@ -16,6 +16,7 @@ const sendTestimonialEmailToAdmin = async ({
   rating,
   email,
 }: sendTestimonialEmailToAdminProps) => {
+  console.log(process.env.ADMIN_EMAIL!);
   const admin = [new Recipient(process.env.ADMIN_EMAIL!, "Wiseways Solutions")];
   const emailParams = new EmailParams()
     .setFrom(domain)

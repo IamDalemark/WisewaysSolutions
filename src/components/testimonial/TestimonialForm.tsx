@@ -5,15 +5,18 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { Star, Loader2 } from "lucide-react";
-import {
-  TestimonialFormProps,
-  TestimonialFormData,
-  FormErrors,
-} from "@/types/testimonials.type";
-import { useUser } from "@/components/contexts/UserContext";
+import { TestimonialFormData, FormErrors } from "@/types/testimonials.type";
 
-const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
-  const user = useUser();
+type TestimonialFormProps = {
+  onSubmit: () => void;
+  userName: string;
+  userEmail: string;
+};
+const TestimonialForm = ({
+  onSubmit,
+  userName,
+  userEmail,
+}: TestimonialFormProps) => {
   const [formData, setFormData] = useState<TestimonialFormData>({
     name: "",
     email: "",
@@ -22,14 +25,14 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
     title: "",
   });
   useEffect(() => {
-    if (user) {
+    if (userName || userEmail) {
       setFormData((prev) => ({
         ...prev,
-        name: user.user?.user_metadata.username ?? "",
-        email: user.user?.user_metadata.email ?? "",
+        name: userName,
+        email: userEmail,
       }));
     }
-  }, [user]);
+  }, [userName, userEmail]);
   const [formErrors, setFormErrors] = useState<FormErrors>({});
   const { submitTestimonial, isSubmitting } = useCreateTestimonial();
   const handleChange = (
@@ -84,7 +87,7 @@ const TestimonialForm = ({ onSubmit }: TestimonialFormProps) => {
   return (
     <div className="bg-white p-4 md:p-6 w-full md:w-3/4 lg:w-1/2 mx-auto mt-32 rounded-2xl shadow-2xl ">
       <div className="text-blue-green-dark text-4xl font-medium">
-        Form us your Testimonial
+        Send us your Testimonial
       </div>
       <div className="text-blue-green mb-4">
         Share with us your feedback and experience

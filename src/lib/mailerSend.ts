@@ -4,6 +4,6 @@ export const mailerSend = new MailerSend({
   apiKey: process.env.MAILER_SEND_KEY!,
 });
 export const domain = new Sender(
-  process.env.ADMIN_EMAIl!,
+  process.env.MAILER_SEND_DOMAIN!,
   "Wiseways Solutions"
 );
