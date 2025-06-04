@@ -68,6 +68,7 @@ const TestimonialSection = () => {
             </Carousel>
             <div className="justify-self-center self-center mt-8 md:mt-10">
               <Button
+                data-cy="testimonial-section-submit"
                 className="bg-blue-green hover:bg-blue-green-dark mb-28 text-xl p-6 rounded-xl
                 hover:scale-103 transition-all cursor-pointer"
                 onClick={onSubmit}
