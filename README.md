@@ -32,8 +32,8 @@ npm run lint
 ## Testing
 
 ```bash
-NEXT_PUBLIC_SUPABASE_URL_TEST="your supabase URL"
-NEXT_PUBLIC_SUPABASE_ANON_KEY_TEST="your supabase anon key"
+NEXT_PUBLIC_SUPABASE_URL_TEST="your test supabase URL"
+NEXT_PUBLIC_SUPABASE_ANON_KEY_TEST="your test supabase anon key"
 ```
 
 ### Storybook

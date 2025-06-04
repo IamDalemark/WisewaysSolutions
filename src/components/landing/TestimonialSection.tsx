@@ -22,7 +22,10 @@ const TestimonialSection = () => {
   return (
     <div id="testimonial" className="w-[90vw] justify-self-center p-4 z-0">
       <div className="place-content-center md:pb-12">
-        <div className="justify-self-center text-center text-5xl lg:text-6xl font-bold leading-[1.1]">
+        <div
+          className="justify-self-center text-center text-5xl lg:text-6xl font-bold leading-[1.1]"
+          data-testid="header"
+        >
           What Our Customers Say
         </div>
         <div className="justify-self-center text-xl lg:text-2xl px-4 py-8">
@@ -36,7 +39,10 @@ const TestimonialSection = () => {
       <div>
         {loading ? (
           <div className="flex justify-center items-center h-full">
-            <Loader2 className="animate-spin w-10 h-10 text-blue-green" />
+            <Loader2
+              className="animate-spin w-10 h-10 text-blue-green"
+              data-testid="loader"
+            />
           </div>
         ) : (
           <>
@@ -46,11 +52,13 @@ const TestimonialSection = () => {
                 loop: true,
               }}
               className="w-[90vw] max-w-[95%] md:max-w-[85%] justify-self-center "
+              data-testid="carousel"
             >
               <CarouselContent>
-                {testimonials.map((props) => (
+                {testimonials.map((props, index) => (
                   <CarouselItem
                     key={props.testimonial_id}
+                    data-testid={`carousel-item${index}`}
                     className="md:basis-2/3 lg:basis-1/3 pb-16"
                   >
                     <Testimonial {...props} />
@@ -59,8 +67,14 @@ const TestimonialSection = () => {
               </CarouselContent>
               {testimonials.length >= 4 || window.outerWidth <= 720 ? (
                 <>
-                  <CarouselPrevious className="top-1/2 -translate-y-1/2 left-2 sm:-left-5 md:-left-5" />
-                  <CarouselNext className="top-1/2 -translate-y-1/2 right-2 sm:right-0 md:-right-5" />
+                  <CarouselPrevious
+                    className="top-1/2 -translate-y-1/2 left-2 sm:-left-5 md:-left-5"
+                    data-testid="carousel-prev"
+                  />
+                  <CarouselNext
+                    className="top-1/2 -translate-y-1/2 right-2 sm:right-0 md:-right-5"
+                    data-testid="carousel-next"
+                  />
                 </>
               ) : (
                 <></>
@@ -68,7 +82,7 @@ const TestimonialSection = () => {
             </Carousel>
             <div className="justify-self-center self-center mt-8 md:mt-10">
               <Button
-                data-cy="testimonial-section-submit"
+                data-testid="testimonial-section-submit"
                 className="bg-blue-green hover:bg-blue-green-dark mb-28 text-xl p-6 rounded-xl
                 hover:scale-103 transition-all cursor-pointer"
                 onClick={onSubmit}
