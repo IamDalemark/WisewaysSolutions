@@ -48,4 +48,5 @@ export interface Testimonial {
   is_approved: string;
   created_at?: string;
   title: string;
+  submitted_at?: string;
 }

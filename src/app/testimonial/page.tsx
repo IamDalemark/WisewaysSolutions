@@ -20,7 +20,7 @@ const Testimonial = () => {
     }
   }, [user]);
   const handleBackToHome = () => {
-    router.back();
+    router.push("/");
   };
   return (
     <div className="bg-gray-white h-screen w-full overflow-auto  ">

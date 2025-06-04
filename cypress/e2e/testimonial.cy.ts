@@ -1,3 +1,4 @@
+/// <reference types="cypress" />
 describe("Testimonial", () => {
   beforeEach(() => {
     cy.visit("http://localhost:3000");
