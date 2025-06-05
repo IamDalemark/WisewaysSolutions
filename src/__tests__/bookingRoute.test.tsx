@@ -1,6 +1,6 @@
 // Mock data
 const mockBookingData = {
-  user_id: "d49771c2-77e1-4e57-aceb-b2470a7e2622",
+  user_id: "95ef697d-cec8-41c9-a99a-3e29d546877f",
   booking_id: "afa2e898-166e-4bcc-80f0-f52484115f85",
   invitee_id: "9bba2683-5fdb-4877-b552-b9d736a46201",
   name: "John Doe",
