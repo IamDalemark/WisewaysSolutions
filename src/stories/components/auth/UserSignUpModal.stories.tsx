@@ -1,60 +1,76 @@
 import type { Meta, StoryFn } from "@storybook/react";
-
 import UserSignUpModal, {
   UserSignUpModalProps,
 } from "@/components/auth/user/UserSignUpModal";
-import React, { ReactNode } from "react";
-import { UserProvider } from "@/components/contexts/UserContext";
+import React from "react";
 import { StorybookModalProvider } from "@/mocks/StoryBookModalProvider";
+import { StorybookUserProvider } from "@/mocks/StoryBookUserProvider";
 
 const meta: Meta<typeof UserSignUpModal> = {
-  title: "Components/auth/UserSignUpModal",
+  title: "Components/Auth/UserSignUpModal",
   component: UserSignUpModal,
+  tags: ["autodocs"],
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
+    docs: {
+      description: {
+        component:
+          "The `UserSignUpModal` is used for registering new users. It includes form fields for email, username, password, confirm password, and handles validation and agreement to terms.",
+      },
+      canvas: {
+        height: "100%",
+        width: "100%",
+      },
+    },
+    viewport: {
+      defaultViewport: "responsive",
+    },
   },
   argTypes: {
-    show: { control: "boolean" },
-    email: { control: "text" },
-    username: { control: "text" },
-    password: { control: "text" },
-    confirmPassword: { control: "text" },
-    showPassword: { control: "boolean" },
+    show: {
+      control: "boolean",
+      description: "Controls visibility of the modal",
+    },
+    email: { control: "text", description: "User's email address" },
+    username: { control: "text", description: "Desired username" },
+    password: { control: "text", description: "User's password" },
+    confirmPassword: {
+      control: "text",
+      description: "Re-type the user's password to confirm",
+    },
+    showPassword: {
+      control: "boolean",
+      description: "Toggle for showing password text",
+    },
   },
 };
 
 export default meta;
 
-// Mock UserProvider to avoid Supabase client issues
-const MockUserProvider = ({ children }: { children: ReactNode }) => {
-  return <UserProvider>{children}</UserProvider>;
-};
-
-const Template: StoryFn<UserSignUpModalProps> = (args) => {
-  return (
-    <MockUserProvider>
-      <StorybookModalProvider modalProps={args} fromService="Any.">
+const Template: StoryFn<UserSignUpModalProps> = (args) => (
+  <div style={{ position: "relative", height: "100vh", width: "100%" }}>
+    <StorybookUserProvider>
+      <StorybookModalProvider modalProps={args} fromService="Any">
         <UserSignUpModal {...args} />
       </StorybookModalProvider>
-    </MockUserProvider>
-  );
-};
+    </StorybookUserProvider>
+  </div>
+);
 
-// Template for stories with validation errors
-const ValidationErrorTemplate: StoryFn<UserSignUpModalProps> = (args) => {
-  return (
-    <MockUserProvider>
+const ValidationErrorTemplate: StoryFn<UserSignUpModalProps> = (args) => (
+  <div style={{ position: "relative", height: "100vh", width: "100%" }}>
+    <StorybookUserProvider>
       <StorybookModalProvider
         modalProps={args}
-        showValidationErrors={true}
+        showValidationErrors
         validationErrors={args.validationErrors}
-        fromService="Any."
+        fromService="Any"
       >
         <UserSignUpModal {...args} />
       </StorybookModalProvider>
-    </MockUserProvider>
-  );
-};
+    </StorybookUserProvider>
+  </div>
+);
 
 export const Default = Template.bind({});
 Default.args = {
@@ -179,6 +195,29 @@ Loading.args = {
   password: "testPassword",
   confirmPassword: "testPassword",
   showPassword: false,
+};
+
+export const OpenedTerms = Template.bind({});
+OpenedTerms.args = {
+  show: true,
+  isLoading: false,
+  email: "test@email.com",
+  username: "testUsername",
+  password: "testPassword",
+  confirmPassword: "testPassword",
+  acceptedTerms: true,
+  showTerms: true,
+};
+
+export const AcceptedTerms = Template.bind({});
+AcceptedTerms.args = {
+  show: true,
+  isLoading: false,
+  email: "test@email.com",
+  username: "testUsername",
+  password: "testPassword",
+  confirmPassword: "testPassword",
+  acceptedTerms: true,
 };
 
 export const WithUsernameError = ValidationErrorTemplate.bind({});

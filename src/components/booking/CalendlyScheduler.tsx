@@ -5,7 +5,7 @@ import CalendlyInlineWidget from "../calendly/InlineWidget";
 import { Loader2 } from "lucide-react";
 import { useModal } from "../contexts/ModalContext";
 
-interface CalendlySchedulerProps {
+export interface CalendlySchedulerProps {
   user_id: string;
   name: string;
   email: string;

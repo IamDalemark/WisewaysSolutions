@@ -8,7 +8,10 @@ const TermsAndConditions = ({
   onHandleCancel,
 }: TermsAndConditionsProps) => {
   return (
-    <div className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-md overflow-y-auto h-[80vh] mt-2">
+    <div
+      className="max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-md overflow-y-auto h-[80vh] mt-2"
+      data-cy="terms-modal"
+    >
       <h2 className="text-2xl font-bold text-teal-700 mb-4">
         Terms and Conditions
       </h2>
@@ -62,12 +65,14 @@ const TermsAndConditions = ({
         <button
           onClick={onHandleCancel}
           className="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100"
+          data-cy="cancel-terms-btn"
         >
           Cancel
         </button>
         <button
           onClick={onHandleAccept}
           className="px-4 py-2 bg-teal-700 text-white rounded-md hover:bg-teal-800"
+          data-cy="accept-terms-btn"
         >
           Accept
         </button>
