@@ -100,7 +100,7 @@ npm run test:jest--concurrent
 2. In a new terminal, run Cypress tests:
 
 ```bash
-   npm run test:cypress
+   npx open cypress
 ```
 
 **Option 2: Concurrent Execution**
