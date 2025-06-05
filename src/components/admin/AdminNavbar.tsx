@@ -22,6 +22,7 @@ const AdminNavbar = ({ toggleSidebar }: { toggleSidebar: () => void }) => {
       </div>
       <Button
         variant="outline"
+        data-testid="logout-button"
         className="border-white text-blue-green-dark hover:bg-white hover:text-[#FD8432] 
         hover:scale-105 transition-all cursor-pointer"
         onClick={handleLogout}

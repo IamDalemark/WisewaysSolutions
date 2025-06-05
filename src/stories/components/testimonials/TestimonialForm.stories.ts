@@ -28,6 +28,11 @@ export const FilledForm: Story = {
       delay: 100,
     });
 
+    const titleInput = canvas.getByTestId("form-title");
+    await userEvent.type(titleInput, "CEO", {
+      delay: 100,
+    });
+
     const ratingInput = canvas.getByTestId("form-rating-3");
     await userEvent.click(ratingInput, {
       delay: 100,
@@ -75,6 +80,11 @@ export const SubmissionError: Story = {
       delay: 100,
     });
 
+    const titleInput = canvas.getByTestId("form-title");
+    await userEvent.type(titleInput, "CEO", {
+      delay: 100,
+    });
+
     const ratingInput = canvas.getByTestId("form-rating-3");
     await userEvent.click(ratingInput, {
       delay: 100,
@@ -96,7 +106,7 @@ export const SubmissionError: Story = {
         http.post("/api/testimonials", () => {
           // Simulate a server error
           return HttpResponse.json(
-            { error: "Database connection error" },
+            { error: "Something went wrong" },
             { status: 500 }
           );
         }),
@@ -125,6 +135,9 @@ export const LongInputValues: Story = {
       "SirBartholomewAlexanderMaximusTheFourthHighDukeOfExtraordinaryFormSubmissionsAndBeyond";
     const longEmail =
       "the.most.unbelievably.long.email.address.that.you.have.ever.seen.in.your.entire.life@example.super-long-organization-name-that-might-break-layout.com";
+
+    const titleInput = canvas.getByTestId("form-title");
+
     const longTestimonial =
       "Let me begin by stating unequivocally that this platform has irrevocably transformed my understanding of what it means to deliver excellence in the realm of digital form submissions. Never before have I encountered a user experience so fluid, so responsive, so utterly impeccable in its construction. ".repeat(
         5
@@ -134,6 +147,9 @@ export const LongInputValues: Story = {
       delay: 5,
     });
     await userEvent.type(canvas.getByTestId("form-email"), longEmail, {
+      delay: 5,
+    });
+    await userEvent.type(titleInput, "CEO", {
       delay: 5,
     });
     await userEvent.click(canvas.getByTestId("form-rating-5"), { delay: 100 });

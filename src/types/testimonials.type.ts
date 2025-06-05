@@ -1,6 +1,3 @@
-export type TestimonialFormProps = {
-  onSubmit: () => void;
-};
 export type SentTestimonialProps = {
   onSubmit: () => void;
   description: string;
@@ -51,4 +48,5 @@ export interface Testimonial {
   is_approved: string;
   created_at?: string;
   title: string;
+  submitted_at?: string;
 }
