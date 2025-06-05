@@ -36,7 +36,10 @@ const NavBar = () => {
       </div>
 
       <div className="flex w-[30%] md:w-[55%] lg:w-[30%] xl:w-[30%] mr-[2%] justify-end">
-        <div className="hidden md:flex md:w-[60%] lg:w-[75%] items-center justify-end max-w-70">
+        <div
+          className="hidden md:flex md:w-[60%] lg:w-[75%] items-center justify-end max-w-70"
+          data-cy="navbar-appointment-button"
+        >
           <AppointmentButton
             onHandleScheduleAppointment={handleScheduleAppointment}
           />

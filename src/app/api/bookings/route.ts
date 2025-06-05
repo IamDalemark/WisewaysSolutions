@@ -94,3 +94,37 @@ export const GET = async (request: Request) => {
     );
   }
 };
+
+export const DELETE = async (request: Request) => {
+  try {
+    const { booking_id } = await request.json();
+
+    if (!booking_id) {
+      return NextResponse.json(
+        { error: "Missing booking_id" },
+        { status: 400 }
+      );
+    }
+
+    const { error } = await supabase
+      .from("booking")
+      .delete()
+      .eq("booking_id", booking_id);
+
+    if (error) {
+      console.error("Supabase error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json(
+      { success: true, message: "Booking deleted successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Server error:", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+};

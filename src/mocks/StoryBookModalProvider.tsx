@@ -1,10 +1,11 @@
-import React, { ReactNode, useState } from "react";
-import { ModalContext } from "@/components/contexts/ModalContext";
+import React, { ReactNode, useState, useContext } from "react";
+import { ModalContext } from "@/components/contexts/ModalContext"; // Import the real context
 import { LogInResult, SignUpResult } from "@/types/auth.type";
 
 type ModalProps = {
-  show: boolean;
-  isLoading: boolean;
+  showSignUpModal?: boolean;
+  showLogInModal?: boolean;
+  isLoading?: boolean;
   username?: string;
   email?: string;
   password?: string;
@@ -24,8 +25,6 @@ type ModalProps = {
 interface StorybookModalProviderProps {
   children: ReactNode;
   modalProps: ModalProps;
-
-  // Add specific validation error props
   showValidationErrors?: boolean;
   validationErrors?: {
     username?: string;
@@ -35,7 +34,7 @@ interface StorybookModalProviderProps {
     acceptedTerms?: boolean;
     general?: string;
   };
-  fromService: string;
+  fromService?: string;
 }
 
 export const StorybookModalProvider = ({
@@ -45,6 +44,14 @@ export const StorybookModalProvider = ({
   validationErrors = {},
   fromService = "Any.",
 }: StorybookModalProviderProps) => {
+  // State for controlling modal visibility
+  const [showSignUpModal, setShowSignUpModal] = useState(
+    modalProps.showSignUpModal || false
+  );
+  const [showLogInModal, setShowLogInModal] = useState(
+    modalProps.showLogInModal || false
+  );
+
   const [signUpFormState, setSignUpFormState] = useState({
     username: modalProps.username || "",
     email: modalProps.email || "",
@@ -59,54 +66,97 @@ export const StorybookModalProvider = ({
     showPassword: modalProps.showPassword || false,
   });
 
+  // Mock functions with proper state management
+  const openSignUpModal = () => {
+    setShowSignUpModal(true);
+    setShowLogInModal(false);
+  };
+
+  const closeSignUpModal = () => {
+    setShowSignUpModal(false);
+  };
+
+  const openLogInModal = () => {
+    setShowLogInModal(true);
+    setShowSignUpModal(false);
+  };
+
+  const closeLogInModal = () => {
+    setShowLogInModal(false);
+  };
+
+  const mockHandleScheduleAppointment = () => {
+    console.log("Mock: Schedule appointment clicked");
+    // In storybook, just open login modal for demo
+    openLogInModal();
+  };
+
   // Mock signup function that will show errors when called
   const mockHandleSignUp = async (): Promise<SignUpResult> => {
     if (showValidationErrors) {
-      // For demo purposes, always show the validation errors when this flag is true
       return {
         success: false,
         error: validationErrors.general || "Sign up failed",
       };
     }
 
+    // Simulate successful signup - switch to login modal
+    openLogInModal();
     return { success: true };
   };
 
   // Mock login function that will show errors when called
   const mockHandleLogIn = async (): Promise<LogInResult> => {
     if (showValidationErrors) {
-      // For demo purposes, always show the validation errors when this flag is true
       return {
         success: false,
         error: validationErrors.general || "Authentication failed",
       };
     }
 
+    // Simulate successful login - close modal
+    closeLogInModal();
+    console.log("Mock: User logged in, would navigate to /booking");
     return { success: true };
+  };
+
+  const mockHandleToResetPassword = () => {
+    closeLogInModal();
+    console.log("Mock: User reset password, would navigate to /resetpassword");
   };
 
   return (
     <ModalContext.Provider
       value={{
-        showSignUpModal: modalProps.show || false,
-        showLogInModal: false,
-        openSignUpModal: () => {},
-        closeSignUpModal: () => {},
-        openLogInModal: () => {},
-        closeLogInModal: () => {},
-        handleScheduleAppointment: () => {},
+        showSignUpModal,
+        showLogInModal,
+        openSignUpModal,
+        closeSignUpModal,
+        openLogInModal,
+        closeLogInModal,
+        handleToResetPassword: mockHandleToResetPassword,
+        handleScheduleAppointment: mockHandleScheduleAppointment,
         handleSignUp: mockHandleSignUp,
         handleLogIn: mockHandleLogIn,
         signUpLoading: modalProps.isLoading || false,
-        logInLoading: false,
+        logInLoading: modalProps.isLoading || false,
         signUpForm: signUpFormState,
         loginForm: loginFormState,
         setSignUpForm: setSignUpFormState,
         setLoginForm: setLoginFormState,
-        fromService: fromService,
+        fromService,
       }}
     >
       {children}
     </ModalContext.Provider>
   );
+};
+
+// Hook to use the real modal context (same as your app)
+export const useModal = () => {
+  const context = useContext(ModalContext);
+  if (!context) {
+    throw new Error("useModal must be used within a ModalProvider");
+  }
+  return context;
 };
