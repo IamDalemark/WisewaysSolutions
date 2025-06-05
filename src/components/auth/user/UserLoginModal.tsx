@@ -2,7 +2,6 @@
 
 import { useModal } from "@/components/contexts/ModalContext";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export interface UserLoginModalProps {
@@ -34,13 +33,13 @@ const UserLoginModal = ({
   showPassword = false,
   validationErrors = {},
 }: UserLoginModalProps) => {
-  const router = useRouter();
   const {
     logInLoading,
     showLogInModal,
     closeLogInModal,
     openSignUpModal,
     handleLogIn: contextLogIn,
+    handleToResetPassword,
     loginForm,
     setLoginForm,
   } = useModal();
@@ -113,18 +112,24 @@ const UserLoginModal = ({
   };
 
   const handleForgetPassword = async () => {
-    closeLogInModal();
-    router.push("/resetpassword");
+    handleToResetPassword();
   };
 
   if (!showLogInModal && !show) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white rounded-3xl shadow-lg p-8 max-w-md w-full relative border border-gray-200">
+    <div
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 w-full h-full min-w-fit min-h-fit"
+      data-cy="modal-overlay"
+    >
+      <div
+        className="bg-white rounded-3xl shadow-lg p-8 max-w-md w-full relative border border-gray-200"
+        data-cy="login-modal"
+      >
         <button
           onClick={closeLogInModal}
           className="absolute top-4 right-4 text-teal-700 text-2xl font-bold"
+          data-cy="close-login-modal"
         >
           &times;
         </button>
@@ -133,7 +138,10 @@ const UserLoginModal = ({
         </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           {errors.general && (
-            <div className="text-red-500 text-center mb-2">
+            <div
+              className="text-red-500 text-center mb-2"
+              data-cy="general-error"
+            >
               {errors.general}
             </div>
           )}
@@ -148,9 +156,12 @@ const UserLoginModal = ({
               onChange={handleChange}
               className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
               placeholder="Enter Email"
+              data-cy="email-input"
             />
             {errors.email && (
-              <p className="text-red-500 text-sm">{errors.email}</p>
+              <p className="text-red-500 text-sm" data-cy="email-error">
+                {errors.email}
+              </p>
             )}
           </div>
 
@@ -166,9 +177,12 @@ const UserLoginModal = ({
                 onChange={handleChange}
                 className="w-full border border-gray-400 rounded-md px-4 py-2 pr-2 outline-none focus:ring-2 focus:ring-teal-300"
                 placeholder="Enter Password"
+                data-cy="password-input"
               />
               {errors.password && (
-                <p className="text-red-500 text-sm">{errors.password}</p>
+                <p className="text-red-500 text-sm" data-cy="password-error">
+                  {errors.password}
+                </p>
               )}
             </div>
           </div>
@@ -176,10 +190,14 @@ const UserLoginModal = ({
             type="submit"
             disabled={isLoading || logInLoading}
             className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
+            data-cy="login-submit-btn"
           >
             {isLoading || logInLoading ? (
               <>
-                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                <Loader2
+                  className="mr-2 h-4 w-4 animate-spin"
+                  data-cy="loading-spinner"
+                />
                 Logging In...
               </>
             ) : (
@@ -189,7 +207,11 @@ const UserLoginModal = ({
         </form>
 
         <div className="text-sm text-center text-teal-700 mt-4">
-          <button className="hover:underline" onClick={handleForgetPassword}>
+          <button
+            className="hover:underline"
+            onClick={handleForgetPassword}
+            data-cy="forgot-password-btn"
+          >
             Forgot Password?
           </button>
         </div>
@@ -201,6 +223,7 @@ const UserLoginModal = ({
           <button
             onClick={openSignUpModal}
             className="font-semibold hover:underline"
+            data-cy="signup-link"
           >
             Sign up
           </button>

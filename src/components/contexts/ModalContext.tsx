@@ -21,6 +21,7 @@ interface ModalContextType {
   closeSignUpModal: () => void;
   openLogInModal: () => void;
   closeLogInModal: () => void;
+  handleToResetPassword: () => void;
   handleScheduleAppointment: () => void;
   handleSignUp: () => Promise<SignUpResult>;
   handleLogIn: () => Promise<LogInResult>;
@@ -183,6 +184,11 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
+  const handleToResetPassword = () => {
+    closeLogInModal();
+    router.push("/resetpassword");
+  };
+
   return (
     <ModalContext.Provider
       value={{
@@ -195,6 +201,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
         handleScheduleAppointment,
         handleSignUp,
         handleLogIn,
+        handleToResetPassword,
         signUpLoading,
         logInLoading,
         signUpForm,

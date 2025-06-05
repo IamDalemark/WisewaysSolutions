@@ -15,6 +15,7 @@ export interface UserSignUpModalProps {
   password?: string;
   confirmPassword?: string;
   showPassword?: boolean;
+  showTerms?: boolean;
   acceptedTerms?: boolean;
   validationErrors?: {
     username?: string;
@@ -41,6 +42,7 @@ const UserSignUpModal = ({
   email = "",
   password = "",
   confirmPassword = "",
+  showTerms = false,
   acceptedTerms = false,
   showPassword = false,
   validationErrors = {},
@@ -59,7 +61,7 @@ const UserSignUpModal = ({
     ...validationErrors,
   });
 
-  const [showingTerms, setShowingTerms] = useState(false);
+  const [showingTerms, setShowingTerms] = useState(showTerms);
 
   useEffect(() => {
     setSignUpForm({
@@ -152,18 +154,24 @@ const UserSignUpModal = ({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="bg-white rounded-3xl shadow-lg p-8 max-w-md w-full relative border border-gray-200">
+      <div
+        className="bg-white rounded-3xl shadow-lg p-8 max-w-md w-full relative border border-gray-200"
+        data-cy="signup-modal"
+      >
         <button
           onClick={closeSignUpModal}
           className="absolute top-4 right-4 text-teal-700 text-2xl font-bold"
+          data-cy="close-signup-modal"
         >
           &times;
         </button>
         {showingTerms ? (
-          <TermsAndConditions
-            onHandleAccept={handleAcceptTerms}
-            onHandleCancel={() => setShowingTerms(false)}
-          />
+          <div data-cy="terms-modal">
+            <TermsAndConditions
+              onHandleAccept={handleAcceptTerms}
+              onHandleCancel={() => setShowingTerms(false)}
+            />
+          </div>
         ) : (
           <>
             <h2 className="text-2xl font-semibold text-center text-teal-700 mb-2">
@@ -172,7 +180,10 @@ const UserSignUpModal = ({
 
             <form className="space-y-3" onSubmit={handleSubmit}>
               {errors.general && (
-                <div className="text-red-500 text-center mb-2">
+                <div
+                  className="text-red-500 text-center mb-2"
+                  data-cy="general-error"
+                >
                   {errors.general}
                 </div>
               )}
@@ -187,9 +198,12 @@ const UserSignUpModal = ({
                   onChange={handleChange}
                   placeholder="Enter username"
                   className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                  data-cy="username-input"
                 />
                 {errors.username && (
-                  <p className="text-red-500 text-sm">{errors.username}</p>
+                  <p className="text-red-500 text-sm" data-cy="username-error">
+                    {errors.username}
+                  </p>
                 )}
               </div>
 
@@ -198,15 +212,18 @@ const UserSignUpModal = ({
                   Email
                 </label>
                 <input
-                  type="email"
+                  type="text"
                   name="email"
                   value={signUpForm.email}
                   onChange={handleChange}
                   placeholder="Enter email"
                   className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                  data-cy="email-input"
                 />
                 {errors.email && (
-                  <p className="text-red-500 text-sm">{errors.email}</p>
+                  <p className="text-red-500 text-sm" data-cy="email-error">
+                    {errors.email}
+                  </p>
                 )}
               </div>
 
@@ -221,9 +238,12 @@ const UserSignUpModal = ({
                   onChange={handleChange}
                   placeholder="Enter password"
                   className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                  data-cy="password-input"
                 />
                 {errors.password && (
-                  <p className="text-red-500 text-sm">{errors.password}</p>
+                  <p className="text-red-500 text-sm" data-cy="password-error">
+                    {errors.password}
+                  </p>
                 )}
               </div>
 
@@ -238,9 +258,13 @@ const UserSignUpModal = ({
                   onChange={handleChange}
                   placeholder="Confirm password"
                   className="w-full border border-gray-400 rounded-md px-4 py-2 outline-none focus:ring-2 focus:ring-teal-300"
+                  data-cy="confirm-password-input"
                 />
                 {errors.confirmPassword && (
-                  <p className="text-red-500 text-sm">
+                  <p
+                    className="text-red-500 text-sm"
+                    data-cy="confirm-password-error"
+                  >
                     {errors.confirmPassword}
                   </p>
                 )}
@@ -254,6 +278,7 @@ const UserSignUpModal = ({
                     checked={signUpForm.acceptedTerms}
                     onChange={handleChange}
                     className="h-4 w-4 text-teal-600 border-gray-300 rounded max-w-6"
+                    data-cy="terms-checkbox"
                   />
                   <label
                     htmlFor="terms"
@@ -264,6 +289,7 @@ const UserSignUpModal = ({
                       type="button"
                       onClick={() => setShowingTerms(true)}
                       className="text-teal-700 font-semibold hover:underline"
+                      data-cy="terms-link"
                     >
                       Terms and Services
                     </button>
@@ -271,7 +297,9 @@ const UserSignUpModal = ({
                 </div>
 
                 {errors.acceptedTerms && (
-                  <p className="text-red-500 text-sm">{errors.acceptedTerms}</p>
+                  <p className="text-red-500 text-sm" data-cy="terms-error">
+                    {errors.acceptedTerms}
+                  </p>
                 )}
               </div>
 
@@ -279,10 +307,14 @@ const UserSignUpModal = ({
                 type="submit"
                 disabled={isLoading || signUpLoading}
                 className="w-full bg-teal-700 hover:bg-teal-800 text-white font-medium py-2 rounded-xl transition flex items-center justify-center"
+                data-cy="signup-submit-btn"
               >
                 {isLoading || signUpLoading ? (
                   <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    <Loader2
+                      className="mr-2 h-4 w-4 animate-spin"
+                      data-cy="loading-spinner"
+                    />
                     Creating Account...
                   </>
                 ) : (
@@ -297,6 +329,7 @@ const UserSignUpModal = ({
               <button
                 onClick={contextOpenLogInModal}
                 className="font-semibold hover:underline"
+                data-cy="login-link"
               >
                 Log In
               </button>

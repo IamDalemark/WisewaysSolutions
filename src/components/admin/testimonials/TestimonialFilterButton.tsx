@@ -90,7 +90,7 @@ const TestimonialFilterButton: React.FC<TestimonialFilterButtonProps> = ({
                 <option value="">All Statuses</option>
                 <option value="Accepted">Accepted</option>
                 <option value="Declined">Declined</option>
-                <option value="Pending">Pending</option>
+                <option value="pending">Pending</option>
               </select>
             </div>
 
