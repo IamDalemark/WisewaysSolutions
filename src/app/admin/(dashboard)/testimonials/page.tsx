@@ -18,6 +18,10 @@ const AdminTestimonialsPage = () => {
   const [totalPages, setTotalPages] = useState(1);
 
   useEffect(() => {
+  setCurrentPage(1);
+  }, [filters]);
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
       router.push("/admin");

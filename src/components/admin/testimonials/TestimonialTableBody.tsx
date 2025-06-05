@@ -32,9 +32,7 @@ export const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
 }) => {
   const [error, setError] = useState("");
   const [testimonials, setTestimonials] = useState<TestimonialAdminData[]>([]);
-  const [filteredTestimonials, setFilteredTestimonials] = useState<
-    TestimonialAdminData[]
-  >([]);
+  const [filteredTestimonials, setFilteredTestimonials] = useState<TestimonialAdminData[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -91,18 +89,16 @@ export const TestimonialTableBody: React.FC<AdminTableBodyTestimonialProps> = ({
           schema: "public",
           table: "testimonial",
         },
-        (payload) => {
-          const updated = payload.new as TestimonialAdminData;
-          setTestimonials((prev) =>
-            prev
-              ? prev.map((t) =>
-                  t.testimonial_id === updated.testimonial_id ? updated : t
-                )
-              : [updated]
-          );
+        async () => {
+        try {
+          const updatedData = await fetchTestimonials();
+          setTestimonials(updatedData);
+        } catch (err) {
+          console.error("Failed to fetch updated testimonials:", err);
         }
-      )
-      .subscribe();
+      }
+    )
+    .subscribe();
 
     return () => {
       supabase.removeChannel(channel);

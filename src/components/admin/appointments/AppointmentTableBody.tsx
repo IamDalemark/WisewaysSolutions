@@ -133,6 +133,18 @@ const AppointmentTableBody: React.FC<AdminTableBodyBookingProps> = ({
                 : b
             )
           );
+      //   async () => {
+      //     try {
+      //       const data = await fetchAppointments();
+      //       const formattedData = data.map((booking) => ({
+      //         ...booking,
+      //         date: formatDate(booking.created_at),
+      //         time: formatTime(booking.created_at),
+      //       }));
+      //       setBookings(formattedData);
+      //     } catch (err) {
+      //       console.error("Failed to fetch updated bookings:", err);
+      //     }
         }
       )
       .subscribe();
