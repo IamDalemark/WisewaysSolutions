@@ -100,7 +100,7 @@ npm run test:jest--concurrent
 2. In a new terminal, run Cypress tests:
 
 ```bash
-   npx open cypress
+   npx cypress open
 ```
 
 **Option 2: Concurrent Execution**
@@ -119,5 +119,5 @@ npm run test:cypress--concurrent
 | `npm run storybook`                | Launch Storybook component explorer                   |
 | `npm run test:jest`                | Run Jest unit tests                                   |
 | `npm run test:jest--concurrent`    | Run development server and Jest tests concurrently    |
-| `npm run test:cypress`             | Run Cypress e2e tests                                 |
+| `npx cypress open`                 | Run Cypress e2e tests                                 |
 | `npm run test:cypress--concurrent` | Run development server and Cypress tests concurrently |
